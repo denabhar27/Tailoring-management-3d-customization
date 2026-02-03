@@ -1,0 +1,392 @@
+import React, { useState, useEffect } from 'react';
+import '../adminStyle/dryclean.css'; // Reuse same styles
+import AdminHeader from './AdminHeader';
+import Sidebar from './Sidebar';
+import { getAllRepairOrders, getRepairOrdersByStatus, updateRepairOrderItem } from '../api/RepairOrderApi';
+
+const DAMAGE_TYPES = [
+  "Tears / Holes",
+  "Loose seams / Stitch unraveling",
+  "Missing buttons / Fasteners",
+  "Broken zippers",
+  "Fraying edges / Hems",
+  "Snags / Pulls",
+  "Stretching / Misshaping",
+  "Fabric thinning"
+];
+
+const Repair = () => {
+  const [allItems, setAllItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
+  const [viewFilter, setViewFilter] = useState("all");
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showDetailModal, setShowDetailModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [editForm, setEditForm] = useState({
+    finalPrice: '',
+    approvalStatus: '',
+    adminNotes: ''
+  });
+
+  // Load repair orders on component mount
+  useEffect(() => {
+    loadRepairOrders();
+  }, []);
+
+  const loadRepairOrders = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const result = await getAllRepairOrders();
+      if (result.success) {
+        setAllItems(result.orders);
+      } else {
+        setError(result.message || 'Failed to load repair orders');
+      }
+    } catch (err) {
+      setError('Failed to load repair orders');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const pendingAppointments = allItems.filter(item => item.approval_status === 'pending_review');
+  const acceptedOrders = allItems.filter(item => item.approval_status !== 'pending_review');
+
+  const stats = {
+    pending: pendingAppointments.length,
+    inProgress: acceptedOrders.filter(o => o.approval_status === 'approved').length,
+    toPickup: acceptedOrders.filter(o => o.approval_status === 'ready_for_pickup').length,
+    completed: acceptedOrders.filter(o => o.approval_status === 'completed').length,
+    rejected: acceptedOrders.filter(o => o.approval_status === 'rejected').length
+  };
+
+  const getFilteredItems = () => {
+    let items = viewFilter === "pending" ? pendingAppointments :
+                viewFilter === "accepted" ? acceptedOrders : allItems;
+
+    items = items.filter(item =>
+      !searchTerm ||
+      item.order_id?.toString().includes(searchTerm.toLowerCase()) ||
+      `${item.first_name} ${item.last_name}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.specific_data?.garmentType?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.email?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    if (statusFilter && viewFilter !== 'pending') {
+      items = items.filter(item => item.approval_status === statusFilter);
+    }
+    return items;
+  };
+
+  const handleAccept = async (itemId) => {
+    try {
+      const result = await updateRepairOrderItem(itemId, {
+        approvalStatus: 'approved'
+      });
+      if (result.success) {
+        loadRepairOrders(); // Refresh data
+        alert("Repair request approved!");
+      } else {
+        alert(result.message || "Failed to approve repair request");
+      }
+    } catch (err) {
+      alert("Failed to approve repair request");
+    }
+  };
+
+  const handleDecline = async (itemId) => {
+    if (window.confirm("Decline this repair request?")) {
+      try {
+        const result = await updateRepairOrderItem(itemId, {
+          approvalStatus: 'rejected'
+        });
+        if (result.success) {
+          loadRepairOrders(); // Refresh data
+        } else {
+          alert(result.message || "Failed to decline repair request");
+        }
+      } catch (err) {
+        alert("Failed to decline repair request");
+      }
+    }
+  };
+
+  const updateStatus = async (itemId, status) => {
+    try {
+      const result = await updateRepairOrderItem(itemId, {
+        approvalStatus: status
+      });
+      if (result.success) {
+        loadRepairOrders(); // Refresh data
+      } else {
+        alert(result.message || "Failed to update status");
+      }
+    } catch (err) {
+      alert("Failed to update status");
+    }
+  };
+
+  const handleViewDetails = (item) => {
+    setSelectedOrder(item);
+    setShowDetailModal(true);
+  };
+
+  const handleEditOrder = (item) => {
+    setSelectedOrder(item);
+    setEditForm({
+      finalPrice: item.final_price || '',
+      approvalStatus: item.approval_status || '',
+      adminNotes: item.pricing_factors?.adminNotes || ''
+    });
+    setShowEditModal(true);
+  };
+
+  const handleSaveEdit = async () => {
+    if (!selectedOrder) return;
+    
+    try {
+      const result = await updateRepairOrderItem(selectedOrder.item_id, editForm);
+      if (result.success) {
+        setShowEditModal(false);
+        loadRepairOrders(); // Refresh data
+        alert('Repair order updated successfully!');
+      } else {
+        alert(result.message || 'Failed to update repair order');
+      }
+    } catch (err) {
+      alert('Failed to update repair order');
+    }
+  };
+
+  return (
+    <div className="dry-cleaning-management">
+      <Sidebar />
+      <AdminHeader />
+
+      <div className="content">
+        <div className="dashboard-title">
+          <div>
+            <h2>Repair Services Management</h2>
+            <p>Manage garment repair requests and ongoing fixes</p>
+          </div>
+          {error && <div className="error-message" style={{ color: 'red', marginBottom: '20px' }}>{error}</div>}
+        </div>
+
+        {/* Stats */}
+        <div className="stats-grid">
+          <div className="stat-card">
+            <div className="stat-header">
+              <span>Pending</span>
+              <div className="stat-icon" style={{ background: '#fff3e0', color: '#f57c00' }}>⏳</div>
+            </div>
+            <div className="stat-number">{stats.pending}</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-header">
+              <span>In Progress</span>
+              <div className="stat-icon" style={{ background: '#e3f2fd', color: '#2196f3' }}>🔄</div>
+            </div>
+            <div className="stat-number">{stats.inProgress}</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-header">
+              <span>To Pick up</span>
+              <div className="stat-icon" style={{ background: '#fff3e0', color: '#ff9800' }}>📦</div>
+            </div>
+            <div className="stat-number">{stats.toPickup}</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-header">
+              <span>Completed</span>
+              <div className="stat-icon" style={{ background: '#e8f5e9', color: '#4caf50' }}>✓</div>
+            </div>
+            <div className="stat-number">{stats.completed}</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-header">
+              <span>Rejected</span>
+              <div className="stat-icon" style={{ background: '#ffebee', color: '#f44336' }}>✕</div>
+            </div>
+            <div className="stat-number">{stats.rejected}</div>
+          </div>
+        </div>
+
+        {/* Tabs */}
+        <div className="view-tabs">
+          <button className={viewFilter === 'all' ? 'tab-btn active' : 'tab-btn'} onClick={() => setViewFilter('all')}>
+            All ({allItems.length})
+          </button>
+          <button className={viewFilter === 'pending' ? 'tab-btn active' : 'tab-btn'} onClick={() => setViewFilter('pending')}>
+            Pending ({pendingAppointments.length})
+          </button>
+          <button className={viewFilter === 'accepted' ? 'tab-btn active' : 'tab-btn'} onClick={() => setViewFilter('accepted')}>
+            Accepted ({acceptedOrders.length})
+          </button>
+        </div>
+
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Search by Unique No, Name, or Garment"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          {viewFilter !== 'pending' && (
+            <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+              <option value="">All Status</option>
+              <option value="approved">In Progress</option>
+              <option value="ready_for_pickup">To Pick up</option>
+              <option value="completed">Completed</option>
+              <option value="rejected">Rejected</option>
+            </select>
+          )}
+        </div>
+
+        {/* Table */}
+        <div className="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Garment</th>
+                <th>Damage Type</th>
+                <th>Damage Description</th>
+                <th>Date</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? (
+                <tr><td colSpan="9" style={{ textAlign: 'center', padding: '40px' }}>Loading repair orders...</td></tr>
+              ) : getFilteredItems().length === 0 ? (
+                <tr><td colSpan="9" style={{ textAlign: 'center', padding: '40px' }}>No repair orders found</td></tr>
+              ) : (
+                getFilteredItems().map(item => (
+                  <tr key={item.item_id}>
+                    <td><strong>#{item.order_id}</strong></td>
+                    <td>{item.first_name} {item.last_name}</td>
+                    <td>{item.specific_data?.garmentType || 'N/A'}</td>
+                    <td><span style={{ fontSize: '0.9em', color: '#d32f2f' }}>{item.specific_data?.serviceName || 'N/A'}</span></td>
+                    <td><span style={{ fontSize: '0.8em' }}>{item.specific_data?.damageDescription?.substring(0, 50) || 'N/A'}...</span></td>
+                    <td>{new Date(item.order_date).toLocaleDateString()}</td>
+                    <td>₱{parseFloat(item.final_price || 0).toLocaleString()}</td>
+                    <td>
+                      {item.approval_status === 'pending_review' ? (
+                        <span className="status-badge pending">Pending</span>
+                      ) : (
+                        <select
+                          className="status-select"
+                          value={item.approval_status || 'pending'}
+                          onChange={(e) => updateStatus(item.item_id, e.target.value)}
+                        >
+                          <option value="approved">In Progress</option>
+                          <option value="ready_for_pickup">To Pick up</option>
+                          <option value="completed">Completed</option>
+                          <option value="rejected">Rejected</option>
+                        </select>
+                      )}
+                    </td>
+                    <td>
+                      {item.approval_status === 'pending_review' ? (
+                        <>
+                          <button className="accept-btn" onClick={() => handleAccept(item.item_id)}
+                             style={{
+                              padding: '10px 10px',
+                              border: 'none',
+                              borderRadius: '6px',
+                              cursor: 'pointer',
+                              fontWeight: '600',
+                              fontSize: '10px',
+                              background: '#27AE60',
+                              color: 'white',
+                              marginRight: '5px'
+                            }}>Accept</button>
+                          <button className="decline-btn" onClick={() => handleDecline(item.item_id)}
+                          style={{
+                            padding: '10px 10px',
+                            border: 'none',
+                            borderRadius: '6px',
+                            cursor: 'pointer',
+                            fontWeight: '600',
+                            fontSize: '10px',
+                            background: '#E74C3C',
+                            color: 'white',
+                            marginRight: '5px'
+                          }}>Decline</button>
+                        </>
+                      ) : null}
+                      <button className="action-btn view-btn" onClick={() => handleViewDetails(item)}
+                         style={{
+                          padding: '10px 10px',
+                          border: 'none',
+                          borderRadius: '6px',
+                          cursor: 'pointer',
+                          fontWeight: '600',
+                          fontSize: '10px',
+                          background: '#2196f3',
+                          color: 'white',
+                          marginRight: '5px'
+                        }}>View</button>
+                      <button className="action-btn edit-btn" onClick={() => handleEditOrder(item)}
+                         style={{
+                          padding: '10px 10px',
+                          border: 'none',
+                          borderRadius: '6px',
+                          cursor: 'pointer',
+                          fontWeight: '600',
+                          fontSize: '10px',
+                          background: '#ff9800',
+                          color: 'white'
+                        }}>Edit</button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Edit Repair Order Modal */}
+      {showEditModal && selectedOrder && (
+        <div className="modal-overlay active" onClick={(e) => e.target === e.currentTarget && setShowEditModal(false)}>
+                    src={`http://localhost:5000${selectedOrder.specific_data.imageUrl}`} 
+                    alt="Damage" 
+                    style={{ maxWidth: '300px', maxHeight: '300px', border: '1px solid #ddd', borderRadius: '4px' }}
+                  />
+                </div>
+              )}
+              
+              <div className="detail-row"><strong>Damage Description:</strong> {selectedOrder.specific_data?.damageDescription || 'N/A'}</div>
+              <div className="detail-row"><strong>Date Received:</strong> {new Date(selectedOrder.order_date).toLocaleDateString()}</div>
+              <div className="detail-row"><strong>Estimated Time:</strong> {selectedOrder.pricing_factors?.estimatedTime || 'N/A'}</div>
+              <div className="detail-row"><strong>Repair Cost:</strong> ₱{parseFloat(selectedOrder.final_price || 0).toLocaleString()}</div>
+              <div className="detail-row"><strong>Status:</strong> 
+                <span className={`status-badge ${selectedOrder.approval_status}`}>
+                  {selectedOrder.approval_status?.replace('_', ' ') || 'Unknown'}
+                </span>
+              </div>
+              
+              {selectedOrder.pricing_factors?.adminNotes && (
+                <div className="detail-row"><strong>Admin Notes:</strong> {selectedOrder.pricing_factors.adminNotes}</div>
+              )}
+            </div>
+            <div className="modal-footer">
+              <button className="close-btn" onClick={() => setShowDetailModal(false)}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Repair;

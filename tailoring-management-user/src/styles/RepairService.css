@@ -1,0 +1,404 @@
+
+.repair-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.repair-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.repair-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.repair-card.loading {
+  background: #f8f9fa;
+  min-height: 400px;
+}
+
+.loading-placeholder {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.repair-image {
+  height: 200px;
+  overflow: hidden;
+}
+
+.repair-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.repair-card:hover .repair-image img {
+  transform: scale(1.05);
+}
+
+.repair-info {
+  padding: 20px;
+}
+
+.repair-info h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.repair-info p {
+  margin: 0 0 15px 0;
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.repair-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.repair-time {
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.repair-price {
+  color: #8B4513;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.btn-repair {
+  width: 100%;
+  padding: 12px;
+  background: #8B4513;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-repair:hover {
+  background: #6B3410;
+  transform: translateY(-2px);
+}
+
+.repair-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.repair-modal {
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.repair-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e0e0e0;
+  background: #f8f9fa;
+  border-radius: 12px 12px 0 0;
+}
+
+.repair-modal-header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.repair-modal-close {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.repair-modal-close:hover {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.repair-modal-content {
+  padding: 24px;
+}
+
+.service-summary {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.service-summary h3 {
+  margin: 0 0 8px 0;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.service-summary p {
+  margin: 0 0 8px 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.service-time {
+  color: #8B4513;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.repair-form {
+  display: grid;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: grid;
+  gap: 8px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #8B4513;
+  box-shadow: 0 0 0 2px rgba(139, 69, 19, 0.25);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-group input{
+  color: black;
+}
+
+.uploaded-image-preview {
+  margin-top: 8px;
+  text-align: center;
+}
+
+.uploaded-image-preview img {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  margin-bottom: 4px;
+}
+
+.uploaded-image-preview p {
+  margin: 0;
+  color: #28a745;
+  font-size: 0.85rem;
+}
+
+.price-estimate {
+  background: #e8f5e8;
+  border: 1px solid #c3e6cb;
+  border-radius: 6px;
+  padding: 16px;
+  text-align: center;
+}
+
+.price-estimate h4 {
+  margin: 0 0 4px 0;
+  color: #28a745;
+  font-size: 1.2rem;
+}
+
+.price-estimate p {
+  margin: 0;
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.cart-message {
+  padding: 12px;
+  margin: 16px 0;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.cart-message.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.cart-message.error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.repair-modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.btn-cancel,
+.btn-add-cart {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-cancel {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-cancel:hover {
+  background: #5a6268;
+}
+
+.btn-add-cart {
+  background: #28a745;
+  color: white;
+}
+
+.btn-add-cart:hover:not(:disabled) {
+  background: #218838;
+}
+
+.btn-add-cart:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .repair-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .repair-modal {
+    width: 95%;
+    margin: 20px;
+  }
+
+  .repair-modal-header,
+  .repair-modal-content {
+    padding: 16px;
+  }
+
+  .repair-modal-actions {
+    flex-direction: column;
+  }
+
+  .btn-cancel,
+  .btn-add-cart {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .repair-info {
+    padding: 16px;
+  }
+
+  .repair-info h3 {
+    font-size: 1.1rem;
+  }
+
+  .repair-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .service-summary h3 {
+    font-size: 1rem;
+  }
+}

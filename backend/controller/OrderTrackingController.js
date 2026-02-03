@@ -1,0 +1,464 @@
+const OrderTracking = require('../model/OrderTrackingModel');
+const Order = require('../model/OrderModel');
+const Notification = require('../model/NotificationModel');
+const db = require('../config/db');
+
+exports.getUserOrderTracking = (req, res) => {
+  const userId = req.user.id; 
+  console.log('Fetching orders for user ID:', userId); 
+
+  OrderTracking.getLatestStatusByUserId(userId, (err, results) => {
+    if (err) {
+      console.error('Database error in getUserOrderTracking:', err);
+      return res.status(500).json({
+        success: false,
+        message: "Error fetching order tracking",
+        error: err.message || err
+      });
+    }
+
+    console.log('Raw results from database:', results);
+
+    const orders = {};
+    const processedKeys = new Set(); 
+    
+    results.forEach(item => {
+      console.log('Processing item:', item); 
+
+      const itemKey = `${item.order_id}-${item.order_item_id}-${item.service_type}`;
+
+      if (processedKeys.has(itemKey)) {
+        console.log('Skipping duplicate item:', itemKey);
+        return;
+      }
+
+      if (item.status === 'cancelled' || item.status === 'rejected' || item.status === 'price_declined') {
+        console.log('Skipping rejected item:', item.order_item_id, 'status:', item.status);
+        return;
+      }
+
+      processedKeys.add(itemKey);
+      
+      try {
+        if (!orders[item.order_id]) {
+          orders[item.order_id] = {
+            order_id: item.order_id,
+            order_date: item.order_date,
+            total_price: item.total_price,
+            items: []
+          };
+        }
+
+        const statusInfo = OrderTracking.getStatusInfo(item.status, item.service_type);
+
+        let specificData = {};
+        if (item.specific_data) {
+          try {
+            specificData = typeof item.specific_data === 'string' 
+              ? JSON.parse(item.specific_data) 
+              : item.specific_data;
+          } catch (parseErr) {
+            console.warn('Failed to parse specific_data for item:', item.order_item_id, parseErr);
+            specificData = {};
+          }
+        }
+
+        let pricingFactors = {};
+        if (item.pricing_factors) {
+          try {
+            pricingFactors = typeof item.pricing_factors === 'string' 
+              ? JSON.parse(item.pricing_factors) 
+              : item.pricing_factors;
+          } catch (parseErr) {
+            console.warn('Failed to parse pricing_factors for item:', item.order_item_id, parseErr);
+            pricingFactors = {};
+          }
+        }
+
+        specificData = { ...specificData, ...pricingFactors };
+
+        let nextStatuses = [];
+        try {
+          if (OrderTracking.getNextStatuses && typeof OrderTracking.getNextStatuses === 'function') {
+            nextStatuses = OrderTracking.getNextStatuses(item.service_type, item.status || 'pending');
+            console.log(`Next statuses for item ${item.order_item_id} (${item.service_type}, ${item.status}):`, nextStatuses);
+          } else {
+            console.warn('getNextStatuses function not available, using empty array');
+            nextStatuses = [];
+          }
+        } catch (statusErr) {
+          console.warn('Failed to get next statuses for item:', item.order_item_id, statusErr);
+          nextStatuses = [];
+        }
+
+        let paymentStatusDisplay = 'Unpaid';
+        if (item.payment_status === 'paid') {
+          paymentStatusDisplay = 'Paid';
+        } else if (item.payment_status === 'down-payment') {
+          paymentStatusDisplay = 'Down-payment';
+        } else if (item.payment_status === 'fully_paid') {
+          paymentStatusDisplay = 'Fully Paid';
+        } else if (item.payment_status === 'cancelled') {
+          paymentStatusDisplay = 'Cancelled';
+        }
+
+        orders[item.order_id].items.push({
+          order_item_id: item.order_item_id,
+          service_type: item.service_type,
+          final_price: item.final_price,
+          specific_data: specificData,
+          status: item.status || 'pending',
+          status_label: statusInfo.label,
+          status_class: statusInfo.class,
+          status_updated_at: item.status_updated_at,
+          next_statuses: nextStatuses,
+          rental_start_date: item.rental_start_date || null,
+          rental_end_date: item.rental_end_date || null,
+          pricing_factors: pricingFactors,
+          payment_status: item.payment_status || 'unpaid',
+          payment_status_display: paymentStatusDisplay
+        });
+      } catch (itemErr) {
+        console.error('Error processing order item:', item, itemErr);
+        console.error('Item details:', {
+          order_id: item.order_id,
+          order_item_id: item.order_item_id,
+          service_type: item.service_type,
+          status: item.status
+        });
+        
+      }
+    });
+
+    const finalOrders = Object.values(orders).filter(order => order.items.length > 0);
+    console.log('Final processed orders:', finalOrders);
+
+    res.json({
+      success: true,
+      data: finalOrders
+    });
+  });
+};
+
+exports.getOrderItemTrackingHistory = (req, res) => {
+  const userId = req.user.id; 
+  const orderItemId = req.params.id;
+
+  Order.getOrderItemById(orderItemId, (err, orderItem) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Error fetching order item",
+        error: err
+      });
+    }
+
+    if (!orderItem) {
+      return res.status(404).json({
+        success: false,
+        message: "Order item not found"
+      });
+    }
+
+    Order.getOrderById(orderItem.order_id, (err, order) => {
+      if (err || !order || order.user_id !== userId) {
+        return res.status(403).json({
+          success: false,
+          message: "Access denied"
+        });
+      }
+
+      OrderTracking.getTrackingHistory(orderItemId, (err, history) => {
+        if (err) {
+          return res.status(500).json({
+            success: false,
+            message: "Error fetching tracking history",
+            error: err
+          });
+        }
+
+        const formattedHistory = history.map(item => ({
+          status: item.status,
+          status_info: OrderTracking.getStatusInfo(item.status, orderItem.service_type),
+          notes: item.notes,
+          created_at: item.created_at,
+          updated_by_name: item.updated_by_name || 'System'
+        }));
+
+        res.json({
+          success: true,
+          data: {
+            order_item: orderItem,
+            tracking_history: formattedHistory
+          }
+        });
+      });
+    });
+  });
+};
+
+exports.updateTrackingStatus = (req, res) => {
+  const adminId = req.user.id; 
+  const { status, notes } = req.body;
+  const orderItemId = req.params.id; 
+
+  console.log('Received request to update tracking status');
+  console.log('Request params:', req.params);
+  console.log('Request body:', req.body);
+  console.log('Order item ID from params:', orderItemId);
+  console.log('Parsed order item ID type:', typeof orderItemId);
+  console.log('Admin ID:', adminId);
+
+  const orderItemID = parseInt(orderItemId);
+  if (isNaN(orderItemID)) {
+    console.log('Invalid order item ID provided:', orderItemId);
+    return res.status(400).json({
+      success: false,
+      message: "Invalid order item ID provided"
+    });
+  }
+
+  console.log('Updating tracking status for order item:', orderItemID, 'to status:', status);
+
+  if (!status) {
+    return res.status(400).json({
+      success: false,
+      message: "Status is required"
+    });
+  }
+
+  Order.getOrderItemById(orderItemID, (err, orderItem) => {
+    if (err) {
+      console.error('Error fetching order item:', err);
+      return res.status(500).json({
+        success: false,
+        message: "Error fetching order item",
+        error: err
+      });
+    }
+
+    if (!orderItem) {
+      console.log('Order item not found:', orderItemID);
+      return res.status(404).json({
+        success: false,
+        message: "Order item not found"
+      });
+    }
+
+    console.log('Found order item:', orderItem);
+
+    OrderTracking.getByOrderItemId(orderItemID, (err, currentTracking) => {
+      if (err) {
+        console.error('Error fetching current tracking:', err);
+        return res.status(500).json({
+          success: false,
+          message: "Error fetching current tracking",
+          error: err
+        });
+      }
+
+      const currentStatus = currentTracking.length > 0 ? currentTracking[0].status : 'pending';
+      const nextStatuses = OrderTracking.getNextStatuses(orderItem.service_type, currentStatus);
+
+      console.log('Current status:', currentStatus, 'Next statuses:', nextStatuses);
+
+      if (!nextStatuses.includes(status) && currentStatus !== status) {
+        return res.status(400).json({
+          success: false,
+          message: `Invalid status transition. From '${currentStatus}' you can only go to: ${nextStatuses.join(', ')}`
+        });
+      }
+
+      OrderTracking.updateStatus(orderItemID, status, notes || '', adminId, (err, result) => {
+        if (err) {
+          console.error('Error updating tracking status:', err);
+          return res.status(500).json({
+            success: false,
+            message: "Error updating tracking status",
+            error: err
+          });
+        }
+
+        console.log('Tracking status updated successfully for order item:', orderItemID);
+
+        let approvalStatus = status;
+        const statusMapping = {
+          'ready_to_pickup': 'ready_to_pickup',
+          'ready_for_pickup': 'ready_to_pickup',
+          'rented': 'rented',
+          'returned': 'returned',
+          'completed': 'completed',
+          'in_progress': 'in_progress',
+          'accepted': 'accepted',
+          'price_confirmation': 'price_confirmation',
+          'cancelled': 'cancelled'
+        };
+        
+        if (statusMapping[status]) {
+          approvalStatus = statusMapping[status];
+        }
+
+        const updateApprovalStatusSql = `UPDATE order_items SET approval_status = ? WHERE item_id = ?`;
+        db.query(updateApprovalStatusSql, [approvalStatus, orderItemID], (updateErr, updateResult) => {
+          if (updateErr) {
+            console.error('Error updating approval_status:', updateErr);
+            
+          } else {
+            console.log(`Updated approval_status to ${approvalStatus} for order item ${orderItemID}`);
+
+            const billingHelper = require('../utils/billingHelper');
+            const previousStatus = orderItem.approval_status || 'pending';
+            
+            if (approvalStatus !== previousStatus) {
+              billingHelper.updateBillingStatus(
+                orderItemID, 
+                orderItem.service_type, 
+                approvalStatus, 
+                previousStatus, 
+                (billingErr, billingResult) => {
+                  if (billingErr) {
+                    console.error('Error auto-updating billing status:', billingErr);
+                  } else if (billingResult) {
+                    console.log('Billing status auto-updated:', billingResult);
+                  }
+                }
+              );
+            }
+          }
+        });
+
+        Order.getById(orderItem.order_id, (orderErr, order) => {
+          if (orderErr) {
+            console.error('Error fetching order:', orderErr);
+          }
+          
+          if (!orderErr && order) {
+            console.log('Found order for notification:', order);
+            const userId = order.user_id;
+            console.log('Creating notification for user:', userId, 'status:', status);
+
+            if (status === 'accepted') {
+              console.log('Creating accepted notification');
+              Notification.createAcceptedNotification(userId, orderItemID, orderItem.service_type, (notifErr) => {
+                if (notifErr) {
+                  console.error('Failed to create accepted notification:', notifErr);
+                } else {
+                  console.log('Accepted notification created successfully');
+                }
+              });
+            } else if (['in_progress', 'ready_to_pickup', 'completed', 'rented', 'returned'].includes(status)) {
+              console.log('Creating status update notification');
+              const serviceType = (orderItem.service_type || 'customize').toLowerCase().trim();
+              Notification.createStatusUpdateNotification(userId, orderItemID, status, notes, serviceType, (notifErr) => {
+                if (notifErr) {
+                  console.error('Failed to create status update notification:', notifErr);
+                } else {
+                  console.log('Status update notification created successfully');
+                }
+              });
+            }
+          } else {
+            console.log('Order not found or error fetching order for order item:', orderItem.order_id);
+          }
+        });
+
+        res.json({
+          success: true,
+          message: "Tracking status updated successfully",
+          data: {
+            order_item_id: orderItemID,
+            new_status: status,
+            status_info: OrderTracking.getStatusInfo(status, orderItem.service_type)
+          }
+        });
+      });
+    });
+  });
+};
+
+exports.initializeOrderTracking = (orderItems, callback) => {
+  let completed = 0;
+  const total = orderItems.length;
+  const errors = [];
+
+  if (total === 0) {
+    return callback(null, { initialized: 0, errors: [] });
+  }
+
+  orderItems.forEach(item => {
+    OrderTracking.initializeOrderTracking([item], (err, result) => {
+      completed++;
+      
+      if (err) {
+        errors.push({
+          order_item_id: item.order_item_id,
+          error: err.message
+        });
+      }
+
+      if (completed === total) {
+        callback(null, {
+          initialized: total - errors.length,
+          errors: errors
+        });
+      }
+    });
+  });
+};
+
+exports.getStatusTransitions = (req, res) => {
+  const orderItemId = req.params.id;
+  const orderItemID = parseInt(orderItemId);
+  if (isNaN(orderItemID)) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid order item ID provided"
+    });
+  }
+
+  Order.getOrderItemById(orderItemID, (err, orderItem) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Error fetching order item",
+        error: err
+      });
+    }
+
+    if (!orderItem) {
+      return res.status(404).json({
+        success: false,
+        message: "Order item not found"
+      });
+    }
+
+    OrderTracking.getByOrderItemId(orderItemID, (err, tracking) => {
+      if (err) {
+        return res.status(500).json({
+          success: false,
+          message: "Error fetching tracking",
+          error: err
+        });
+      }
+
+      const currentStatus = tracking.length > 0 ? tracking[0].status : 'pending';
+      const nextStatuses = OrderTracking.getNextStatuses(orderItem.service_type, currentStatus);
+
+      const statusOptions = nextStatuses.map(status => ({
+        value: status,
+        label: OrderTracking.getStatusInfo(status, orderItem.service_type).label,
+        class: OrderTracking.getStatusInfo(status, orderItem.service_type).class
+      }));
+
+      res.json({
+        success: true,
+        data: {
+          current_status: currentStatus,
+          current_status_info: OrderTracking.getStatusInfo(currentStatus, orderItem.service_type),
+          next_statuses: statusOptions,
+          service_type: orderItem.service_type
+        }
+      });
+    });
+  });
+};
