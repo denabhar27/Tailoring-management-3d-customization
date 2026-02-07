@@ -252,7 +252,7 @@ exports.getRevenueByService = async (req, res) => {
     });
   }
 
-  const { startDate, endDate, paymentStatus } = req.query;
+  const { startDate, endDate, paymentStatus, serviceTypes } = req.query;
 
   try {
     let dateCondition = '';
@@ -267,6 +267,22 @@ exports.getRevenueByService = async (req, res) => {
         paymentCondition = "AND (oi.payment_status = 'paid' OR (LOWER(oi.service_type) = 'rental' AND oi.payment_status NOT IN ('unpaid', 'pending', 'cancelled')))";
       } else {
         paymentCondition = `AND oi.payment_status = '${paymentStatus}'`;
+      }
+    }
+
+    let serviceTypeCondition = '';
+    if (serviceTypes) {
+      const types = Array.isArray(serviceTypes) ? serviceTypes : [serviceTypes];
+      if (types.length > 0) {
+        const mappedTypes = types.map(t => {
+          const lower = t.toLowerCase();
+          if (lower === 'customization') return "'customize', 'customization'";
+          if (lower === 'dry cleaning') return "'dry_cleaning', 'dry-cleaning', 'drycleaning', 'dry cleaning'";
+          if (lower === 'repair') return "'repair'";
+          if (lower === 'rental') return "'rental'";
+          return `'${lower}'`;
+        });
+        serviceTypeCondition = `AND LOWER(oi.service_type) IN (${mappedTypes.join(', ')})`;
       }
     }
 
@@ -289,6 +305,7 @@ exports.getRevenueByService = async (req, res) => {
       WHERE 1=1
         ${paymentCondition}
         ${dateCondition}
+        ${serviceTypeCondition}
       GROUP BY 
         CASE 
           WHEN LOWER(oi.service_type) IN ('customize', 'customization') THEN 'Customization'
@@ -331,12 +348,28 @@ exports.getTopServices = async (req, res) => {
     });
   }
 
-  const { startDate, endDate, limit = 10 } = req.query;
+  const { startDate, endDate, limit = 10, serviceTypes } = req.query;
 
   try {
     let dateCondition = '';
     if (startDate && endDate) {
       dateCondition = `AND DATE(o.order_date) BETWEEN '${startDate}' AND '${endDate}'`;
+    }
+
+    let serviceTypeCondition = '';
+    if (serviceTypes) {
+      const types = Array.isArray(serviceTypes) ? serviceTypes : [serviceTypes];
+      if (types.length > 0) {
+        const mappedTypes = types.map(t => {
+          const lower = t.toLowerCase();
+          if (lower === 'customization') return "'customize', 'customization'";
+          if (lower === 'dry cleaning') return "'dry_cleaning', 'dry-cleaning', 'drycleaning', 'dry cleaning'";
+          if (lower === 'repair') return "'repair'";
+          if (lower === 'rental') return "'rental'";
+          return `'${lower}'`;
+        });
+        serviceTypeCondition = `AND LOWER(oi.service_type) IN (${mappedTypes.join(', ')})`;
+      }
     }
 
     const revenueExpr = getRevenueExpression();
@@ -357,6 +390,7 @@ exports.getTopServices = async (req, res) => {
       JOIN orders o ON oi.order_id = o.order_id
       WHERE (oi.payment_status = 'paid' OR (LOWER(oi.service_type) = 'rental' AND oi.payment_status NOT IN ('unpaid', 'pending', 'cancelled')))
         ${dateCondition}
+        ${serviceTypeCondition}
       GROUP BY 
         CASE 
           WHEN LOWER(oi.service_type) IN ('customize', 'customization') THEN 'Customization'

@@ -40,12 +40,15 @@ export const getRevenueTrend = async (period = 'monthly', startDate = null, endD
   }
 };
 
-export const getRevenueByService = async (startDate = null, endDate = null, paymentStatus = 'paid') => {
+export const getRevenueByService = async (startDate = null, endDate = null, paymentStatus = 'paid', serviceTypes = []) => {
   try {
     const params = new URLSearchParams();
     if (startDate) params.append('startDate', startDate);
     if (endDate) params.append('endDate', endDate);
     if (paymentStatus) params.append('paymentStatus', paymentStatus);
+    if (serviceTypes && serviceTypes.length > 0) {
+      serviceTypes.forEach(type => params.append('serviceTypes', type));
+    }
     
     const response = await axios.get(`${API_URL}/by-service?${params.toString()}`, getAuthHeaders());
     return response.data;
@@ -55,12 +58,15 @@ export const getRevenueByService = async (startDate = null, endDate = null, paym
   }
 };
 
-export const getTopServices = async (startDate = null, endDate = null, limit = 10) => {
+export const getTopServices = async (startDate = null, endDate = null, limit = 10, serviceTypes = []) => {
   try {
     const params = new URLSearchParams();
     if (startDate) params.append('startDate', startDate);
     if (endDate) params.append('endDate', endDate);
     params.append('limit', limit);
+    if (serviceTypes && serviceTypes.length > 0) {
+      serviceTypes.forEach(type => params.append('serviceTypes', type));
+    }
     
     const response = await axios.get(`${API_URL}/top-services?${params.toString()}`, getAuthHeaders());
     return response.data;

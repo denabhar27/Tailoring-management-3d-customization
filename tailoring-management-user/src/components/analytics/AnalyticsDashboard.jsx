@@ -63,8 +63,8 @@ const AnalyticsDashboard = () => {
     setLoading(true);
     try {
       const [serviceRes, topRes] = await Promise.all([
-        getRevenueByService(dateRange.startDate, dateRange.endDate),
-        getTopServices(dateRange.startDate, dateRange.endDate)
+        getRevenueByService(dateRange.startDate, dateRange.endDate, 'paid', selectedServices),
+        getTopServices(dateRange.startDate, dateRange.endDate, 10, selectedServices)
       ]);
 
       if (serviceRes.success) setServiceData(serviceRes.data);
