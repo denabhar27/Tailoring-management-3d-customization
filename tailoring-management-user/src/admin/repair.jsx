@@ -625,8 +625,6 @@ const Repair = () => {
           </div>
           {error && <div className="error-message" style={{ color: 'red', marginBottom: '20px' }}>{error}</div>}
         </div>
-
-        {}
         <div className="stats-grid">
           <div className="stat-card">
             <div className="stat-header">
@@ -671,9 +669,6 @@ const Repair = () => {
             <div className="stat-number">{stats.rejected}</div>
           </div>
         </div>
-
-        {}
-
         <div className="search-container">
           <input
             type="text"
@@ -692,8 +687,6 @@ const Repair = () => {
             <option value="cancelled">Rejected</option>
           </select>
         </div>
-
-        {}
         <div className="table-container">
           <table>
             <thead>
@@ -851,8 +844,6 @@ const Repair = () => {
           </table>
         </div>
       </div>
-
-      {}
       {showEditModal && selectedOrder && (
         <div className="modal-overlay active" onClick={(e) => e.target === e.currentTarget && setShowEditModal(false)}>
           <div className="modal-content">
@@ -991,8 +982,6 @@ const Repair = () => {
           </div>
         </div>
       )}
-
-      {}
       {showDetailModal && selectedOrder && (
         <div className="modal-overlay active" onClick={(e) => e.target === e.currentTarget && setShowDetailModal(false)}>
           <div className="modal-content">
@@ -1077,16 +1066,12 @@ const Repair = () => {
           </div>
         </div>
       )}
-
-      {}
       <ImagePreviewModal
         isOpen={imagePreviewOpen}
         imageUrl={previewImageUrl}
         altText={previewImageAlt}
         onClose={closeImagePreview}
       />
-
-          {}
 {showRepairGarmentTypeModal && (
   <div className="modal-overlay active" onClick={(e) => e.target === e.currentTarget && setShowRepairGarmentTypeModal(false)}>
     <div className="modal-content" style={{ maxWidth: '700px', maxHeight: '90vh', overflowY: 'auto' }}>
@@ -1130,8 +1115,6 @@ const Repair = () => {
             Active (Show in dropdowns)
           </label>
         </div>
-
-        {}
         {repairGarmentTypes.length > 0 && (
           <div className="repair-types-list-header">
             <h3>Existing Repair Garment Types ({repairGarmentTypes.length})</h3>
@@ -1186,8 +1169,6 @@ const Repair = () => {
     </div>
   </div>
 )}
-
-      {}
       {showPriceConfirmationModal && priceConfirmationItem && priceConfirmationItem.order_type !== 'walk_in' && (
         <div className="modal-overlay active" onClick={(e) => e.target === e.currentTarget && setShowPriceConfirmationModal(false)}>
           <div className="modal-content">
@@ -1238,8 +1219,6 @@ const Repair = () => {
           </div>
         </div>
       )}
-
-      {}
       {showPaymentModal && selectedOrder && (
         <div className="modal-overlay active" onClick={(e) => {
           if (e.target.classList.contains('modal-overlay')) setShowPaymentModal(false);

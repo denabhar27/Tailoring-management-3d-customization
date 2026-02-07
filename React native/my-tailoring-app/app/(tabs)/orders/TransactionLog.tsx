@@ -113,7 +113,6 @@ export default function TransactionLogScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      {}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={28} color="#1F2937" />
@@ -153,7 +152,6 @@ export default function TransactionLogScreen() {
         >
           {logs.map((log) => (
             <View key={log.log_id} style={styles.logCard}>
-              {}
               <View style={styles.logHeader}>
                 <View
                   style={[
@@ -172,8 +170,6 @@ export default function TransactionLogScreen() {
                   </Text>
                 </View>
               </View>
-
-              {}
               <View style={styles.logDetails}>
                 <View style={styles.detailRow}>
                   <Text style={styles.detailLabel}>Payment Status:</Text>

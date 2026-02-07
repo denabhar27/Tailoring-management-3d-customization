@@ -1,29 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { format, subDays, subMonths, startOfWeek, endOfWeek, startOfMonth, endOfMonth } from 'date-fns';
 import {
-  RevenueTrendChart,
   ServiceRevenuePieChart,
-  TopServicesBarChart,
-  RevenueComparisonChart
+  TopServicesBarChart
 } from './AnalyticsCharts';
 import {
-  getRevenueOverview,
-  getRevenueTrend,
   getRevenueByService,
-  getTopServices,
-  getRevenueComparison
+  getTopServices
 } from '../../api/AnalyticsApi';
+import {
+  exportFullAnalytics
+} from '../../utils/excelExport';
 import './AnalyticsDashboard.css';
 
 const AnalyticsDashboard = () => {
   
-  const [trendData, setTrendData] = useState([]);
   const [serviceData, setServiceData] = useState([]);
   const [topServices, setTopServices] = useState([]);
-  const [comparisonData, setComparisonData] = useState({ data: [], periodLabel: {} });
 
-  const [trendPeriod, setTrendPeriod] = useState('monthly');
-  const [comparisonPeriod, setComparisonPeriod] = useState('monthly');
   const [dateRange, setDateRange] = useState({
     startDate: format(subMonths(new Date(), 1), 'yyyy-MM-dd'),
     endDate: format(new Date(), 'yyyy-MM-dd')
@@ -32,26 +26,49 @@ const AnalyticsDashboard = () => {
 
   const [loading, setLoading] = useState(true);
   const [chartLoading, setChartLoading] = useState({
-    trend: false,
     service: false,
-    top: false,
-    comparison: false
+    top: false
   });
+
+  
+  const [exportLoading, setExportLoading] = useState(false);
+  const [exportSuccess, setExportSuccess] = useState(null);
+
+  
+  const handleExportAll = async () => {
+    setExportLoading(true);
+    setExportSuccess(null);
+    
+    try {
+      await exportFullAnalytics({
+        summary: {
+          totalRevenue: serviceData.reduce((sum, s) => sum + (s.revenue || 0), 0),
+          totalOrders: serviceData.reduce((sum, s) => sum + (s.orders || 0), 0),
+          period: `${dateRange.startDate} to ${dateRange.endDate}`
+        },
+        serviceData,
+        topServices
+      });
+      setExportSuccess('Analytics report exported successfully!');
+      setTimeout(() => setExportSuccess(null), 3000);
+    } catch (error) {
+      console.error('Export error:', error);
+      alert(`Failed to export analytics: ${error.message}`);
+    } finally {
+      setExportLoading(false);
+    }
+  };
 
   const fetchAllData = async () => {
     setLoading(true);
     try {
-      const [trendRes, serviceRes, topRes, comparisonRes] = await Promise.all([
-        getRevenueTrend(trendPeriod, dateRange.startDate, dateRange.endDate, selectedServices),
+      const [serviceRes, topRes] = await Promise.all([
         getRevenueByService(dateRange.startDate, dateRange.endDate),
-        getTopServices(dateRange.startDate, dateRange.endDate),
-        getRevenueComparison(comparisonPeriod)
+        getTopServices(dateRange.startDate, dateRange.endDate)
       ]);
 
-      if (trendRes.success) setTrendData(trendRes.data);
       if (serviceRes.success) setServiceData(serviceRes.data);
       if (topRes.success) setTopServices(topRes.data);
-      if (comparisonRes.success) setComparisonData({ data: comparisonRes.data, periodLabel: comparisonRes.periodLabel });
     } catch (error) {
       console.error('Error fetching analytics data:', error);
     } finally {
@@ -59,41 +76,9 @@ const AnalyticsDashboard = () => {
     }
   };
 
-  const fetchTrendData = async () => {
-    setChartLoading(prev => ({ ...prev, trend: true }));
-    try {
-      const res = await getRevenueTrend(trendPeriod, dateRange.startDate, dateRange.endDate, selectedServices);
-      if (res.success) setTrendData(res.data);
-    } catch (error) {
-      console.error('Error fetching trend data:', error);
-    } finally {
-      setChartLoading(prev => ({ ...prev, trend: false }));
-    }
-  };
-
-  const fetchComparisonData = async () => {
-    setChartLoading(prev => ({ ...prev, comparison: true }));
-    try {
-      const res = await getRevenueComparison(comparisonPeriod);
-      if (res.success) setComparisonData({ data: res.data, periodLabel: res.periodLabel });
-    } catch (error) {
-      console.error('Error fetching comparison data:', error);
-    } finally {
-      setChartLoading(prev => ({ ...prev, comparison: false }));
-    }
-  };
-
   useEffect(() => {
     fetchAllData();
   }, []);
-
-  useEffect(() => {
-    if (!loading) fetchTrendData();
-  }, [trendPeriod]);
-
-  useEffect(() => {
-    if (!loading) fetchComparisonData();
-  }, [comparisonPeriod]);
 
   const setQuickDateRange = (preset) => {
     const today = new Date();
@@ -151,13 +136,33 @@ const AnalyticsDashboard = () => {
 
   return (
     <div className="analytics-dashboard">
-      {}
       <div className="analytics-header">
-        <h2>📊 Revenue Analytics</h2>
-        <p>Comprehensive insights into your business performance</p>
+        <div className="header-content">
+          <h2>📊 Revenue Analytics</h2>
+          <p>Comprehensive insights into your business performance</p>
+        </div>
+        <button 
+          className={`export-all-btn ${exportLoading ? 'loading' : ''}`}
+          onClick={handleExportAll}
+          disabled={exportLoading || loading || (serviceData.length === 0 && topServices.length === 0)}
+        >
+          {exportLoading ? (
+            <>
+              <span className="export-spinner"></span>
+              Exporting...
+            </>
+          ) : (
+            <>
+              📥 Download Excel Report
+            </>
+          )}
+        </button>
       </div>
-
-      {}
+      {exportSuccess && (
+        <div className="export-success-notification">
+          ✅ {exportSuccess}
+        </div>
+      )}
       <div className="analytics-filters">
         <div className="filter-group">
           <label>Date Range</label>
@@ -206,69 +211,24 @@ const AnalyticsDashboard = () => {
           Apply Filters
         </button>
       </div>
-
-      {}
       <div className="charts-grid">
-        {}
-        <div className="chart-container trend-chart">
-          <div className="chart-header">
-            <div className="period-selector">
-              <label>View by:</label>
-              <select value={trendPeriod} onChange={(e) => setTrendPeriod(e.target.value)}>
-                <option value="daily">Daily</option>
-                <option value="weekly">Weekly</option>
-                <option value="monthly">Monthly</option>
-                <option value="yearly">Yearly</option>
-              </select>
-            </div>
-          </div>
-          <div className="chart-body">
-            {chartLoading.trend ? (
-              <div className="chart-loading">Loading...</div>
-            ) : (
-              <RevenueTrendChart data={trendData} period={trendPeriod} />
-            )}
-          </div>
-        </div>
-
-        {}
         <div className="chart-container pie-chart">
+          <div className="chart-header">
+            <h3>🥧 Service Revenue Distribution</h3>
+          </div>
           <div className="chart-body">
             <ServiceRevenuePieChart data={serviceData} />
           </div>
         </div>
-
-        {}
         <div className="chart-container bar-chart">
+          <div className="chart-header">
+            <h3>🏆 Top Services</h3>
+          </div>
           <div className="chart-body">
             <TopServicesBarChart data={topServices} />
           </div>
         </div>
 
-        {}
-        <div className="chart-container comparison-chart">
-          <div className="chart-header">
-            <div className="period-selector">
-              <label>Compare:</label>
-              <select value={comparisonPeriod} onChange={(e) => setComparisonPeriod(e.target.value)}>
-                <option value="daily">Today vs Yesterday</option>
-                <option value="weekly">This Week vs Last Week</option>
-                <option value="monthly">This Month vs Last Month</option>
-                <option value="yearly">This Year vs Last Year</option>
-              </select>
-            </div>
-          </div>
-          <div className="chart-body">
-            {chartLoading.comparison ? (
-              <div className="chart-loading">Loading...</div>
-            ) : (
-              <RevenueComparisonChart 
-                data={comparisonData.data} 
-                periodLabel={comparisonData.periodLabel} 
-              />
-            )}
-          </div>
-        </div>
       </div>
 
     </div>

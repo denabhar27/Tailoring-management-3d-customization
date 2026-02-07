@@ -662,8 +662,6 @@ const DryCleaning = () => {
           </div>
           {error && <div className="error-message" style={{ color: 'red', marginBottom: '20px' }}>{error}</div>}
         </div>
-
-        {}
         <div className="stats-grid">
           <div className="stat-card">
             <div className="stat-header">
@@ -701,9 +699,6 @@ const DryCleaning = () => {
             <div className="stat-number">{stats.rejected}</div>
           </div>
         </div>
-
-        {}
-
         <div className="search-container">
           <input
             type="text"
@@ -722,8 +717,6 @@ const DryCleaning = () => {
             <option value="cancelled">Rejected</option>
           </select>
         </div>
-
-        {}
         <div className="table-container">
           <table>
             <thead>
@@ -881,8 +874,6 @@ const DryCleaning = () => {
           </table>
         </div>
       </div>
-
-      {}
       {showEditModal && selectedOrder && (
         <div className="modal-overlay active" onClick={(e) => e.target === e.currentTarget && setShowEditModal(false)}>
           <div className="modal-content">
@@ -1002,8 +993,6 @@ const DryCleaning = () => {
           </div>
         </div>
       )}
-
-      {}
       {showDetailModal && selectedOrder && (
         <div className="modal-overlay active" onClick={(e) => e.target === e.currentTarget && setShowDetailModal(false)}>
           <div className="modal-content">
@@ -1066,8 +1055,6 @@ const DryCleaning = () => {
           </div>
         </div>
       )}
-
-      {}
       {showConfirmModal && (
         <div className="modal-overlay confirm-overlay active" onClick={(e) => e.target === e.currentTarget && setShowConfirmModal(false)}>
           <div className="confirm-modal">
@@ -1087,8 +1074,6 @@ const DryCleaning = () => {
           </div>
         </div>
       )}
-
-      {}
       {showPriceConfirmationModal && priceConfirmationItem && priceConfirmationItem.order_type !== 'walk_in' && (
         <div className="modal-overlay active" onClick={(e) => e.target === e.currentTarget && setShowPriceConfirmationModal(false)}>
           <div className="modal-content">
@@ -1139,8 +1124,6 @@ const DryCleaning = () => {
           </div>
         </div>
       )}
-
-      {}
       {toast.show && (
         <div className={`toast ${toast.type}`}>
           {toast.type === 'success' ? (
@@ -1158,8 +1141,6 @@ const DryCleaning = () => {
           <span>{toast.message}</span>
         </div>
       )}
-
-     {}
 {showGarmentTypeModal && (
   <div className="modal-overlay active" onClick={(e) => e.target === e.currentTarget && setShowGarmentTypeModal(false)}>
     <div className="modal-content" style={{ maxWidth: '700px', maxHeight: '90vh', overflowY: 'auto' }}>
@@ -1215,8 +1196,6 @@ const DryCleaning = () => {
             Active (Show in dropdowns)
           </label>
         </div>
-
-        {}
         {garmentTypes.length > 0 && (
           <div className="garment-types-list-header">
             <h3>Existing Dry Cleaning Garment Types ({garmentTypes.length})</h3>
@@ -1272,8 +1251,6 @@ const DryCleaning = () => {
     </div>
   </div>
 )}
-
-      {}
       {showPaymentModal && selectedOrder && (
         <div className="modal-overlay active" onClick={(e) => {
           if (e.target.classList.contains('modal-overlay')) setShowPaymentModal(false);

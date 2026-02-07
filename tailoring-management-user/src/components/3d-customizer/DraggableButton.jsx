@@ -108,8 +108,6 @@ export default function DraggableButton({ id, modelPath, position, color, scale 
             onPointerLeave={handlePointerLeave}
         >
             {clonedScene && <primitive object={clonedScene} />}
-
-            {}
             {(isSelected || isHovered || isMoving) && (
                 <mesh position={[0, 0, 0]} scale={1.2}>
                     <sphereGeometry args={[1, 16, 16]} />
@@ -121,8 +119,6 @@ export default function DraggableButton({ id, modelPath, position, color, scale 
                     />
                 </mesh>
             )}
-
-            {}
             {isMoving && (
                 <mesh position={[0, 0, 0]} scale={1.5}>
                     <sphereGeometry args={[1, 16, 16]} />

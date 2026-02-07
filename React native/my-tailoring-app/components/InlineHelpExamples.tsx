@@ -22,8 +22,6 @@ export const RegistrationFormExample = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Registration Form</Text>
-
-      {}
       <View style={styles.fieldContainer}>
         <Text style={styles.label}>Email Address</Text>
         <TextInput
@@ -39,8 +37,6 @@ export const RegistrationFormExample = () => {
           type="info"
         />
       </View>
-
-      {}
       <View style={styles.fieldContainer}>
         <Text style={styles.label}>Password</Text>
         <TextInput
@@ -63,27 +59,19 @@ export const ValidationFeedbackExample = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Validation Feedback</Text>
-
-      {}
       <InlineHelp
         text="Please enter a valid email address."
         type="error"
         dismissible={false}
       />
-
-      {}
       <InlineHelp
         text="Your session will expire in 5 minutes. Please save your work."
         type="warning"
       />
-
-      {}
       <InlineHelp
         text="Your profile has been updated successfully!"
         type="success"
       />
-
-      {}
       <InlineHelp
         text="Tip: You can drag and drop images to upload them."
         type="info"
@@ -104,7 +92,6 @@ export const FormFieldHelpExample = () => {
           placeholder="+63 XXX XXX XXXX"
           keyboardType="phone-pad"
         />
-        {}
         <FormFieldHelp
           text="Include country code for international numbers"
           alwaysVisible
@@ -118,7 +105,6 @@ export const FormFieldHelpExample = () => {
           placeholder="Enter your full address"
           multiline
         />
-        {}
         <FormFieldHelp
           text="Please include building name, floor number, and any landmarks for easier delivery. Our riders will call you if they have trouble finding your location."
         />
@@ -199,15 +185,11 @@ export const CompleteFormExample = () => {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Complete Order Form</Text>
-
-      {}
       <InlineHelp
         text="Fields marked with * are required. Please fill in all details accurately to ensure smooth delivery."
         type="info"
         dismissible={false}
       />
-
-      {}
       <View style={styles.fieldContainer}>
         <Text style={styles.label}>Full Name *</Text>
         <TextInput
@@ -217,8 +199,6 @@ export const CompleteFormExample = () => {
           placeholder="Enter your full name"
         />
       </View>
-
-      {}
       <View style={styles.fieldContainer}>
         <Text style={styles.label}>Email Address *</Text>
         <TextInput
@@ -233,8 +213,6 @@ export const CompleteFormExample = () => {
           alwaysVisible
         />
       </View>
-
-      {}
       <View style={styles.fieldContainer}>
         <TooltipHelp
           label="Phone Number *"
@@ -248,8 +226,6 @@ export const CompleteFormExample = () => {
           keyboardType="phone-pad"
         />
       </View>
-
-      {}
       <View style={styles.fieldContainer}>
         <Text style={styles.label}>Delivery Address *</Text>
         <TextInput
@@ -263,8 +239,6 @@ export const CompleteFormExample = () => {
           text="Include building name, floor number, unit number, and nearby landmarks. Complete addresses help our riders deliver faster."
         />
       </View>
-
-      {}
       <View style={styles.fieldContainer}>
         <Text style={styles.label}>Special Instructions (Optional)</Text>
         <TextInput
@@ -281,8 +255,6 @@ export const CompleteFormExample = () => {
           type="info"
         />
       </View>
-
-      {}
       <InlineHelp
         text="Orders placed after 4 PM will be processed the next business day."
         type="warning"

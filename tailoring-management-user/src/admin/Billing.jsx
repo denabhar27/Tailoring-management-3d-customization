@@ -12,7 +12,7 @@ import { useAlert } from '../context/AlertContext';
 
 import ImagePreviewModal from '../components/ImagePreviewModal';
 
-import BillingAnalytics from '../components/analytics/BillingAnalytics';
+import AnalyticsDashboard from '../components/analytics/AnalyticsDashboard';
 
 const Billing = () => {
 
@@ -393,9 +393,6 @@ const Billing = () => {
           </div>
 
         </div>
-
-        {}
-
         <div className="stats-grid">
 
           <div className="stat-card">
@@ -477,13 +474,7 @@ const Billing = () => {
           </div>
 
         </div>
-
-        {}
-
-        <BillingAnalytics />
-
-        {}
-
+        <AnalyticsDashboard />
         <div className="search-container">
 
           <input
@@ -531,9 +522,6 @@ const Billing = () => {
           </select>
 
         </div>
-
-        {}
-
         <div className="table-container">
 
           {loading ? (
@@ -697,9 +685,6 @@ const Billing = () => {
         </div>
 
       </div>
-
-      {}
-
       {showDetailModal && selectedBill && (
 
         <div 
@@ -801,9 +786,6 @@ const Billing = () => {
                 </span>
 
               </div>
-
-              {}
-
               {getServiceDescription(selectedBill) && (
 
                 <div className="detail-row">
@@ -815,9 +797,6 @@ const Billing = () => {
                 </div>
 
               )}
-
-              {}
-
               {getServiceImageUrl(selectedBill) && (
 
                 <div className="detail-row">
@@ -867,9 +846,6 @@ const Billing = () => {
                 </div>
 
               )}
-
-              {}
-
               {(selectedBill.serviceType || '').toLowerCase() === 'rental' && (
 
                 <>
@@ -929,9 +905,6 @@ const Billing = () => {
         </div>
 
       )}
-
-      {}
-
       <ImagePreviewModal
 
         isOpen={imagePreview.isOpen}

@@ -450,7 +450,6 @@ export default function ProfileScreen() {
           />
         }
       >
-        {}
         <View style={styles.header}>
           <TouchableOpacity onPress={() => router.push("../home")}>
             <Ionicons name="arrow-back" size={24} color="#000" />
@@ -470,8 +469,6 @@ export default function ProfileScreen() {
             )}
           </TouchableOpacity>
         </View>
-
-        {}
         <View style={styles.profileCard}>
           <View style={styles.avatarContainer}>
             <View style={styles.avatar}>
@@ -495,8 +492,6 @@ export default function ProfileScreen() {
             </TouchableOpacity>
           </View>
         </View>
-
-        {}
         <View style={styles.section}>
           <TouchableOpacity
             style={styles.measurementsDropdownHeader}
@@ -536,8 +531,6 @@ export default function ProfileScreen() {
               color="#94665B" 
             />
           </TouchableOpacity>
-
-          {}
           {measurementsExpanded && (
             <View style={styles.measurementsDropdownContent}>
               {loadingMeasurements ? (
@@ -547,7 +540,6 @@ export default function ProfileScreen() {
                 </View>
               ) : measurements ? (
                 <View style={styles.measurementsContent}>
-                  {}
                   {measurements.top && Object.keys(measurements.top).length > 0 && (
                     <View style={styles.measurementSection}>
                       <Text style={styles.measurementSectionTitle}>Top Measurements</Text>
@@ -577,8 +569,6 @@ export default function ProfileScreen() {
                       </View>
                     </View>
                   )}
-
-                  {/* Bottom Measurements */}
                   {measurements.bottom && Object.keys(measurements.bottom).length > 0 && (
                     <View style={styles.measurementSection}>
                       <Text style={styles.measurementSectionTitle}>Bottom Measurements</Text>
@@ -608,8 +598,6 @@ export default function ProfileScreen() {
                       </View>
                     </View>
                   )}
-
-                  {}
                   {measurements.notes && (
                     <View style={styles.measurementNotesContainer}>
                       <Text style={styles.measurementNotesTitle}>Notes:</Text>
@@ -644,8 +632,6 @@ export default function ProfileScreen() {
             </View>
           )}
         </View>
-
-        {}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Contact Information</Text>
 
@@ -659,8 +645,6 @@ export default function ProfileScreen() {
             </View>
           </View>
         </View>
-
-        {}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>Order Tracking</Text>
@@ -747,8 +731,6 @@ export default function ProfileScreen() {
                           </Text>
                         </View>
                       </View>
-
-                      {}
                       {(estimatedPrice > 0 || parseFloat(item.final_price) > 0) && (
                         <View style={styles.priceComparison}>
                           {estimatedPrice > 0 ? (
@@ -781,14 +763,10 @@ export default function ProfileScreen() {
                           )}
                         </View>
                       )}
-
-                      {}
                       <View style={styles.orderTimeline}>
                         <View style={styles.timelineContainer}>
-                          {}
                           {item.service_type === 'rental' ? (
                             <>
-                              {}
                               <View style={[styles.timelineItem, getTimelineItemClass(item.status, 'pending', 'rental') === 'completed' ? styles.timelineItemCompleted : {}]}>
                                 <View style={[styles.timelineDot, getStatusDotClass(item.status, 'pending', 'rental') === 'completed' ? styles.timelineDotCompleted : styles.timelineDotPending]} />
                                 <View style={styles.timelineContent}>
@@ -831,7 +809,6 @@ export default function ProfileScreen() {
                             </>
                           ) : (
                             <>
-                              {}
                               <View style={[styles.timelineItem, getTimelineItemClass(item.status, 'pending') === 'completed' ? styles.timelineItemCompleted : {}]}>
                                 <View style={[styles.timelineDot, getStatusDotClass(item.status, 'pending') === 'completed' ? styles.timelineDotCompleted : styles.timelineDotPending]} />
                                 <View style={styles.timelineContent}>
@@ -839,8 +816,6 @@ export default function ProfileScreen() {
                                   <Text style={styles.timelineDate}>{formatDate(order.order_date)}</Text>
                                 </View>
                               </View>
-
-                              {}
                               {item.status === 'price_confirmation' && (
                                 <View style={[styles.timelineItem, getTimelineItemClass(item.status, 'price_confirmation') === 'completed' ? styles.timelineItemCompleted : {}]}>
                                   <View style={[styles.timelineDot, getStatusDotClass(item.status, 'price_confirmation') === 'completed' ? styles.timelineDotCompleted : styles.timelineDotPending]} />
@@ -850,8 +825,6 @@ export default function ProfileScreen() {
                                   </View>
                                 </View>
                               )}
-                              
-                              {}
                               {item.status === 'accepted' && (
                                 <View style={[styles.timelineItem, getTimelineItemClass(item.status, 'accepted') === 'completed' ? styles.timelineItemCompleted : {}]}>
                                   <View style={[styles.timelineDot, getStatusDotClass(item.status, 'accepted') === 'completed' ? styles.timelineDotCompleted : styles.timelineDotPending]} />
@@ -889,8 +862,6 @@ export default function ProfileScreen() {
                           )}
                         </View>
                       </View>
-
-                      {}
                       {shouldShowPriceConfirmation(item) && (
                         <View style={styles.priceConfirmationActions}>
                           <View style={styles.confirmationMessage}>
@@ -928,8 +899,6 @@ export default function ProfileScreen() {
             </View>
           )}
         </View>
-
-        {}
         <View style={styles.section}>
           <TouchableOpacity
             style={[styles.actionButton, { borderBottomWidth: 0 }]}
@@ -944,8 +913,6 @@ export default function ProfileScreen() {
           </TouchableOpacity>
         </View>
       </ScrollView>
-
-      {}
       <Modal
         visible={editModalVisible}
         transparent={true}
@@ -963,7 +930,6 @@ export default function ProfileScreen() {
             onPress={(e) => e.stopPropagation()}
           >
             <View style={styles.modalContent}>
-              {}
               <View style={styles.modalHeader}>
                 <TouchableOpacity onPress={closeEditModal}>
                   <Ionicons name="close" size={28} color="#1F2937" />
@@ -976,7 +942,6 @@ export default function ProfileScreen() {
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ paddingBottom: 20 }}
               >
-                {}
                 <View style={styles.modalAvatarSection}>
                   <View style={styles.modalAvatar}>
                     <Ionicons name="person" size={50} color="#94665B" />
@@ -986,8 +951,6 @@ export default function ProfileScreen() {
                     <Text style={styles.changePhotoText}>Change Photo</Text>
                   </TouchableOpacity>
                 </View>
-
-                {}
                 <View style={styles.formSection}>
                   <Text style={styles.formSectionTitle}>
                     Personal Information
@@ -1031,8 +994,6 @@ export default function ProfileScreen() {
                     </View>
                   </View>
                 </View>
-
-                {}
                 <View style={styles.formSection}>
                   <Text style={styles.formSectionTitle}>
                     Contact Information
@@ -1055,8 +1016,6 @@ export default function ProfileScreen() {
                     </View>
                   </View>
                 </View>
-
-                {}
                 <View style={styles.modalButtons}>
                   <TouchableOpacity
                     style={styles.cancelButton}
@@ -1076,8 +1035,6 @@ export default function ProfileScreen() {
           </TouchableOpacity>
         </TouchableOpacity>
       </Modal>
-
-      {}
       <View style={[styles.bottomNav, { paddingBottom: Math.max(insets.bottom, 12) }]}>
         <TouchableOpacity onPress={() => router.push("/home")}>
           <View style={styles.navItemWrap}>

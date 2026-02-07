@@ -95,13 +95,10 @@ const AdminAnalytics = () => {
 
   return (
     <div className="analytics-dashboard">
-      {}
       <div className="analytics-header">
         <h2>📊 Service Analytics</h2>
         <p>Revenue breakdown by service type and top performing services</p>
       </div>
-
-      {}
       <div className="analytics-filters">
         <div className="filter-group">
           <label>Date Range</label>
@@ -144,17 +141,12 @@ const AdminAnalytics = () => {
           Apply Filters
         </button>
       </div>
-
-      {}
       <div className="charts-grid">
-        {}
         <div className="chart-container pie-chart">
           <div className="chart-body">
             <ServiceRevenuePieChart data={serviceData} />
           </div>
         </div>
-
-        {}
         <div className="chart-container bar-chart">
           <div className="chart-body">
             <TopServicesBarChart data={topServices} />

@@ -19,8 +19,13 @@ import * as ImagePicker from "expo-image-picker";
 import { Picker } from "@react-native-picker/picker";
 import DateTimePickerModal from "../../../components/DateTimePickerModal";
 import { addRepairToCart, uploadRepairImage } from "../../../utils/repairService";
-import apiCall, { appointmentSlotService } from "../../../utils/apiService";
+import apiCall, { appointmentSlotService, API_BASE_URL } from "../../../utils/apiService";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+const DEFAULT_REPAIR_GARMENT_TYPES = [
+  "Shirt", "Pants", "Jacket", "Coat", "Dress", "Skirt", "Suit", "Blouse", "Sweater", "Other"
+];
 
 const { width, height } = Dimensions.get("window");
 
@@ -52,6 +57,8 @@ export default function RepairClothes() {
   const [isShopOpen, setIsShopOpen] = useState(true);
   const [estimatedPrice, setEstimatedPrice] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [repairGarmentTypes, setRepairGarmentTypes] = useState<string[]>(DEFAULT_REPAIR_GARMENT_TYPES);
+  const [loadingGarments, setLoadingGarments] = useState(false);
 
   const damageLevels = [
     { value: 'minor', label: 'Minor', basePrice: 300, description: 'Small tears, loose threads, missing buttons' },
@@ -60,9 +67,72 @@ export default function RepairClothes() {
     { value: 'severe', label: 'Severe', basePrice: 1500, description: 'Complete reconstruction, multiple major issues' }
   ];
 
-  const itemTypes = [
-    "Shirt", "Pants", "Jacket", "Coat", "Dress", "Skirt", "Suit", "Blouse", "Sweater", "Other"
-  ];
+  
+  useEffect(() => {
+    console.log('=== [RepairClothes] Component MOUNTED - DYNAMIC VERSION ===');
+    loadRepairGarmentTypes();
+  }, []);
+
+  
+  useFocusEffect(
+    useCallback(() => {
+      console.log('[RepairClothes] Screen focused, refreshing repair garment types...');
+      loadRepairGarmentTypes();
+    }, [])
+  );
+
+  const loadRepairGarmentTypes = async () => {
+    setLoadingGarments(true);
+    console.log('=== [RepairClothes] loadRepairGarmentTypes CALLED ===');
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      console.log('[RepairClothes] Token:', token ? 'Retrieved' : 'Missing');
+      
+      const baseUrl = process.env.EXPO_PUBLIC_API_BASE_URL || 'http://192.168.1.180:5000/api';
+      const url = `${baseUrl}/repair-garment-types`;
+      console.log('[RepairClothes] Fetching:', url);
+      
+      const response = await fetch(url, {
+        headers: {
+          'Authorization': token ? `Bearer ${token}` : '',
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      console.log('[RepairClothes] Response status:', response.status);
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log('[RepairClothes] API returned', data.garments?.length || 0, 'items');
+        console.log('[RepairClothes] Raw API response:', JSON.stringify(data));
+        
+        
+        if (data.success && data.garments && data.garments.length > 0) {
+          const garmentTypes = data.garments
+            .filter((g: any) => g.is_active === 1 || g.is_active === true)
+            .map((garment: any) => garment.garment_name);
+          
+          if (garmentTypes.length > 0) {
+            setRepairGarmentTypes(garmentTypes);
+            console.log('✅ [RepairClothes] SUCCESS - Loaded', garmentTypes.length, 'garment types from API');
+            console.log('✅ [RepairClothes] Types:', garmentTypes.join(', '));
+          } else {
+            console.log('[RepairClothes] No active garment types found, using defaults');
+          }
+        } else {
+          console.log('[RepairClothes] API returned empty data, using defaults');
+        }
+      } else {
+        const errorText = await response.text();
+        console.log('[RepairClothes] API error:', response.status, errorText);
+      }
+    } catch (error: any) {
+      console.log('[RepairClothes] FETCH ERROR:', error.message || error);
+    } finally {
+      setLoadingGarments(false);
+      console.log('[RepairClothes] Loading complete');
+    }
+  };
 
   useEffect(() => {
     if (damageLevel) {
@@ -418,7 +488,6 @@ export default function RepairClothes() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {}
       <View style={styles.header}>
         <TouchableOpacity onPress={handleClose} style={styles.closeButton}>
           <Ionicons name="arrow-back" size={24} color="#5D4037" />
@@ -437,8 +506,6 @@ export default function RepairClothes() {
             <Text style={styles.cardTitle}>Repair Request</Text>
             <Text style={styles.cardSubtitle}>We'll make it good as new</Text>
           </View>
-
-          {/* Image Upload */}
           <Text style={styles.sectionTitle}>Upload Damage Photo (Recommended)</Text>
           <TouchableOpacity style={styles.imageUpload} onPress={pickImage}>
             {imagePreview ? (
@@ -456,23 +523,26 @@ export default function RepairClothes() {
               </View>
             )}
           </TouchableOpacity>
-
-          {/* Garment Type */}
           <Text style={styles.sectionTitle}>Garment Type *</Text>
-          <View style={styles.pickerWrapper}>
-            <Picker
-              selectedValue={selectedItem}
-              onValueChange={(value) => setSelectedItem(value)}
-              style={styles.picker}
-            >
-              <Picker.Item label="Select garment type..." value="" />
-              {itemTypes.map((item) => (
-                <Picker.Item label={item} value={item} key={item} />
-              ))}
-            </Picker>
-          </View>
-
-          {/* Damage Level */}
+          {loadingGarments ? (
+            <View style={[styles.pickerWrapper, { justifyContent: 'center', alignItems: 'center', paddingVertical: 15 }]}>
+              <ActivityIndicator size="small" color="#8D6E63" />
+              <Text style={{ color: '#64748b', marginTop: 8, fontSize: 12 }}>Loading garment types...</Text>
+            </View>
+          ) : (
+            <View style={styles.pickerWrapper}>
+              <Picker
+                selectedValue={selectedItem}
+                onValueChange={(value) => setSelectedItem(value)}
+                style={styles.picker}
+              >
+                <Picker.Item label="Select garment type..." value="" />
+                {repairGarmentTypes.map((item, index) => (
+                  <Picker.Item label={item} value={item} key={`${item}-${index}`} />
+                ))}
+              </Picker>
+            </View>
+          )}
           <Text style={styles.sectionTitle}>Damage Level *</Text>
           <View style={styles.damageLevelContainer}>
             {damageLevels.map((level) => (
@@ -509,8 +579,6 @@ export default function RepairClothes() {
               Estimated price: ₱{estimatedPrice}
             </Text>
           )}
-
-          {/* Detailed Description */}
           <Text style={styles.sectionTitle}>Detailed Description *</Text>
           <TextInput
             placeholder="Please describe the damage in detail (size, location, extent of damage)..."
@@ -524,8 +592,6 @@ export default function RepairClothes() {
           <Text style={styles.smallText}>
             Examples: 2-inch hole in left sleeve, broken zipper on jacket back, torn seam on pants
           </Text>
-
-          {/* Appointment Date Picker */}
           <Text style={styles.sectionTitle}>Preferred Appointment Date *</Text>
           <Text style={styles.sectionSubtitle}>Select a date when the shop is open</Text>
           <TouchableOpacity
@@ -545,13 +611,9 @@ export default function RepairClothes() {
             </Text>
             <Ionicons name="chevron-down" size={16} color="#8D6E63" />
           </TouchableOpacity>
-
-          {/* Time Slot Selection */}
           {appointmentDate && (
             <>
               <Text style={styles.sectionTitle}>Select Time Slot *</Text>
-              
-              {/* Legend */}
               <View style={styles.timeSlotLegend}>
                 <View style={styles.legendItem}>
                   <View style={[styles.legendDot, styles.legendDotAvailable]} />
@@ -566,8 +628,6 @@ export default function RepairClothes() {
                   <Text style={styles.legendText}>Full</Text>
                 </View>
               </View>
-
-              {/* Time Slots Grid */}
               {loadingSlots ? (
                 <View style={styles.loadingContainer}>
                   <ActivityIndicator size="small" color="#B8860B" />
@@ -583,7 +643,7 @@ export default function RepairClothes() {
               ) : timeSlots.length > 0 ? (
                 <View style={styles.timeSlotsGrid}>
                   {(() => {
-                    // Deduplicate slots by time_slot to ensure no duplicates are shown
+                    
                     const seenTimes = new Set<string>();
                     const uniqueSlots = timeSlots.filter((slot) => {
                       if (seenTimes.has(slot.time_slot)) {
@@ -629,8 +689,6 @@ export default function RepairClothes() {
               )}
             </>
           )}
-
-          {/* Price Estimate */}
           {estimatedPrice > 0 && (
             <View style={styles.summaryCard}>
               <Text style={styles.summaryTitle}>Estimated Price: ₱{estimatedPrice}</Text>
@@ -651,8 +709,6 @@ export default function RepairClothes() {
               </Text>
             </View>
           )}
-
-          {/* Buttons */}
           <View style={styles.buttonRow}>
             <TouchableOpacity
               style={styles.secondaryButton}
@@ -682,8 +738,6 @@ export default function RepairClothes() {
           </View>
         </View>
       </ScrollView>
-
-      {/* Date Picker Modal */}
       <DateTimePickerModal
         visible={showDatePicker}
         mode="date"
@@ -977,7 +1031,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
-  // Time Slot Styles
+  
   timeSlotLegend: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -1020,7 +1074,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   timeSlotButton: {
-    width: (width - 88) / 3, // 3 columns with gaps
+    width: (width - 88) / 3, 
     paddingVertical: 14,
     paddingHorizontal: 8,
     borderRadius: 12,

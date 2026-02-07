@@ -182,7 +182,6 @@ export default function OrderDetails() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {}
       <View style={styles.header}>
         <TouchableOpacity
           onPress={() => router.push("/(tabs)/UserProfile/profile")}
@@ -195,7 +194,6 @@ export default function OrderDetails() {
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.card}>
-          {}
           <View style={styles.orderHeader}>
             <Text style={styles.orderNo}>ORD-{order.order_id}</Text>
             <View
@@ -216,8 +214,6 @@ export default function OrderDetails() {
           </Text>
 
           <View style={styles.divider} />
-
-          {}
           {(() => {
             
             let imageUrl = order.specific_data?.imageUrl || 
@@ -285,13 +281,9 @@ export default function OrderDetails() {
             }
             return null;
           })()}
-
-          {}
           {order.specific_data && (
             <View style={styles.serviceDetailsSection}>
               <Text style={styles.sectionTitle}>Service Details</Text>
-              
-              {}
               {order.service_type === 'dry_cleaning' && (
                 <>
                   {order.specific_data.serviceName && (
@@ -336,8 +328,6 @@ export default function OrderDetails() {
                   )}
                 </>
               )}
-              
-              {}
               {order.service_type === 'repair' && (
                 <>
                   {order.specific_data.garmentType && (
@@ -376,8 +366,6 @@ export default function OrderDetails() {
                   )}
                 </>
               )}
-              
-              {}
               {order.service_type === 'rental' && (
                 <>
                   {order.specific_data.item_name && (
@@ -392,8 +380,6 @@ export default function OrderDetails() {
                       <Text style={styles.value}>{order.specific_data.brand}</Text>
                     </View>
                   )}
-                  
-                  {}
                   {order.specific_data.size && (
                     <View style={styles.sizeSection}>
                       <Text style={styles.sizeSectionTitle}>Size Details</Text>
@@ -413,8 +399,6 @@ export default function OrderDetails() {
                       </View>
                     </View>
                   )}
-                  
-                  {}
                   {order.specific_data.bundle_items && order.specific_data.bundle_items.length > 0 && (
                     <View style={styles.sizeSection}>
                       <Text style={styles.sizeSectionTitle}>Bundle Items</Text>
@@ -468,8 +452,6 @@ export default function OrderDetails() {
                   )}
                 </>
               )}
-              
-              {}
               {(order.service_type === 'customization' || order.service_type === 'customize') && (
                 <>
                   {order.specific_data?.garmentType && (
@@ -514,8 +496,6 @@ export default function OrderDetails() {
                       </Text>
                     </View>
                   )}
-                  
-                  {}
                   {order.specific_data?.designData?.angleImages && (
                     <View style={styles.detailRow}>
                       <Text style={styles.label}>Design Views</Text>
@@ -543,8 +523,6 @@ export default function OrderDetails() {
               )}
             </View>
           )}
-
-          {}
           <View style={styles.priceSection}>
             <Text style={styles.totalLabel}>Total Amount</Text>
             {(() => {
@@ -578,8 +556,6 @@ export default function OrderDetails() {
               );
             })()}
           </View>
-
-          {}
           <TouchableOpacity
             style={styles.transactionLogButton}
             onPress={() => {
@@ -600,8 +576,6 @@ export default function OrderDetails() {
 
         <View style={{ height: 120 }} />
       </ScrollView>
-
-      {}
       <View style={[styles.bottomNav, { paddingBottom: Math.max(insets.bottom, 12) }]}>
         <TouchableOpacity onPress={() => router.push("/home")}>
           <View style={styles.navItemWrap}>

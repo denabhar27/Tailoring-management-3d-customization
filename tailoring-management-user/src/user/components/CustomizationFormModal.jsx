@@ -642,24 +642,18 @@ const CustomizationFormModal = ({ isOpen, onClose, onCartUpdate }) => {
   return (
     <div className="modal-overlay-shared" onClick={handleClose}>
       <div className="modal-container-shared" onClick={(e) => e.stopPropagation()}>
-        {}
         <div className="modal-header-shared">
           <h2 className="modal-title-shared">Customization Service</h2>
           <button className="modal-close-shared" onClick={handleClose} aria-label="Close modal">
             ×
           </button>
         </div>
-
-        {}
         <div className="modal-content-shared">
-          {}
           {message && (
             <div className={`message-shared ${loading ? 'info' : 'success'}`}>
               {message}
             </div>
           )}
-
-          {}
           <div className="form-group-shared">
             <label className="form-label-shared">
               📷 Upload Reference Image
@@ -701,7 +695,6 @@ const CustomizationFormModal = ({ isOpen, onClose, onCartUpdate }) => {
 
             {imagePreview && (
               <div className="image-preview-shared">
-                {}
                 {designDetails?.angleImages ? (
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', marginBottom: '10px' }}>
                     {['front', 'back', 'right', 'left'].map((angle) => (
@@ -754,8 +747,6 @@ const CustomizationFormModal = ({ isOpen, onClose, onCartUpdate }) => {
               <span className="error-message-shared">{errors.image}</span>
             )}
           </div>
-
-          {}
           <div className="form-group-shared">
             <label htmlFor="fabricType" className="form-label-shared">
               🧵 Fabric Type
@@ -784,8 +775,6 @@ const CustomizationFormModal = ({ isOpen, onClose, onCartUpdate }) => {
               <span className="error-message-shared">{errors.fabricType}</span>
             )}
           </div>
-
-          {}
           <div className="form-group-shared">
             <label htmlFor="garmentType" className="form-label-shared">
               👔 Garment Type
@@ -811,8 +800,6 @@ const CustomizationFormModal = ({ isOpen, onClose, onCartUpdate }) => {
               <span className="error-message-shared">{errors.garmentType}</span>
             )}
           </div>
-
-          {}
           <div className="form-group-shared">
             <label htmlFor="preferredDate" className="form-label-shared">
               📅 Preferred Date for Sizing in Store
@@ -838,15 +825,11 @@ const CustomizationFormModal = ({ isOpen, onClose, onCartUpdate }) => {
               <span className="error-message-shared">{errors.preferredDate}</span>
             )}
           </div>
-
-          {}
           {formData.preferredDate && (
             <div className="form-group-shared">
               <label className="form-label-shared">
                 🕐 Select Time Slot <span className="required-indicator">*</span>
               </label>
-              
-              {}
               <div className="time-slot-legend">
                 <div className="legend-item">
                   <span className="legend-dot available"></span>
@@ -918,8 +901,6 @@ const CustomizationFormModal = ({ isOpen, onClose, onCartUpdate }) => {
               )}
             </div>
           )}
-
-          {}
           {designDetails && (
             <div className="form-group" style={{ backgroundColor: '#f8f9fa', padding: '15px', borderRadius: '8px', border: '1px solid #e0e0e0', marginTop: '10px' }}>
               <h4 style={{ margin: '0 0 15px 0', color: '#333', fontSize: '16px', fontWeight: '600' }}>
@@ -979,8 +960,6 @@ const CustomizationFormModal = ({ isOpen, onClose, onCartUpdate }) => {
               </div>
             </div>
           )}
-
-          {}
           <div className="form-group-shared">
             <label htmlFor="notes" className="form-label-shared">
               📝 Additional Notes
@@ -996,8 +975,6 @@ const CustomizationFormModal = ({ isOpen, onClose, onCartUpdate }) => {
               disabled={loading}
             />
           </div>
-
-          {}
           {isUniformSelected ? (
             <div className="price-estimate-shared" style={{ backgroundColor: '#fff3e0', borderColor: '#ffb74d' }}>
               <h4 style={{ color: '#e65100' }}>💰 Price: Varies by uniform type</h4>
@@ -1021,8 +998,6 @@ const CustomizationFormModal = ({ isOpen, onClose, onCartUpdate }) => {
             </div>
           )}
         </div>
-
-        {}
         <div className="modal-footer-shared">
           <button
             type="button"

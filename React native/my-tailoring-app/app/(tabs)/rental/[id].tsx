@@ -347,8 +347,6 @@ export default function RentalDetail() {
         >
           <Ionicons name="arrow-back" size={26} color="#fff" />
         </TouchableOpacity>
-
-        {}
         <TouchableOpacity
           activeOpacity={0.95}
           onPress={() => setShowImageModal(true)}
@@ -379,8 +377,6 @@ export default function RentalDetail() {
               })()}/3 days
             </Text>
           </View>
-
-          {}
           <View style={styles.detailsGrid}>
             {[
               { key: "color", icon: "color-palette-outline", value: item.color },
@@ -400,8 +396,6 @@ export default function RentalDetail() {
               </View>
             ))}
           </View>
-
-          {}
           {getMeasurements().length > 0 && (
             <View style={styles.measurementsSection}>
               <View style={styles.measurementsHeader}>
@@ -423,7 +417,6 @@ export default function RentalDetail() {
 
               {showMeasurements && (
                 <View style={styles.measurementsContent}>
-                  {}
                   <View style={styles.unitToggleContainer}>
                     <TouchableOpacity
                       style={[
@@ -450,8 +443,6 @@ export default function RentalDetail() {
                       ]}>CM</Text>
                     </TouchableOpacity>
                   </View>
-
-                  {}
                   <View style={styles.measurementsList}>
                     {getMeasurements().map((m, idx) => (
                       <View key={idx} style={styles.measurementRow}>
@@ -471,12 +462,8 @@ export default function RentalDetail() {
               {item.description || "Premium rental garment. Perfect for formal occasions."}
             </Text>
           </View>
-
-          {}
           <View style={styles.section}>
             <Text style={styles.sectionLabel}>Rental Period</Text>
-
-            {}
             <TouchableOpacity
               style={styles.calendarBtn}
               onPress={() => {
@@ -498,8 +485,6 @@ export default function RentalDetail() {
               </View>
               <Ionicons name="chevron-forward" size={20} color="#9CA3AF" />
             </TouchableOpacity>
-
-            {}
             <View style={styles.durationContainer}>
               <Text style={styles.durationLabel}>Rental Duration *</Text>
               <View style={styles.pickerContainer}>
@@ -521,16 +506,12 @@ export default function RentalDetail() {
                 </Picker>
               </View>
             </View>
-
-            {}
             {startDate && endDate && (
               <View style={styles.endDateContainer}>
                 <Text style={styles.endDateLabel}>End Date (Auto-calculated)</Text>
                 <Text style={styles.endDateValue}>{formatDate(endDate)}</Text>
               </View>
             )}
-
-            {}
             {startDate && rentalDuration && (
               <View style={styles.totalSection}>
                 <Text style={styles.totalLabel}>Total Cost</Text>
@@ -566,8 +547,6 @@ export default function RentalDetail() {
             </View>
           </View>
         </View>
-
-        {}
         <Modal visible={showCalendar} animationType="slide">
           <View style={styles.calendarModal}>
             <View style={styles.calendarHeader}>
@@ -615,8 +594,6 @@ export default function RentalDetail() {
             )}
           </View>
         </Modal>
-
-        {}
         <Modal visible={showConfirmModal} transparent animationType="fade">
           <View style={styles.modalOverlay}>
             <View style={styles.modalContent}>
@@ -635,8 +612,6 @@ export default function RentalDetail() {
               <Text style={styles.modalValue}>
                 {rentalDuration} day{rentalDuration > 1 ? "s" : ""}
               </Text>
-
-              {}
               <View style={styles.costBreakdown}>
                 <View style={styles.costRow}>
                   <Text style={styles.costLabel}>
@@ -683,8 +658,6 @@ export default function RentalDetail() {
             </View>
           </View>
         </Modal>
-
-        {}
         <Modal visible={showImageModal} transparent={true} animationType="fade">
           <TouchableWithoutFeedback onPress={() => setShowImageModal(false)}>
             <View style={styles.fullImageOverlay}>

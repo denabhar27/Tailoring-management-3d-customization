@@ -324,7 +324,7 @@ export default function Customizer3DScreen() {
 
   const injectedJavaScript = `
     (function() {
-      // Store auth data in web app
+      
       window.REACT_NATIVE_AUTH = {
         token: ${authToken ? `"${authToken}"` : 'null'},
         userId: ${userId ? `"${userId}"` : 'null'},
@@ -332,7 +332,7 @@ export default function Customizer3DScreen() {
         version: '1.0.0'
       };
 
-      // Override console.log to forward logs to RN (for debugging)
+      
       const originalLog = console.log;
       console.log = function(...args) {
         originalLog.apply(console, args);
@@ -344,7 +344,7 @@ export default function Customizer3DScreen() {
         }
       };
 
-      // WebGL context loss recovery
+      
       window.addEventListener('webglcontextlost', function(e) {
         e.preventDefault();
         console.log('WebGL context lost - attempting recovery...');
@@ -352,7 +352,7 @@ export default function Customizer3DScreen() {
 
       window.addEventListener('webglcontextrestored', function(e) {
         console.log('WebGL context restored');
-        // Force a page refresh if needed
+        
         if (window.location.reload) {
           setTimeout(() => {
             window.location.reload();
@@ -360,7 +360,7 @@ export default function Customizer3DScreen() {
         }
       }, false);
 
-      // Monitor for canvas elements and add context loss handling
+      
       const observeCanvases = () => {
         const canvases = document.querySelectorAll('canvas');
         canvases.forEach(canvas => {
@@ -377,12 +377,12 @@ export default function Customizer3DScreen() {
         });
       };
 
-      // Observe for new canvases
+      
       const observer = new MutationObserver(observeCanvases);
       observer.observe(document.body, { childList: true, subtree: true });
       setTimeout(observeCanvases, 1000);
 
-      // Helper function for web app to send data to React Native
+      
       window.sendToReactNative = function(data) {
         if (window.ReactNativeWebView) {
           window.ReactNativeWebView.postMessage(JSON.stringify(data));
@@ -391,20 +391,20 @@ export default function Customizer3DScreen() {
         return false;
       };
 
-      // Notify web app that we're in React Native WebView
+      
       window.IS_REACT_NATIVE_WEBVIEW = true;
       
-      // Dispatch custom event to notify web app
+      
       document.dispatchEvent(new CustomEvent('reactNativeReady', { 
         detail: window.REACT_NATIVE_AUTH 
       }));
 
-      // Also try to call init function if it exists
+      
       if (typeof window.initReactNativeMode === 'function') {
         window.initReactNativeMode(window.REACT_NATIVE_AUTH);
       }
 
-      true; // Required for Android
+      true; 
     })();
   `;
 
@@ -717,8 +717,6 @@ export default function Customizer3DScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#FFF8F0" />
-      
-      {}
       <View style={styles.header}>
         <TouchableOpacity onPress={handleGoBack} style={styles.backButton}>
           <Ionicons name="arrow-back" size={24} color="#5D4037" />
@@ -731,8 +729,6 @@ export default function Customizer3DScreen() {
           <Ionicons name="refresh" size={22} color="#5D4037" />
         </TouchableOpacity>
       </View>
-
-      {}
       <WebView
         ref={webViewRef}
         source={{ uri: WEB_3D_CUSTOMIZER_URL }}
@@ -772,8 +768,6 @@ export default function Customizer3DScreen() {
           android: 'Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36 ReactNativeWebView',
         })}
       />
-
-      {}
       {(isLoading || isSaving) && (
         <View style={styles.loadingOverlay}>
           <View style={styles.loadingBox}>
@@ -794,8 +788,6 @@ export default function Customizer3DScreen() {
           </View>
         </View>
       )}
-
-      {}
       <Modal
         visible={showConfirmModal}
         animationType="slide"
@@ -805,7 +797,6 @@ export default function Customizer3DScreen() {
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              {}
               <View style={styles.modalHeader}>
                 <Text style={styles.modalTitle}>🧥 Customization Service</Text>
                 <TouchableOpacity
@@ -815,8 +806,6 @@ export default function Customizer3DScreen() {
                   <Ionicons name="close" size={24} color="#5D4037" />
                 </TouchableOpacity>
               </View>
-
-              {}
               {pendingCustomization?.angleImages ? (
                 <View style={styles.imageSection}>
                   <Text style={styles.sectionLabel}>📷 Your 3D Design</Text>
@@ -850,8 +839,6 @@ export default function Customizer3DScreen() {
                   />
                 </View>
               )}
-
-              {}
               <View style={styles.formSection}>
                 <Text style={styles.sectionLabel}>
                   🧵 Fabric Type <Text style={styles.required}>*</Text>
@@ -887,8 +874,6 @@ export default function Customizer3DScreen() {
                 )}
                 {formErrors.fabric && <Text style={styles.errorText}>{formErrors.fabric}</Text>}
               </View>
-
-              {}
               <View style={styles.formSection}>
                 <Text style={styles.sectionLabel}>
                   👔 Garment Type <Text style={styles.required}>*</Text>
@@ -924,8 +909,6 @@ export default function Customizer3DScreen() {
                 )}
                 {formErrors.garment && <Text style={styles.errorText}>{formErrors.garment}</Text>}
               </View>
-
-              {}
               <View style={styles.formSection}>
                 <Text style={styles.sectionLabel}>
                   📅 Preferred Date for Sizing in Store <Text style={styles.required}>*</Text>
@@ -946,8 +929,6 @@ export default function Customizer3DScreen() {
                   <Ionicons name="chevron-forward" size={20} color="#8D6E63" />
                 </TouchableOpacity>
               </View>
-
-              {}
               {pendingCustomization?.designData && (
                 <View style={styles.customizationChoicesSection}>
                   <Text style={styles.customizationChoicesTitle}>🎨 3D Customization Choices</Text>
@@ -1021,8 +1002,6 @@ export default function Customizer3DScreen() {
                   </View>
                 </View>
               )}
-
-              {}
               <View style={styles.formSection}>
                 <Text style={styles.sectionLabel}>📝 Additional Notes</Text>
                 <TextInput
@@ -1036,8 +1015,6 @@ export default function Customizer3DScreen() {
                   textAlignVertical="top"
                 />
               </View>
-
-              {}
               {estimatedPrice > 0 && selectedFabric && selectedGarment && (
                 <View style={styles.priceEstimateSection}>
                   <Text style={styles.priceEstimateTitle}>Estimated Price: ₱{estimatedPrice.toLocaleString()}</Text>
@@ -1049,8 +1026,6 @@ export default function Customizer3DScreen() {
                   </Text>
                 </View>
               )}
-
-              {}
               <View style={styles.modalActions}>
                 <TouchableOpacity
                   style={styles.modalCancelButton}
@@ -1075,8 +1050,6 @@ export default function Customizer3DScreen() {
             </ScrollView>
           </View>
         </View>
-
-        {}
         <DateTimePickerModal
           visible={showDatePicker}
           mode="date"

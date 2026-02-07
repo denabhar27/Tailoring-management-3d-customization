@@ -218,7 +218,6 @@ export default function NotificationsScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={26} color="#1F2937" />
@@ -228,8 +227,6 @@ export default function NotificationsScreen() {
           <Ionicons name="trash-outline" size={24} color="#EF4444" />
         </TouchableOpacity>
       </View>
-
-      {}
       {unreadCount > 0 && (
         <View style={styles.actionBar}>
           <Text style={styles.unreadCount}>{unreadCount} unread</Text>
@@ -238,8 +235,6 @@ export default function NotificationsScreen() {
           </TouchableOpacity>
         </View>
       )}
-
-      {}
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
@@ -305,8 +300,6 @@ export default function NotificationsScreen() {
           ))
         )}
       </ScrollView>
-
-      {/* Bottom Navigation */}
       <View style={[styles.bottomNav, { paddingBottom: Math.max(insets.bottom, 12) }]}>
         <TouchableOpacity onPress={() => router.push("/home")}>
           <View style={styles.navItemWrap}>

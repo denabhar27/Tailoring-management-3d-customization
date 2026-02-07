@@ -335,8 +335,6 @@ const UserHomePage = ({ userName, setIsLoggedIn }) => {
           )}
         </div>
       </header>
-
-      {}
             <section className="hero" id="top" style={{ backgroundImage: `url(${heroBg})` }}>
               <div className="hero-overlay"></div>
               <div className="hero-content">
@@ -372,8 +370,6 @@ const UserHomePage = ({ userName, setIsLoggedIn }) => {
           </div>
         </div>
       </section>
-
-      {/* Rental Clothes */}
       <RentalClothes openAuthModal={() => setServiceModalOpen(true)} />
 
       <section className="customization fade-in-up" id="Customize">
@@ -546,10 +542,10 @@ const UserHomePage = ({ userName, setIsLoggedIn }) => {
               <div className="cart-actions">
                 <button className="btn-danger" onClick={() => removeItem(it.id)}>Remove</button>
               </div>
-            </div> {/* End of cart-card-body */}
-          </div> // End of cart-card
+            </div> {}
+          </div> 
         ))}
-      </div> {/* End of cart-items */}
+      </div> {}
       <div className="cart-footer">
         <button className="btn-primary" disabled={cartItems.length === 0} onClick={() => { setCartOpen(false); setSummaryModalOpen(true); }}>Proceed to booking</button>
       </div>
@@ -575,7 +571,7 @@ const UserHomePage = ({ userName, setIsLoggedIn }) => {
                 const value = it.details[field.name];
                 let displayValue = value || '-';
                 
-                // Special handling for file inputs
+                
                 if (field.type === 'file' && value) {
                   displayValue = value.name || 'File uploaded';
                 }
@@ -624,38 +620,29 @@ const UserHomePage = ({ userName, setIsLoggedIn }) => {
     </div>
   </div>
 )}
-      {/* Cart Component */}
       <Cart 
         isOpen={cartOpen} 
         onClose={() => {
           setCartOpen(false);
-          fetchCartCount(); // Refresh cart count when cart closes
+          fetchCartCount(); 
         }}
         onCartUpdate={handleCartUpdate}
       />
-
-      {/* Repair Form Modal Component */}
       <RepairFormModal 
         isOpen={repairFormModalOpen} 
         onClose={() => setRepairFormModalOpen(false)}
         onCartUpdate={handleCartUpdate}
       />
-
-      {/* Dry Cleaning Form Modal Component */}
       <DryCleaningFormModal 
         isOpen={dryCleaningFormModalOpen} 
         onClose={() => setDryCleaningFormModalOpen(false)}
         onCartUpdate={handleCartUpdate}
       />
-
-      {/* Customization Form Modal Component */}
       <CustomizationFormModal 
         isOpen={customizationFormModalOpen} 
         onClose={() => setCustomizationFormModalOpen(false)}
         onCartUpdate={handleCartUpdate}
       />
-
-      {/* Order Details Modal Component */}
       <OrderDetailsModal
         isOpen={orderDetailsModalOpen}
         onClose={() => setOrderDetailsModalOpen(false)}

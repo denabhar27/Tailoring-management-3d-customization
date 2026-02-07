@@ -2603,9 +2603,6 @@ const Customize = () => {
           {error && <div className="error-message" style={{ color: 'red', marginBottom: '20px' }}>{error}</div>}
 
         </div>
-
-        {}
-
         <div className="stats-grid">
 
           <div className="stat-card">
@@ -2715,9 +2712,6 @@ const Customize = () => {
           </select>
 
         </div>
-
-        {}
-
         <div className="table-container">
 
           <table>
@@ -3061,9 +3055,6 @@ const Customize = () => {
         </div>
 
       </div>
-
-      {}
-
       {showEditModal && selectedOrder && (
 
         <div className="modal-overlay active" onClick={(e) => e.target === e.currentTarget && setShowEditModal(false)}>
@@ -3085,8 +3076,6 @@ const Customize = () => {
               <div className="detail-row"><strong>Garment:</strong> {selectedOrder.specific_data?.garmentType || 'N/A'}</div>
 
               <div className="detail-row"><strong>Fabric:</strong> {selectedOrder.specific_data?.fabricType || 'N/A'}</div>
-
-              {}
               {selectedOrder.order_type === 'walk_in' && selectedOrder.specific_data?.referenceImage && (
                 <div className="detail-row">
                   <strong>Reference Image:</strong>
@@ -3289,9 +3278,6 @@ const Customize = () => {
                 />
 
               </div>
-
-              {}
-
               <div style={{ marginTop: '30px', paddingTop: '20px', borderTop: '2px solid #eee' }}>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
@@ -3401,9 +3387,6 @@ const Customize = () => {
         </div>
 
       )}
-
-      {}
-
       {showDetailModal && selectedOrder && (
 
         <div className="modal-overlay active" onClick={(e) => e.target === e.currentTarget && setShowDetailModal(false)}>
@@ -3529,9 +3512,6 @@ const Customize = () => {
                 <div className="detail-row"><strong>Admin Notes:</strong> {selectedOrder.pricing_factors.adminNotes}</div>
 
               )}
-
-              {}
-
               <div className="measurements-btn-wrapper">
 
                   <button 
@@ -3617,8 +3597,6 @@ const Customize = () => {
                   </button>
 
               </div>
-
-              {}
               {selectedOrder.order_type === 'walk_in' && selectedOrder.specific_data?.referenceImage && (
                 <div className="detail-row">
                   <strong>Reference Image:</strong>
@@ -3639,9 +3617,6 @@ const Customize = () => {
                   </div>
                 </div>
               )}
-
-              {}
-
               {(() => {
 
                 let designData = selectedOrder.specific_data?.designData;
@@ -3823,9 +3798,6 @@ const Customize = () => {
                 return null;
 
               })()}
-
-              {}
-
               {(() => {
 
                 let designData = selectedOrder.specific_data?.designData;
@@ -3989,9 +3961,6 @@ const Customize = () => {
         </div>
 
       )}
-
-      {}
-
       {showConfirmModal && (
 
         <div className="modal-overlay active confirm-modal-overlay" onClick={(e) => e.target === e.currentTarget && setShowConfirmModal(false)}>
@@ -4029,9 +3998,6 @@ const Customize = () => {
         </div>
 
       )}
-
-      {}
-
       {showPriceConfirmationModal && priceConfirmationItem && priceConfirmationItem.order_type !== 'walk_in' && (
 
         <div className="modal-overlay active" onClick={(e) => e.target === e.currentTarget && setShowPriceConfirmationModal(false)}>
@@ -4127,9 +4093,6 @@ const Customize = () => {
         </div>
 
       )}
-
-      {}
-
       {showMeasurementsModal && selectedOrder && (
 
         <div className="modal-overlay active" onClick={(e) => e.target === e.currentTarget && setShowMeasurementsModal(false)}>
@@ -4167,13 +4130,7 @@ const Customize = () => {
                 )}
 
               </div>
-
-              {}
-
               <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
-
-                {}
-
                 <div style={{ flex: 1, padding: '15px', backgroundColor: '#f9f9f9', borderRadius: '8px' }}>
 
                   <p className="measurement-title" style={{ marginTop: 0, marginBottom: '15px', color: '#000', textAlign: 'center', fontWeight: '600', fontSize: '16px', padding: 0 }}>Top Measurements</p>
@@ -4315,9 +4272,6 @@ const Customize = () => {
                   </div>
 
                 </div>
-
-                {}
-
                 <div style={{ flex: 1, padding: '15px', backgroundColor: '#f9f9f9', borderRadius: '8px' }}>
 
                   <p className="measurement-title" style={{ marginTop: 0, marginBottom: '15px', color: '#000', textAlign: 'center', fontWeight: '600', fontSize: '16px', padding: 0 }}>Bottom Measurements</p>
@@ -4461,9 +4415,6 @@ const Customize = () => {
                 </div>
 
               </div>
-
-              {}
-
               <div style={{ marginTop: '20px', padding: '15px', backgroundColor: '#fff3e0', borderRadius: '8px', border: '1px solid #ffcc80' }}>
 
                 <label style={{ display: 'block', marginBottom: '10px', color: '#000', fontWeight: '600', fontSize: '16px' }}>Notes</label>
@@ -4530,9 +4481,6 @@ const Customize = () => {
         </div>
 
       )}
-
-      {}
-
       {toast.show && (
 
         <div className={`toast ${toast.type}`}>
@@ -4566,9 +4514,6 @@ const Customize = () => {
         </div>
 
       )}
-
-      {}
-
       <ImagePreviewModal
 
         isOpen={imagePreviewOpen}
@@ -4580,9 +4525,6 @@ const Customize = () => {
         onClose={closeImagePreview}
 
       />
-
-     {}
-
 {showGLBUploadModal && (
 
   <div className="modal-overlay active" onClick={(e) => e.target === e.currentTarget && setShowGLBUploadModal(false)}>
@@ -4598,9 +4540,6 @@ const Customize = () => {
       </div>
 
       <div className="glb-modal-body">
-
-        {}
-
         <div className="model-type-selection">
 
           <label>
@@ -4680,9 +4619,6 @@ const Customize = () => {
           />
 
         </div>
-
-        {}
-
         {glbFormData.model_type === 'garment' && (
 
           <div className="glb-form-group">
@@ -4764,9 +4700,6 @@ const Customize = () => {
           />
 
         </div>
-
-        {}
-
         {customModels.length > 0 && (
 
           <div className="models-list-header">
@@ -4858,9 +4791,6 @@ const Customize = () => {
   </div>
 
 )}
-
-       {}
-
 {showFabricTypeModal && (
 
   <div className="modal-overlay active" onClick={(e) => e.target === e.currentTarget && setShowFabricTypeModal(false)}>
@@ -4962,9 +4892,6 @@ const Customize = () => {
           </label>
 
         </div>
-
-        {}
-
         {fabricTypes.length > 0 && (
 
           <div className="fabric-types-list-header">
@@ -5072,9 +4999,6 @@ const Customize = () => {
   </div>
 
 )}
-
-      {}
-
 {showGarmentTypeModal && (
 
   <div className="modal-overlay active" onClick={(e) => e.target === e.currentTarget && setShowGarmentTypeModal(false)}>
@@ -5256,9 +5180,6 @@ const Customize = () => {
           </label>
 
         </div>
-
-        {}
-
         {garmentTypes.length > 0 && (
 
           <div className="fabric-types-list-header">
@@ -5382,9 +5303,6 @@ const Customize = () => {
   </div>
 
 )}
-
-      {}
-
       {showPatternModal && (
 
         <div className="modal-overlay active" onClick={(e) => e.target === e.currentTarget && setShowPatternModal(false)}>
@@ -5574,9 +5492,6 @@ const Customize = () => {
                 </div>
 
               </div>
-
-              {}
-
               {!editingPattern && (
 
                 <div style={{ 
@@ -5766,9 +5681,6 @@ const Customize = () => {
                 </label>
 
               </div>
-
-              {}
-
               {patterns.length > 0 && (
 
                 <div className="fabric-types-list-header">
@@ -5794,9 +5706,6 @@ const Customize = () => {
                           style={{ display: 'flex', alignItems: 'center', gap: '15px' }}
 
                         >
-
-                          {}
-
                           <div style={{
 
                             width: '60px',
@@ -5952,9 +5861,6 @@ const Customize = () => {
         </div>
 
       )}
-
-      {}
-
       {showPaymentModal && selectedOrder && (
 
         <div className="modal-overlay active" onClick={(e) => {

@@ -38,7 +38,6 @@ export default function ClothingRentalStore() {
 
   return (
     <div className="min-h-screen bg-white">
-      {}
       <header className="fixed top-0 left-0 w-full bg-white bg-opacity-95 shadow-lg z-50 px-8 py-6">
         <div className="flex justify-between items-center">
           <div className="text-2xl font-bold text-amber-900">RentStyle</div>
@@ -73,8 +72,6 @@ export default function ClothingRentalStore() {
           </button>
         </div>
       </header>
-
-      {}
       <section className="mt-24 h-96 bg-gradient-to-r from-gray-900 to-gray-700 rounded-xl overflow-hidden mx-4 relative">
         <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
           <div className="text-center text-white">
@@ -83,8 +80,6 @@ export default function ClothingRentalStore() {
           </div>
         </div>
       </section>
-
-      {}
       <section className="px-8 py-12">
         <h2 className="text-2xl font-bold text-gray-900 mb-8">Category</h2>
         <div className="grid grid-cols-5 gap-6 md:flex md:flex-wrap">
@@ -98,13 +93,10 @@ export default function ClothingRentalStore() {
           ))}
         </div>
       </section>
-
-      {}
       <section className="px-8 py-12 bg-amber-50">
         <h2 className="text-3xl font-bold text-gray-900 mb-8">Rental Clothes</h2>
         
         <div className="relative">
-          {}
           {scrollIndex > 0 && (
             <button
               onClick={() => handleScroll('left')}
@@ -113,8 +105,6 @@ export default function ClothingRentalStore() {
               <ChevronLeft size={20} />
             </button>
           )}
-
-          {}
           <div className="flex gap-6 overflow-hidden">
             {rentalItems.map((item, idx) => (
               <div
@@ -152,8 +142,6 @@ export default function ClothingRentalStore() {
               </div>
             ))}
           </div>
-
-          {}
           {scrollIndex < rentalItems.length - 3 && (
             <button
               onClick={() => handleScroll('right')}
@@ -163,8 +151,6 @@ export default function ClothingRentalStore() {
             </button>
           )}
         </div>
-
-        {}
         <div className="flex justify-center gap-2 mt-8">
           {Array.from({ length: Math.max(1, rentalItems.length - 2) }).map((_, idx) => (
             <button
@@ -177,8 +163,6 @@ export default function ClothingRentalStore() {
           ))}
         </div>
       </section>
-
-      {}
       <footer className="bg-gray-900 text-white py-8 text-center">
         <p>© 2024 RentStyle - Rent Fashion, Not Your Closet</p>
       </footer>

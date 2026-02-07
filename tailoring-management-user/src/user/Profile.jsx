@@ -440,8 +440,6 @@ const Profile = () => {
         return (
           <div className="service-details rental-details">
             <h4>Rental Details</h4>
-
-            {}
             {isBundle && bundleItems.length > 0 ? (
               <div className="detail-row" style={{ marginBottom: '20px' }}>
                 <span className="detail-label">Rental Items:</span>
@@ -628,7 +626,6 @@ const Profile = () => {
                 })()}
               </span>
             </div>
-            {}
             {(() => {
               const pricingFactors = typeof item.pricing_factors === 'string' 
                 ? JSON.parse(item.pricing_factors || '{}') 
@@ -742,8 +739,6 @@ const Profile = () => {
         return (
           <div className="service-details customize-details">
             <h4>Customization Details</h4>
-            
-            {}
             {specific_data.designData?.angleImages ? (
               <div className="detail-row">
                 <span className="detail-label">Design Views:</span>
@@ -838,8 +833,6 @@ const Profile = () => {
                 <span className="detail-value">{specific_data.measurements}</span>
               </div>
             )}
-            
-            {}
             {specific_data.designData && (
               <div className="detail-row" style={{ marginTop: '15px', padding: '15px', backgroundColor: '#f8f9fa', borderRadius: '8px', border: '1px solid #e0e0e0' }}>
                 <div style={{ width: '100%' }}>
@@ -967,8 +960,6 @@ const Profile = () => {
         return (
           <div className="service-details drycleaning-details">
             <h4>Dry Cleaning Details</h4>
-
-            {}
             {specific_data.imageUrl && specific_data.imageUrl !== 'no-image' && (
               <div className="detail-row">
                 <span className="detail-label">Clothing Photo:</span>
@@ -1350,8 +1341,6 @@ const Profile = () => {
 
   return (
     <div className="profile-page">
-
-      {}
       <div className="top-btn-wrapper">
         <button
           className="back-to-home-btn"
@@ -1363,8 +1352,6 @@ const Profile = () => {
           <span>Back to Home</span>
         </button>
       </div>
-
-      {}
       <header className="header">
         <div className="logo">
           <img src={logo} alt="Logo" className="logo-img" />
@@ -1377,8 +1364,6 @@ const Profile = () => {
           </button>
         </div>
       </header>
-
-      {}
       <main className="profile-main">
         <h2 className="section-title">User Information</h2>
 
@@ -1460,10 +1445,7 @@ const Profile = () => {
         </div>
 
         <h2 className="section-title">Order Tracking</h2>
-
-        {}
         <div style={{ marginBottom: '30px' }}>
-          {}
           <div style={{ marginBottom: '20px' }}>
             <div style={{ marginBottom: '10px', fontWeight: 'bold', color: '#333', fontSize: '14px' }}>Service Type:</div>
             <div className="status-filters">
@@ -1499,8 +1481,6 @@ const Profile = () => {
               </button>
             </div>
           </div>
-
-          {}
           <div>
             <div style={{ marginBottom: '10px', fontWeight: 'bold', color: '#333', fontSize: '14px' }}>Status:</div>
             <div className="status-filters">
@@ -1634,8 +1614,6 @@ const Profile = () => {
                         </span>
                       )}
                     </div>
-
-                    {}
                     {isRental && (item.status === 'rented' || item.status === 'picked_up') && item.rental_end_date && (() => {
                       const today = new Date();
                       today.setHours(0, 0, 0, 0);
@@ -1725,8 +1703,6 @@ const Profile = () => {
                       }
                       return null;
                     })()}
-
-                    {}
                     {(estimatedPrice > 0 || item.final_price > 0) && (
                       <div className="price-comparison">
                         {isRental && item.status === 'rented' ? (
@@ -1878,8 +1854,6 @@ const Profile = () => {
                         )}
                       </div>
                     )}
-
-                    {}
                     {item.service_type === 'rental' && (item.status === 'ready_to_pickup' || item.status === 'ready_for_pickup') && (
                       <div className="downpayment-info" style={{
                         background: '#fff3e0',
@@ -1903,10 +1877,8 @@ const Profile = () => {
 
                     <div className="order-timeline">
                       <div className="timeline-container">
-                        {}
                         {item.service_type === 'rental' ? (
                           <>
-                            {}
                             <div className={`timeline-item ${getTimelineItemClass(item.status, 'pending', 'rental')}`}>
                               <div className={`timeline-dot ${getStatusDotClass(item.status, 'pending', 'rental')}`}></div>
                               <div className="timeline-content">
@@ -1941,7 +1913,6 @@ const Profile = () => {
                           </>
                         ) : (
                           <>
-                            {}
                             <div className={`timeline-item ${getTimelineItemClass(item.status, 'pending')}`}>
                               <div className={`timeline-dot ${getStatusDotClass(item.status, 'pending')}`}></div>
                               <div className="timeline-content">
@@ -1949,8 +1920,6 @@ const Profile = () => {
                                 <div className="timeline-date">{formatDate(item.order_date)}</div>
                               </div>
                             </div>
-
-                            {}
                             <div className={`timeline-item ${getTimelineItemClass(item.status, 'price_confirmation', item.service_type)}`}>
                               <div className={`timeline-dot ${getStatusDotClass(item.status, 'price_confirmation', item.service_type)}`}></div>
                               <div className="timeline-content">
@@ -1958,8 +1927,6 @@ const Profile = () => {
                                 <div className="timeline-date">{getTimelineDate(item.status_updated_at, item.status, 'price_confirmation', item.service_type)}</div>
                               </div>
                             </div>
-                            
-                            {}
                             <div className={`timeline-item ${getTimelineItemClass(item.status, 'accepted', item.service_type)}`}>
                               <div className={`timeline-dot ${getStatusDotClass(item.status, 'accepted', item.service_type)}`}></div>
                               <div className="timeline-content">
@@ -1995,8 +1962,6 @@ const Profile = () => {
                         )}
                       </div>
                     </div>
-
-                    {}
                     {(() => {
                       const showConfirmation = shouldShowPriceConfirmation(item);
                       console.log('=== RENDERING PRICE CONFIRMATION ACTIONS ===');
@@ -2058,8 +2023,6 @@ const Profile = () => {
                         >
                           💳 Transaction Log
                         </button>
-                        {}
-                        {}
                         {item.status !== 'cancelled' && item.status !== 'completed' && item.status !== 'returned' && item.status !== 'accepted' && (
                           <button
                             className="btn-cancel"
@@ -2181,7 +2144,6 @@ const Profile = () => {
               </div>
 
               <div className="details-modal-footer">
-                {}
                 {shouldShowPriceConfirmation(selectedItem) && (
                   <div className="price-confirmation-actions" style={{ marginBottom: '15px', padding: '15px', backgroundColor: '#fff3cd', borderRadius: '8px', border: '1px solid #ffc107' }}>
                     <div className="confirmation-message">
@@ -2205,7 +2167,6 @@ const Profile = () => {
                   </div>
                 )}
                 <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
-                  {}
                   {selectedItem.status !== 'cancelled' && selectedItem.status !== 'completed' && selectedItem.status !== 'returned' && selectedItem.status !== 'rented' && selectedItem.status !== 'accepted' && (
                     <button
                       onClick={() => {
@@ -2241,16 +2202,12 @@ const Profile = () => {
           </div>
         )
       }
-
-      {}
       <ImagePreviewModal
         isOpen={imagePreviewOpen}
         imageUrl={previewImageUrl}
         altText={previewImageAlt}
         onClose={() => setImagePreviewOpen(false)}
       />
-
-      {}
       <TransactionLogModal
         isOpen={transactionLogModalOpen}
         onClose={() => {
@@ -2259,8 +2216,6 @@ const Profile = () => {
         }}
         orderItemId={selectedOrderItemId}
       />
-
-      {}
       {measurementsModalOpen && (
         <div 
           className="details-modal-overlay" 
@@ -2280,7 +2235,6 @@ const Profile = () => {
                 <div style={{ textAlign: 'center', padding: '40px' }}>Loading measurements...</div>
               ) : measurements ? (
                 <div>
-                  {}
                   {measurements.top && Object.keys(measurements.top).length > 0 && (
                     <div style={{ marginBottom: '30px' }}>
                       <h4 style={{ marginBottom: '15px', color: '#333', fontSize: '1.1rem', fontWeight: '600', borderBottom: '2px solid #8B4513', paddingBottom: '8px' }}>Top Measurements</h4>
@@ -2317,8 +2271,6 @@ const Profile = () => {
                       </table>
                     </div>
                   )}
-
-                  {/* Bottom Measurements */}
                   {measurements.bottom && Object.keys(measurements.bottom).length > 0 && (
                     <div style={{ marginBottom: '30px' }}>
                       <h4 style={{ marginBottom: '15px', color: '#333', fontSize: '1.1rem', fontWeight: '600', borderBottom: '2px solid #8B4513', paddingBottom: '8px' }}>Bottom Measurements</h4>
@@ -2332,7 +2284,7 @@ const Profile = () => {
                         <tbody>
                           {Object.entries(measurements.bottom).map(([key, value], idx) => {
                             if (!value || value === '' || value === '0') return null;
-                            // Format label to match admin input labels
+                            
                             const labelMap = {
                               'waist': 'Waist',
                               'hips': 'Hips',
@@ -2354,8 +2306,6 @@ const Profile = () => {
                       </table>
                     </div>
                   )}
-
-                  {}
                   {measurements.notes && (
                     <div style={{ marginTop: '20px', padding: '15px', backgroundColor: '#f8f9fa', borderRadius: '8px', border: '1px solid #e0e0e0' }}>
                       <strong style={{ display: 'block', marginBottom: '8px', color: '#333' }}>Notes:</strong>
@@ -2384,8 +2334,6 @@ const Profile = () => {
           </div>
         </div>
       )}
-
-      {}
       {isEditingProfile && (
         <div 
           className="details-modal-overlay" 
@@ -2588,8 +2536,6 @@ const Profile = () => {
           </div>
         </div>
       )}
-
-      {}
       {cancelModalOpen && itemToCancel && (
         <div 
           className="details-modal-overlay" 

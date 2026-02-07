@@ -37,7 +37,6 @@ const OrderDetails = () => {
       <div style={{ border: '1px solid #ddd', borderRadius: '8px', padding: '16px', marginTop: '16px' }}>
         <p><strong>Order Item ID:</strong> {orderItemId}</p>
         <p><strong>Status:</strong> {order?.status || 'Unknown'}</p>
-        {}
       </div>
     </div>
   );

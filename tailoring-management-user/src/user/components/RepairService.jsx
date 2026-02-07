@@ -241,8 +241,6 @@ const RepairService = ({ openAuthModal, showAll = false }) => {
             </div>
           ))}
         </div>
-        
-        {}
         {!showAll && repairServices.length > 3 && (
           <div style={{ 
             display: 'flex', 
@@ -278,8 +276,6 @@ const RepairService = ({ openAuthModal, showAll = false }) => {
           </div>
         )}
       </section>
-
-      {}
       {isModalOpen && selectedService && (
         <div className="repair-modal-overlay" onClick={closeModal}>
           <div className="repair-modal" onClick={(e) => e.stopPropagation()}>
@@ -296,7 +292,6 @@ const RepairService = ({ openAuthModal, showAll = false }) => {
               </div>
 
               <div className="repair-form">
-                {}
                 <div className="form-group">
                   <label>Damage Level *</label>
                   <select
@@ -311,8 +306,6 @@ const RepairService = ({ openAuthModal, showAll = false }) => {
                     <option value="severe">Severe - Complete reconstruction needed</option>
                   </select>
                 </div>
-
-                {}
                 <div className="form-group">
                   <label>Damage Description *</label>
                   <textarea
@@ -323,8 +316,6 @@ const RepairService = ({ openAuthModal, showAll = false }) => {
                     required
                   />
                 </div>
-
-                {}
                 <div className="form-group">
                   <label>Damage Location *</label>
                   <input
@@ -335,8 +326,6 @@ const RepairService = ({ openAuthModal, showAll = false }) => {
                     required
                   />
                 </div>
-
-                {}
                 <div className="form-group">
                   <label>Upload Damage Photo *</label>
                   <input
@@ -356,8 +345,6 @@ const RepairService = ({ openAuthModal, showAll = false }) => {
                     </div>
                   )}
                 </div>
-
-                {}
                 <div className="form-group">
                   <label>Pickup Date *</label>
                   <input
@@ -368,8 +355,6 @@ const RepairService = ({ openAuthModal, showAll = false }) => {
                     required
                   />
                 </div>
-
-                {}
                 {damageLevel && (
                   <div className="price-estimate">
                     <h4>Estimated Price: {formatPrice(estimatedPrice)}</h4>
@@ -377,8 +362,6 @@ const RepairService = ({ openAuthModal, showAll = false }) => {
                   </div>
                 )}
               </div>
-
-              {}
               {cartMessage && (
                 <div className={`cart-message ${cartMessage.includes('✅') ? 'success' : 'error'}`}>
                   {cartMessage}

@@ -99,7 +99,6 @@ export default function DateTimePickerModal({
             <View style={styles.dateSection}>
               <Text style={styles.sectionLabel}>Date</Text>
               <View style={styles.pickerRow}>
-                {}
                 <ScrollView style={styles.pickerColumn} showsVerticalScrollIndicator={false}>
                   {months.map((month, index) => (
                     <TouchableOpacity
@@ -119,8 +118,6 @@ export default function DateTimePickerModal({
                     </TouchableOpacity>
                   ))}
                 </ScrollView>
-
-                {}
                 <ScrollView style={styles.pickerColumnSmall} showsVerticalScrollIndicator={false}>
                   {days.map((day) => {
                     const disabled = isDateDisabled(selectedYear, selectedMonth, day);
@@ -146,8 +143,6 @@ export default function DateTimePickerModal({
                     );
                   })}
                 </ScrollView>
-
-                {}
                 <ScrollView style={styles.pickerColumnSmall} showsVerticalScrollIndicator={false}>
                   {years.map((year) => (
                     <TouchableOpacity
@@ -175,7 +170,6 @@ export default function DateTimePickerModal({
             <View style={styles.timeSection}>
               <Text style={styles.sectionLabel}>Time</Text>
               <View style={styles.pickerRow}>
-                {}
                 <ScrollView style={styles.pickerColumnSmall} showsVerticalScrollIndicator={false}>
                   {hours.map((hour) => (
                     <TouchableOpacity
@@ -197,8 +191,6 @@ export default function DateTimePickerModal({
                 </ScrollView>
 
                 <Text style={styles.timeSeparator}>:</Text>
-
-                {}
                 <ScrollView style={styles.pickerColumnSmall} showsVerticalScrollIndicator={false}>
                   {minutes.map((minute) => (
                     <TouchableOpacity
@@ -218,8 +210,6 @@ export default function DateTimePickerModal({
                     </TouchableOpacity>
                   ))}
                 </ScrollView>
-
-                {}
                 <View style={styles.amPmColumn}>
                   <TouchableOpacity
                     style={[
@@ -249,8 +239,6 @@ export default function DateTimePickerModal({
               </View>
             </View>
           )}
-
-          {}
           <View style={styles.previewSection}>
             <Text style={styles.previewLabel}>Selected:</Text>
             <Text style={styles.previewText}>

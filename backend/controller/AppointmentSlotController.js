@@ -354,11 +354,11 @@ exports.getAllSlotsWithAvailability = (req, res) => {
               color = 'red';
             } else if (available === 1) {
               status = 'limited';
-              statusLabel = `Limited (${available} left)`;
+              statusLabel = `1 Spot`;
               color = 'orange';
             } else {
               status = 'available';
-              statusLabel = `Available (${available} spots)`;
+              statusLabel = `${available} Spots`;
               color = 'green';
             }
 

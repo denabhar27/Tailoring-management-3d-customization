@@ -153,8 +153,6 @@ const Inventory = () => {
             <p>Track completed service items</p>
           </div>
         </div>
-
-        {}
         <div className="stats-grid">
           <div className="stat-card">
             <div className="stat-header">
@@ -198,8 +196,6 @@ const Inventory = () => {
             </div>
           </div>
         </div>
-
-        {}
         <div className="search-container">
           <input
             type="text"
@@ -217,8 +213,6 @@ const Inventory = () => {
             <option value="Consultation">Consultation</option>
           </select>
         </div>
-
-        {}
         <div className="table-container">
           {loading ? (
             <div style={{ textAlign: 'center', padding: '60px', color: '#888' }}>
@@ -281,8 +275,6 @@ const Inventory = () => {
           )}
         </div>
       </div>
-
-      {}
       {showDetailModal && selectedItem && (
         <div 
           className="modal-overlay active" 
@@ -349,16 +341,12 @@ const Inventory = () => {
                   {selectedItem.status}
                 </span>
               </div>
-
-              {}
               {getServiceDescription(selectedItem) && (
                 <div className="detail-row">
                   <strong>Description:</strong>
                   <span>{getServiceDescription(selectedItem)}</span>
                 </div>
               )}
-
-              {}
               {selectedItem.specificData && (
                 <>
                   {selectedItem.serviceType?.toLowerCase() === 'dry_cleaning' || selectedItem.serviceType?.toLowerCase() === 'dry-cleaning' || selectedItem.serviceType?.toLowerCase() === 'drycleaning' ? (
@@ -421,8 +409,6 @@ const Inventory = () => {
                   ) : null}
                 </>
               )}
-
-              {}
               {getServiceImageUrl(selectedItem) && (
                 <div className="detail-row">
                   <strong>Completed Item Image:</strong>
@@ -448,8 +434,6 @@ const Inventory = () => {
                   </div>
                 </div>
               )}
-
-              {}
               {selectedItem.pricingFactors?.adminNotes && (
                 <div className="detail-row">
                   <strong>Admin Notes:</strong>
@@ -465,8 +449,6 @@ const Inventory = () => {
           </div>
         </div>
       )}
-
-      {}
       <ImagePreviewModal
         isOpen={imagePreview.isOpen}
         imageUrl={imagePreview.imageUrl}

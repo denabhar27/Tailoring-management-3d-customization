@@ -88,8 +88,6 @@ const CartExample = () => {
     <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
       <h1>Cart Integration Example</h1>
       <p>This is a demo page to test the cart functionality.</p>
-
-      {}
       {message && (
         <div style={{
           padding: '12px',
@@ -102,8 +100,6 @@ const CartExample = () => {
           {message}
         </div>
       )}
-
-      {}
       <div style={{ marginBottom: '30px', textAlign: 'center' }}>
         <button
           onClick={() => setCartOpen(!cartOpen)}
@@ -120,8 +116,6 @@ const CartExample = () => {
           {cartOpen ? 'Close Cart' : 'Open Cart'}
         </button>
       </div>
-
-      {}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
         {exampleServices.map((service) => (
           <div
@@ -157,8 +151,6 @@ const CartExample = () => {
           </div>
         ))}
       </div>
-
-      {}
       <div style={{ marginTop: '40px', padding: '20px', backgroundColor: '#e9ecef', borderRadius: '8px' }}>
         <h3>How to Test:</h3>
         <ol style={{ lineHeight: '1.6' }}>
@@ -182,8 +174,6 @@ const CartExample = () => {
           <li>✅ Error handling and loading states</li>
         </ul>
       </div>
-
-      {}
       <Cart 
         isOpen={cartOpen} 
         onClose={() => setCartOpen(false)}

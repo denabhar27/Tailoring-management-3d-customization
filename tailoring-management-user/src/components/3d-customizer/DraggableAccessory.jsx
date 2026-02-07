@@ -144,8 +144,6 @@ export default function DraggableAccessory({ id, modelPath, position, color, sca
             }>
                 <AccessoryModel modelPath={fullModelPath} color={color} />
             </Suspense>
-
-            {}
             {(isSelected || isHovered || isMoving) && (
                 <mesh position={[0, 0, 0]} scale={1.2}>
                     <sphereGeometry args={[1, 16, 16]} />
@@ -157,8 +155,6 @@ export default function DraggableAccessory({ id, modelPath, position, color, sca
                     />
                 </mesh>
             )}
-
-            {}
             {isMoving && (
                 <mesh position={[0, 0, 0]} scale={1.5}>
                     <sphereGeometry args={[1, 16, 16]} />

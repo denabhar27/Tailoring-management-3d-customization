@@ -214,7 +214,6 @@ export default function Viewer3D({ garment, size, fit, modelSize, colors, fabric
 
   return (
     <div style={{ width: '100%', height: '100%', background: '#ffffff', position: 'relative' }}>
-      {}
       {isLoading && (
         <div style={{
           position: 'absolute',
@@ -275,7 +274,6 @@ export default function Viewer3D({ garment, size, fit, modelSize, colors, fabric
             <GarmentModel garment={garment} size={size} fit={fit} modelSize={modelSize} colors={colors} fabric={fabric} pattern={pattern} style={style} measurements={measurements} personalization={personalization} pantsType={pantsType} customModels={customModels} patterns={patterns} />
           </Suspense>
         </Stage>
-        {}
         <directionalLight position={[4, 6, -3]} intensity={0.8} color="#ffffff" />
         <directionalLight position={[-5, 3, 5]} intensity={0.5} color="#ffffff" />
         <directionalLight position={[0, 5, 0]} intensity={0.3} color="#ffffff" />

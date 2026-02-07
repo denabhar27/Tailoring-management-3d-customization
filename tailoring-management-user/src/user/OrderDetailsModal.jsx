@@ -57,7 +57,6 @@ const OrderDetailsModal = ({ isOpen, onClose, orderItemId }) => {
                 {order.rental_start_date && order.rental_end_date && (
                   <div><strong>Rental Period:</strong> {new Date(order.rental_start_date).toLocaleDateString()} - {new Date(order.rental_end_date).toLocaleDateString()}</div>
                 )}
-                {}
               </div>
             )}
             <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'flex-end' }}>

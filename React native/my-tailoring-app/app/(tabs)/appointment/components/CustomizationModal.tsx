@@ -254,7 +254,6 @@ export default function CustomizationModal({ visible, onClose }: CustomizationMo
     >
       <View style={styles.overlay}>
         <View style={styles.modalContainer}>
-          {}
           <View style={styles.header}>
             <Text style={styles.headerTitle}>🧥 Customization Service</Text>
             <TouchableOpacity onPress={handleClose} style={styles.closeButton}>
@@ -266,7 +265,6 @@ export default function CustomizationModal({ visible, onClose }: CustomizationMo
             style={styles.content}
             showsVerticalScrollIndicator={false}
           >
-            {}
             <TouchableOpacity 
               style={styles.banner3D}
               onPress={handleOpen3DCustomizer}
@@ -283,15 +281,11 @@ export default function CustomizationModal({ visible, onClose }: CustomizationMo
               </View>
               <Ionicons name="chevron-forward" size={24} color="#B8860B" />
             </TouchableOpacity>
-
-            {}
             <View style={styles.divider}>
               <View style={styles.dividerLine} />
               <Text style={styles.dividerText}>OR fill form below</Text>
               <View style={styles.dividerLine} />
             </View>
-
-            {}
             {step === 1 && (
               <View style={styles.stepContainer}>
                 <Text style={styles.sectionTitle}>Select Garment Type</Text>
@@ -331,8 +325,6 @@ export default function CustomizationModal({ visible, onClose }: CustomizationMo
                 </TouchableOpacity>
               </View>
             )}
-
-            {}
             {step === 2 && (
               <View style={styles.stepContainer}>
                 <Text style={styles.sectionTitle}>Select Fabric Type</Text>
@@ -355,8 +347,6 @@ export default function CustomizationModal({ visible, onClose }: CustomizationMo
                     </TouchableOpacity>
                   ))}
                 </View>
-
-                {}
                 <Text style={styles.sectionTitle}>Reference Image (Optional)</Text>
                 <TouchableOpacity style={styles.imageUpload} onPress={pickImage}>
                   {image ? (
@@ -368,8 +358,6 @@ export default function CustomizationModal({ visible, onClose }: CustomizationMo
                     </View>
                   )}
                 </TouchableOpacity>
-
-                {}
                 <Text style={styles.sectionTitle}>Measurements</Text>
                 <TextInput
                   style={styles.textInput}
@@ -379,8 +367,6 @@ export default function CustomizationModal({ visible, onClose }: CustomizationMo
                   onChangeText={setMeasurements}
                   multiline
                 />
-
-                {}
                 <Text style={styles.sectionTitle}>Special Instructions</Text>
                 <TextInput
                   style={[styles.textInput, styles.notesInput]}
@@ -391,14 +377,10 @@ export default function CustomizationModal({ visible, onClose }: CustomizationMo
                   multiline
                   numberOfLines={3}
                 />
-
-                {}
                 <View style={styles.priceSummary}>
                   <Text style={styles.priceLabel}>Estimated Price:</Text>
                   <Text style={styles.priceValue}>₱{getSelectedGarmentPrice().toLocaleString()}</Text>
                 </View>
-
-                {}
                 <View style={styles.buttonRow}>
                   <TouchableOpacity
                     style={styles.backButton}

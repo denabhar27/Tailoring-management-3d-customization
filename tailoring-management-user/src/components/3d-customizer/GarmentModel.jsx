@@ -694,7 +694,6 @@ export default function GarmentModel({ garment, size, fit, modelSize, colors, fa
     return (
       <group position={[0, 0, 0]} scale={sizeScale}>
         <primitive object={modelScene} />
-        {}
         {personalization.initials && (
           <Text position={[0, 1.5, 0.3]} fontSize={personalization.size * 0.25} color={colors.stitching}>
             {personalization.initials}
@@ -749,7 +748,6 @@ export default function GarmentModel({ garment, size, fit, modelSize, colors, fa
     return (
       <group position={[0, 0, 0]} scale={sizeScale}>
         <primitive object={modelScene} />
-        {}
         {personalization.initials && (
           <Text position={[0, 1.5, 0.3]} fontSize={personalization.size * 0.25} color={colors.stitching}>
             {personalization.initials}

@@ -42,7 +42,6 @@ export default function LandingScreen() {
       resizeMode="cover"
       blurRadius={1.2} 
     >
-      {}
       <LinearGradient
         colors={[
           "rgba(15, 23, 42, 0.78)",
@@ -53,7 +52,6 @@ export default function LandingScreen() {
       />
 
       <View style={styles.container}>
-        {}
         <View style={styles.header}>
           <View style={styles.logoCircle}>
             <Image
@@ -67,13 +65,9 @@ export default function LandingScreen() {
             Welcome to Jackmans Tailor Deluxe!
           </Text>
         </View>
-
-        {}
         <View style={styles.hero}>
           <Text style={styles.subtitle}>Your perfect fit awaits</Text>
         </View>
-
-        {}
         <TouchableOpacity
           style={styles.buttonContainer}
           onPress={() => router.replace("/login")}

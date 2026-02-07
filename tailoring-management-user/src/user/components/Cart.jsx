@@ -569,8 +569,6 @@ const Cart = ({ isOpen, onClose, onCartUpdate }) => {
                       onClick={(e) => e.stopPropagation()}
                       style={{ marginTop: '5px', cursor: 'pointer', width: '18px', height: '18px' }}
                     />
-                    
-                    {}
                     {item.service_type === 'rental' && rentalImageUrl && (
                       <div style={{ width: '80px', height: '80px', flexShrink: 0 }}>
                         <img 
@@ -603,8 +601,6 @@ const Cart = ({ isOpen, onClose, onCartUpdate }) => {
                         </p>
                       )}
                       <p>Service ID: {item.service_id}</p>
-                      
-                      {}
                       {item.service_type === 'rental' ? (
                         <>
                           <p>Rental Price: {formatPrice(item.final_price)}</p>
@@ -617,16 +613,12 @@ const Cart = ({ isOpen, onClose, onCartUpdate }) => {
                       ) : (
                         <p>Estimated Price: {formatPrice(item.final_price)}</p>
                       )}
-                      
-                      {}
                       {item.service_type === 'repair' && item.specific_data && (
                         <div className="repair-details">
                           <p>Damage Level: {item.specific_data.damageLevel || 'N/A'}</p>
                           <p>Garment: {item.specific_data.garmentType || 'N/A'}</p>
                           <p>Description: {item.specific_data.damageDescription || 'N/A'}</p>
                           <p>Drop off preferred date: {formatDateTo12Hour(item.specific_data.pickupDate) || 'N/A'}</p>
-                          
-                          {}
                           {item.specific_data.imageUrl && item.specific_data.imageUrl !== 'no-image' && (
                             <div className="cart-item-image">
                               <img 
@@ -644,8 +636,6 @@ const Cart = ({ isOpen, onClose, onCartUpdate }) => {
                           )}
                         </div>
                       )}
-
-                      {}
                       {item.service_type === 'dry_cleaning' && item.specific_data && (
                         <div className="drycleaning-details">
                           {item.specific_data.garmentType && (
@@ -657,8 +647,6 @@ const Cart = ({ isOpen, onClose, onCartUpdate }) => {
                           {item.specific_data.pricePerItem && (
                             <p>Price per item: ₱{parseFloat(item.specific_data.pricePerItem).toFixed(2)}</p>
                           )}
-                          
-                          {}
                           {item.specific_data.imageUrl && item.specific_data.imageUrl !== 'no-image' && (
                             <div className="cart-item-image">
                               <img 
@@ -676,8 +664,6 @@ const Cart = ({ isOpen, onClose, onCartUpdate }) => {
                           )}
                         </div>
                       )}
-
-                      {}
                       {item.service_type === 'customization' && item.specific_data && (
                         <div className="customization-details">
                           <p>Garment Type: {item.specific_data.garmentType || 'N/A'}</p>
@@ -690,8 +676,6 @@ const Cart = ({ isOpen, onClose, onCartUpdate }) => {
                           {item.specific_data.notes && (
                             <p>Notes: {item.specific_data.notes}</p>
                           )}
-                          
-                          {}
                           {item.specific_data.designData?.angleImages && (
                             <div style={{ marginTop: '10px', marginBottom: '10px' }}>
                               <strong style={{ display: 'block', marginBottom: '8px', fontSize: '14px' }}>Design Views:</strong>
@@ -736,8 +720,6 @@ const Cart = ({ isOpen, onClose, onCartUpdate }) => {
                               <small style={{ display: 'block', fontSize: '11px', color: '#888', marginTop: '4px' }}>Click any image to enlarge</small>
                             </div>
                           )}
-                          
-                          {}
                           {!item.specific_data.designData?.angleImages && item.specific_data.imageUrl && item.specific_data.imageUrl !== 'no-image' && (
                             <div className="cart-item-image" style={{ marginTop: '10px' }}>
                               <img 
@@ -753,8 +735,6 @@ const Cart = ({ isOpen, onClose, onCartUpdate }) => {
                               <small>Design preview</small>
                             </div>
                           )}
-                          
-                          {}
                           {item.specific_data.designData && (
                             <div style={{ marginTop: '10px', padding: '10px', backgroundColor: '#f8f9fa', borderRadius: '5px' }}>
                               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: expandedDetails.has(item.cart_id) ? '10px' : '0' }}>
@@ -826,8 +806,6 @@ const Cart = ({ isOpen, onClose, onCartUpdate }) => {
                               )}
                             </div>
                           )}
-                          
-                          {}
                           {item.specific_data.imageUrl && item.specific_data.imageUrl !== 'no-image' && !item.specific_data.designData?.angleImages && (
                             <div className="cart-item-image">
                               <img 
@@ -927,16 +905,12 @@ const Cart = ({ isOpen, onClose, onCartUpdate }) => {
           )}
         </div>
       </div>
-
-      {}
       <ImagePreviewModal
         isOpen={imagePreviewOpen}
         imageUrl={previewImageUrl}
         altText={previewImageAlt}
         onClose={closeImagePreview}
       />
-
-      {}
       {bundleModalOpen && (
         <div className="cart-overlay" style={{ zIndex: 2000 }} onClick={closeBundleModal}>
           <div 
@@ -979,8 +953,6 @@ const Cart = ({ isOpen, onClose, onCartUpdate }) => {
                 ×
               </button>
             </div>
-            
-            {}
             {parentBundleData && (
               <div style={{ 
                 display: 'grid', 
@@ -1089,8 +1061,6 @@ const Cart = ({ isOpen, onClose, onCartUpdate }) => {
                 </div>
               ))}
             </div>
-            
-            {}
             {parentBundleData && (
               <div style={{ 
                 marginTop: '20px', 
@@ -1110,8 +1080,6 @@ const Cart = ({ isOpen, onClose, onCartUpdate }) => {
           </div>
         </div>
       )}
-
-      {}
       {bundleItemDetailOpen && selectedBundleItem && (
         <div className="cart-overlay" style={{ zIndex: 2100 }} onClick={closeBundleItemDetail}>
           <div 
@@ -1153,8 +1121,6 @@ const Cart = ({ isOpen, onClose, onCartUpdate }) => {
                 ×
               </button>
             </div>
-            
-            {}
             {selectedBundleItem.image_url && (
               <div style={{ textAlign: 'center', marginBottom: '20px' }}>
                 <img
@@ -1172,8 +1138,6 @@ const Cart = ({ isOpen, onClose, onCartUpdate }) => {
                 />
               </div>
             )}
-            
-            {}
             <div style={{ display: 'grid', gap: '10px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px', backgroundColor: '#f8f9fa', borderRadius: '6px' }}>
                 <span style={{ fontWeight: '500', color: '#666' }}>Item Name</span>
@@ -1200,8 +1164,6 @@ const Cart = ({ isOpen, onClose, onCartUpdate }) => {
                   <span style={{ fontWeight: '600', color: '#333' }}>{selectedBundleItem.material}</span>
                 </div>
               )}
-              
-              {}
               {selectedBundleItem.size && renderSizeMeasurements(selectedBundleItem.size)}
               
               {selectedBundleItem.price && (
@@ -1232,8 +1194,6 @@ const Cart = ({ isOpen, onClose, onCartUpdate }) => {
           </div>
         </div>
       )}
-
-      {}
       {rentalDetailModalOpen && selectedRentalItem && (
         <div className="cart-overlay" style={{ zIndex: 2000 }} onClick={closeRentalDetailModal}>
           <div 
@@ -1276,8 +1236,6 @@ const Cart = ({ isOpen, onClose, onCartUpdate }) => {
                 ×
               </button>
             </div>
-            
-            {}
             {(() => {
               const rentalImages = [
                 selectedRentalItem.specific_data?.front_image && { url: selectedRentalItem.specific_data.front_image, label: 'Front' },
@@ -1299,8 +1257,6 @@ const Cart = ({ isOpen, onClose, onCartUpdate }) => {
               }
               return null;
             })()}
-            
-            {}
             <div style={{ display: 'grid', gap: '12px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px', backgroundColor: '#f8f9fa', borderRadius: '6px' }}>
                 <span style={{ fontWeight: '500', color: '#666' }}>Item Name</span>
@@ -1327,8 +1283,6 @@ const Cart = ({ isOpen, onClose, onCartUpdate }) => {
                   <span style={{ fontWeight: '600', color: '#333' }}>{selectedRentalItem.specific_data.material}</span>
                 </div>
               )}
-              
-              {}
               {selectedRentalItem.specific_data?.size && renderSizeMeasurements(selectedRentalItem.specific_data.size)}
               
               <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px', backgroundColor: '#f8f9fa', borderRadius: '6px' }}>

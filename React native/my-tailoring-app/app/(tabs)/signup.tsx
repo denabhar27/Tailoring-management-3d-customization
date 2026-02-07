@@ -105,7 +105,6 @@ export default function SignupScreen() {
           keyboardShouldPersistTaps="handled"
         >
           <View style={styles.container}>
-            {}
             <View style={styles.card}>
               <View style={styles.header}>
                 <Image 
@@ -118,8 +117,6 @@ export default function SignupScreen() {
                   Join the Jackman Tailor Deluxe family
                 </Text>
               </View>
-
-              {}
               <View style={styles.toggleContainer}>
                 <TouchableOpacity
                   style={styles.toggleButton}
@@ -134,8 +131,6 @@ export default function SignupScreen() {
                   <Text style={styles.toggleButtonTextActive}>Sign Up</Text>
                 </TouchableOpacity>
               </View>
-
-              {}
               <View style={styles.inputGroup}>
                 <TextInput
                   style={styles.input}
@@ -146,8 +141,6 @@ export default function SignupScreen() {
                   onChangeText={setFirstName}
                 />
               </View>
-
-              {}
               <View style={styles.inputGroup}>
                 <TextInput
                   style={styles.input}
@@ -158,8 +151,6 @@ export default function SignupScreen() {
                   onChangeText={setLastName}
                 />
               </View>
-
-              {}
               <View style={styles.inputGroup}>
                 <TextInput
                   style={styles.input}
@@ -171,8 +162,6 @@ export default function SignupScreen() {
                   onChangeText={setUsername}
                 />
               </View>
-
-              {}
               <View style={styles.inputGroup}>
                 <TextInput
                   style={styles.input}
@@ -185,8 +174,6 @@ export default function SignupScreen() {
                   onChangeText={setEmail}
                 />
               </View>
-
-              {}
               <View style={styles.inputGroup}>
                 <TextInput
                   style={styles.input}
@@ -207,8 +194,6 @@ export default function SignupScreen() {
                   />
                 </TouchableOpacity>
               </View>
-
-              {}
               <View style={styles.inputGroup}>
                 <TextInput
                   style={styles.input}
@@ -229,8 +214,6 @@ export default function SignupScreen() {
                   />
                 </TouchableOpacity>
               </View>
-
-              {}
               <View style={styles.inputGroup}>
                 <TextInput
                   style={styles.input}
@@ -241,8 +224,6 @@ export default function SignupScreen() {
                   onChangeText={setPhoneNumber}
                 />
               </View>
-
-              {}
               <TouchableOpacity
                 style={styles.submitButton}
                 onPress={handleSignup}
@@ -253,8 +234,6 @@ export default function SignupScreen() {
                   {loading ? "Processing..." : "Create Account"}
                 </Text>
               </TouchableOpacity>
-
-              {}
               <View style={styles.footer}>
                 <Text style={styles.footerText}>
                   Already have an account?{" "}

@@ -307,7 +307,6 @@ export default function FAQScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {}
       <View style={styles.header}>
         <TouchableOpacity 
           style={styles.backButton}
@@ -318,8 +317,6 @@ export default function FAQScreen() {
         <Text style={styles.headerTitle}>FAQ</Text>
         <View style={styles.headerPlaceholder} />
       </View>
-
-      {}
       <View style={styles.content}>
         <SearchBar
           value={searchQuery}
@@ -363,8 +360,6 @@ export default function FAQScreen() {
           />
         )}
       </View>
-
-      {}
       <View style={[styles.bottomNav, { paddingBottom: insets.bottom > 0 ? insets.bottom : 12 }]}>
         <TouchableOpacity onPress={() => router.push("/(tabs)/home")}>
           <View style={styles.navItemWrap}>

@@ -1,8 +1,13 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+// Debug: Log environment variable
+console.log('ENV API URL:', process.env.EXPO_PUBLIC_API_BASE_URL);
+
 export const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || 'http://192.168.1.202:5000/api';
+console.log('Using API_BASE_URL:', API_BASE_URL);
 const REQUEST_TIMEOUT = parseInt(process.env.EXPO_PUBLIC_REQUEST_TIMEOUT || '10000', 10);
+
 
 const decodeToken = (token: string) => {
   try {
@@ -21,6 +26,7 @@ const decodeToken = (token: string) => {
   }
 };
 
+
 const getAuthHeaders = async () => {
   const token = await AsyncStorage.getItem('userToken');
   return {
@@ -28,6 +34,7 @@ const getAuthHeaders = async () => {
     'Authorization': token ? `Bearer ${token}` : '',
   };
 };
+
 
 const apiCall = async (endpoint: string, options: RequestInit = {}) => {
   try {
@@ -43,7 +50,8 @@ const apiCall = async (endpoint: string, options: RequestInit = {}) => {
     };
 
     console.log('API Call:', url, config);
-
+    
+ 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
     
@@ -82,6 +90,7 @@ const apiCall = async (endpoint: string, options: RequestInit = {}) => {
   }
 };
 
+// Auth API functions
 export const authService = {
   login: async (username: string, password: string) => {
     return apiCall('/login', {
@@ -110,7 +119,8 @@ export const authService = {
       body: JSON.stringify(userData),
     });
   },
-
+  
+  // Get user profile
   getProfile: async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
@@ -151,53 +161,62 @@ export const authService = {
   }
 };
 
+// Cart API functions
 export const cartService = {
-  
+  // Get user's cart
   getCart: async () => {
     return apiCall('/cart');
   },
-
+  
+  // Add item to cart
   addToCart: async (itemData: any) => {
     return apiCall('/cart', {
       method: 'POST',
       body: JSON.stringify(itemData),
     });
   },
-
+  
+  // Remove item from cart
   removeFromCart: async (itemId: string) => {
     return apiCall(`/cart/${itemId}`, {
       method: 'DELETE',
     });
   },
-
+  
+  // Submit cart as order (with selected items and notes)
   submitCart: async (notes?: string, selectedCartIds?: string[]) => {
     return apiCall('/cart/submit', {
       method: 'POST',
       body: JSON.stringify({ notes, selectedCartIds }),
     });
   },
-
+  
+  // Get cart summary
   getCartSummary: async () => {
     return apiCall('/cart/summary');
   }
 };
 
+// Order Tracking API functions
 export const orderTrackingService = {
-  
+  // Get user's order tracking
   getUserOrderTracking: async () => {
     return apiCall('/tracking');
   },
-
+  
+  // Get order item tracking history
   getOrderItemTrackingHistory: async (orderItemId: string) => {
     return apiCall(`/tracking/history/${orderItemId}`);
   },
-
+  
+  // Accept price for an order item
   acceptPrice: async (orderItemId: string) => {
     return apiCall(`/orders/${orderItemId}/accept-price`, {
       method: 'POST',
     });
   },
-
+  
+  // Decline price for an order item
   declinePrice: async (orderItemId: string) => {
     return apiCall(`/orders/${orderItemId}/decline-price`, {
       method: 'POST',
@@ -205,34 +224,40 @@ export const orderTrackingService = {
   }
 };
 
+// Notification API functions
 export const notificationService = {
-  
+  // Get all notifications for the user
   getUserNotifications: async () => {
     return apiCall('/notifications');
   },
-
+  
+  // Get unread notifications count
   getUnreadCount: async () => {
     return apiCall('/notifications/unread-count');
   },
-
+  
+  // Mark a notification as read
   markAsRead: async (notificationId: string) => {
     return apiCall(`/notifications/${notificationId}/read`, {
       method: 'PUT',
     });
   },
-
+  
+  // Mark all notifications as read
   markAllAsRead: async () => {
     return apiCall('/notifications/read-all', {
       method: 'PUT',
     });
   },
-
+  
+  // Delete a notification
   deleteNotification: async (notificationId: string) => {
     return apiCall(`/notifications/${notificationId}`, {
       method: 'DELETE',
     });
   },
-
+  
+  // Delete all notifications
   deleteAllNotifications: async () => {
     return apiCall('/notifications', {
       method: 'DELETE',
@@ -240,8 +265,9 @@ export const notificationService = {
   }
 };
 
+// Measurements API functions
 export const measurementsService = {
-  
+  // Get current user's own measurements
   getMyMeasurements: async () => {
     try {
       return await apiCall('/user/measurements');
@@ -256,55 +282,21 @@ export const measurementsService = {
   }
 };
 
-export const faqService = {
-  
-  getAllFAQs: async () => {
-    return apiCall('/faqs');
-  },
-
-  getCategories: async () => {
-    return apiCall('/faqs/categories');
-  },
-
-  getUserVotes: async () => {
-    try {
-      return await apiCall('/faqs/user-votes');
-    } catch (error) {
-      console.error('Get user votes error:', error);
-      return {
-        success: false,
-        data: {}
-      };
-    }
-  },
-
-  voteFAQ: async (faqId: number, isHelpful: boolean) => {
-    return apiCall(`/faqs/${faqId}/vote`, {
-      method: 'POST',
-      body: JSON.stringify({ isHelpful }),
-    });
-  }
-};
-
+// Appointment Slot API functions
 export const appointmentSlotService = {
-  
+  // Get available time slots for a date and service type
   getAvailableSlots: async (serviceType: string, date: string) => {
     return apiCall(`/appointments/available?serviceType=${serviceType}&date=${date}`);
   },
-
+  
+  // Get all time slots with availability status (for color-coded calendar display)
   getAllSlotsWithAvailability: async (serviceType: string, date: string, timeout?: number) => {
-    
-    const timestamp = Date.now();
-    const url = `${API_BASE_URL}/appointments/slots-with-availability?serviceType=${serviceType}&date=${date}&_t=${timestamp}`;
-    const headers = await getAuthHeaders();
-
-    const pollTimeout = timeout || 5000;
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), pollTimeout);
+    const timeoutId = setTimeout(() => controller.abort(), timeout || REQUEST_TIMEOUT);
     
     try {
-      const response = await fetch(url, {
-        method: 'GET',
+      const headers = await getAuthHeaders();
+      const response = await fetch(`${API_BASE_URL}/appointments/slots-with-availability?serviceType=${serviceType}&date=${date}`, {
         headers,
         signal: controller.signal,
       });
@@ -313,42 +305,73 @@ export const appointmentSlotService = {
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
-      
       return await response.json();
-    } catch (fetchError: any) {
+    } catch (error: any) {
       clearTimeout(timeoutId);
-      if (fetchError.name === 'AbortError') {
-        throw new Error(`Request timeout after ${pollTimeout}ms`);
+      if (error.name === 'AbortError') {
+        throw new Error('Request timeout');
       }
-      throw fetchError;
+      throw error;
     }
   },
-
+  
+  // Book a slot
   bookSlot: async (serviceType: string, date: string, time: string, cartItemId?: string) => {
     return apiCall('/appointments/book', {
       method: 'POST',
       body: JSON.stringify({ serviceType, date, time, cartItemId }),
     });
   },
-
+  
+  // Check if a specific slot is available
   checkSlotAvailability: async (serviceType: string, date: string, time: string) => {
     return apiCall(`/appointments/check?serviceType=${serviceType}&date=${date}&time=${time}`);
   },
 };
 
+// Transaction Log API functions
 export const transactionLogService = {
-  
+  // Get transaction logs for an order item
   getTransactionLogsByOrderItem: async (orderItemId: string | number) => {
     return apiCall(`/transaction-logs/order-item/${orderItemId}`);
   },
-
+  
+  // Get transaction logs for current user
   getMyTransactionLogs: async () => {
     return apiCall('/transaction-logs/my-logs');
   },
-
+  
+  // Get transaction summary for an order item
   getTransactionSummary: async (orderItemId: string | number) => {
     return apiCall(`/transaction-logs/summary/${orderItemId}`);
   }
 };
 
+// FAQ API functions
+export const faqService = {
+  // Get all FAQs
+  getAllFAQs: async () => {
+    return apiCall('/faqs');
+  },
+  
+  // Get FAQ by ID
+  getFAQById: async (id: number) => {
+    return apiCall(`/faqs/${id}`);
+  },
+  
+  // Vote on a FAQ (helpful or not helpful)
+  voteFAQ: async (faqId: number, isHelpful: boolean) => {
+    return apiCall(`/faqs/${faqId}/vote`, {
+      method: 'POST',
+      body: JSON.stringify({ isHelpful }),
+    });
+  },
+  
+  // Get user's votes
+  getUserVotes: async () => {
+    return apiCall('/faqs/user/votes');
+  }
+};
+
+// Export the base API call function for other services
 export default apiCall;

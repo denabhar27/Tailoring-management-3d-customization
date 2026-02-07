@@ -349,7 +349,6 @@ export default function CartScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 180 }}
       >
-        {}
         <View style={styles.header}>
           <TouchableOpacity onPress={() => router.back()}>
             <Ionicons name="arrow-back" size={28} color="#1F2937" />
@@ -363,8 +362,6 @@ export default function CartScreen() {
             </Text>
           </TouchableOpacity>
         </View>
-
-        {}
         {cartItems.length === 0 ? (
           <View style={styles.emptyCart}>
             <Ionicons name="cart-outline" size={100} color="#D1D5DB" />
@@ -389,7 +386,6 @@ export default function CartScreen() {
                   onPress={() => toggleItemSelection(item.id)}
                   activeOpacity={0.8}
                 >
-                  {}
                   <View style={styles.checkboxContainer}>
                     <View
                       style={[
@@ -403,8 +399,6 @@ export default function CartScreen() {
                       )}
                     </View>
                   </View>
-
-                  {}
                   {item.image && item.image !== 'no-image' && item.image.trim() !== '' ? (
                     <Image
                       source={{ uri: item.image }}
@@ -420,8 +414,6 @@ export default function CartScreen() {
                       />
                     </View>
                   )}
-
-                  {}
                   <View style={styles.itemDetails}>
                     <Text style={styles.serviceType}>{getServiceTypeDisplay(item.service)}</Text>
                     {item.isBundle && (
@@ -431,8 +423,6 @@ export default function CartScreen() {
                     )}
                     <Text style={styles.itemName}>{item.item}</Text>
                     <Text style={styles.serviceIdText}>Service ID: {item.serviceId}</Text>
-                    
-                    {}
                     {item.service?.toLowerCase() === 'repair' && (
                       <>
                         {item.damageType && (
@@ -525,8 +515,6 @@ export default function CartScreen() {
                         )}
                       </>
                     )}
-
-                    {}
                     {item.isBundle ? (
                       <TouchableOpacity
                         onPress={(e) => {
@@ -563,8 +551,6 @@ export default function CartScreen() {
                         />
                       </TouchableOpacity>
                     )}
-
-                    {}
                     {item.service?.toLowerCase() === 'rental' ? (
                       <>
                         <Text style={styles.itemPrice}>
@@ -590,8 +576,6 @@ export default function CartScreen() {
                       </Text>
                     )}
                   </View>
-
-                  {}
                   <TouchableOpacity
                     style={styles.removeButton}
                     onPress={(e) => {
@@ -604,8 +588,6 @@ export default function CartScreen() {
                 </TouchableOpacity>
               ))}
             </View>
-
-            {}
             <View style={styles.summarySection}>
               <Text style={styles.summaryTitle}>Order Summary</Text>
               <View style={styles.summaryRow}>
@@ -629,8 +611,6 @@ export default function CartScreen() {
           </>
         )}
       </ScrollView>
-
-      {}
       <Modal
         visible={showDetailsModal}
         transparent
@@ -690,8 +670,6 @@ export default function CartScreen() {
                       </Text>
                     </View>
                   )}
-
-                  {}
                   {selectedItemDetails.service?.toLowerCase() === 'repair' && (
                     <>
                       {selectedItemDetails.damageType && (
@@ -728,8 +706,6 @@ export default function CartScreen() {
                       )}
                     </>
                   )}
-
-                  {}
                   {selectedItemDetails.service?.toLowerCase() === 'dry_cleaning' && (
                     <>
                       {selectedItemDetails.garmentType && (
@@ -774,8 +750,6 @@ export default function CartScreen() {
                       )}
                     </>
                   )}
-
-                  {}
                   {(selectedItemDetails.service?.toLowerCase() === 'customization' || selectedItemDetails.service?.toLowerCase() === 'customize') && (
                     <>
                       {selectedItemDetails.garmentType && (
@@ -830,8 +804,6 @@ export default function CartScreen() {
                           </Text>
                         </View>
                       )}
-                      
-                      {}
                       {selectedItemDetails.designData?.angleImages && (
                         <View style={styles.detailsSection}>
                           <Text style={styles.detailsLabel}>Design Views</Text>
@@ -855,8 +827,6 @@ export default function CartScreen() {
                           </View>
                         </View>
                       )}
-                      
-                      {}
                       {!selectedItemDetails.designData?.angleImages && selectedItemDetails.image && selectedItemDetails.image !== 'no-image' && (
                         <View style={styles.detailsSection}>
                           <Text style={styles.detailsLabel}>Design Preview</Text>
@@ -869,8 +839,6 @@ export default function CartScreen() {
                       )}
                     </>
                   )}
-
-                  {}
                   {selectedItemDetails.service?.toLowerCase() === 'rental' && (
                     <>
                       {selectedItemDetails.isBundle && (
@@ -899,8 +867,6 @@ export default function CartScreen() {
                       )}
                     </>
                   )}
-
-                  {}
                   <View style={styles.detailsSection}>
                     <Text style={styles.detailsLabel}>
                       {selectedItemDetails.service?.toLowerCase() === 'rental' ? 'Rental Price' : 
@@ -927,8 +893,6 @@ export default function CartScreen() {
           </View>
         </View>
       </Modal>
-
-      {}
       <Modal
         visible={showBundleModal}
         transparent
@@ -997,8 +961,6 @@ export default function CartScreen() {
           </View>
         </View>
       </Modal>
-
-      {}
       <Modal visible={showConfirmModal} transparent animationType="fade">
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
@@ -1027,8 +989,6 @@ export default function CartScreen() {
                 ₱{getSelectedTotal().toLocaleString()}
               </Text>
             </View>
-
-            {}
             <View style={styles.orderNotesContainer}>
               <Text style={styles.orderNotesLabel}>Order Notes (Optional)</Text>
               <TextInput
@@ -1066,8 +1026,6 @@ export default function CartScreen() {
           </View>
         </View>
       </Modal>
-
-      {}
       {cartItems.length > 0 && (
         <View style={styles.checkoutContainer}>
           <View style={styles.checkoutInfo}>
@@ -1093,8 +1051,6 @@ export default function CartScreen() {
           </TouchableOpacity>
         </View>
       )}
-
-      {}
       <View style={[styles.bottomNav, { paddingBottom: Math.max(insets.bottom, 12) }]}>
         <TouchableOpacity onPress={() => router.replace("/home")}>
           <View style={styles.navItemWrap}>

@@ -99,7 +99,6 @@ export default function HomeScreen() {
         contentContainerStyle={{ paddingBottom: 110 }}
         showsVerticalScrollIndicator={false}
       >
-        {}
         <View style={styles.headerSection}>
           <View style={styles.greetingRow}>
             <Image
@@ -108,8 +107,6 @@ export default function HomeScreen() {
             />
             <Text style={styles.headerTitle}>Jackman Tailor Deluxe</Text>
           </View>
-
-          {}
           <TouchableOpacity 
             style={styles.profileIcon}
             onPress={() => router.push("/notifications")}
@@ -124,8 +121,6 @@ export default function HomeScreen() {
             )}
           </TouchableOpacity>
         </View>
-
-        {}
         <View style={styles.heroContainer}>
           <Image
             source={require("../../assets/images/tailorbackground.jpg")}
@@ -141,8 +136,6 @@ export default function HomeScreen() {
             <Text style={styles.heroSubtitle}>Your perfect fit awaits.</Text>
           </View>
         </View>
-
-        {}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Our Services</Text>
           <Ionicons name="cut-outline" size={24} color="#991b1b" />
@@ -177,8 +170,6 @@ export default function HomeScreen() {
             </TouchableOpacity>
           ))}
         </View>
-
-        {}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Rentals</Text>
           <TouchableOpacity onPress={() => router.push("/rental")}>
@@ -224,8 +215,6 @@ export default function HomeScreen() {
           </View>
         )}
       </ScrollView>
-
-      {}
       <View style={[styles.bottomNav, { paddingBottom: Math.max(insets.bottom, 12) }]}>
         <View style={styles.navItemWrapActive}>
           <Ionicons name="home" size={20} color="#7A5A00" />

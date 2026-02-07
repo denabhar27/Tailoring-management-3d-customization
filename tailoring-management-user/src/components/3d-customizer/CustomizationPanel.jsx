@@ -181,7 +181,6 @@ export default function CustomizationPanel({ garment, setGarment, size, setSize,
                     <option value="coat-women">Blazer (Women)</option>
                     <option value="coat-women-plain">Blazer Coat (Women) Plain</option>
                     <option value="coat-teal">Teal Long Coat</option>
-                    {}
                     {customGarmentModels
                       .filter((model, index, self) => {
                         
@@ -252,7 +251,6 @@ export default function CustomizationPanel({ garment, setGarment, size, setSize,
                   <select value={garment} onChange={e => setGarment(e.target.value)}>
                     <option value="suit-1">Business Suit Style 1</option>
                     <option value="suit-2">Business Suit Style 2</option>
-                    {}
                     {customGarmentModels
                       .filter((model, index, self) => {
                         
@@ -302,7 +300,6 @@ export default function CustomizationPanel({ garment, setGarment, size, setSize,
                 <label>Select Type
                   <select value={garment} onChange={e => setGarment(e.target.value)}>
                     <option value="barong">Barong Tagalog (Default)</option>
-                    {}
                     {customGarmentModels
                       .filter((model, index, self) => {
                         
@@ -354,7 +351,6 @@ export default function CustomizationPanel({ garment, setGarment, size, setSize,
                     <option value="casual-men">Pants (Men Casual)</option>
                     <option value="formal-men">Pants (Men Formal)</option>
                     <option value="formal-women">Pants (Women Formal)</option>
-                    {}
                     {customGarmentModels
                       .filter((model, index, self) => {
                         

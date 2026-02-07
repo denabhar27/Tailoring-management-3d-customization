@@ -238,8 +238,6 @@ export default function OrderHistoryScreen() {
             </View>
           )}
         </View>
-
-        {}
         {(item.service_type === 'customize' || item.service_type === 'customization') && (
          item.specific_data?.garmentType?.toLowerCase() === 'uniform' ||
          item.specific_data?.isUniform === true ||
@@ -298,7 +296,6 @@ export default function OrderHistoryScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {}
       <View style={styles.header}>
         <TouchableOpacity
           onPress={() => router.replace("../UserProfile/profile")}
@@ -307,8 +304,6 @@ export default function OrderHistoryScreen() {
         </TouchableOpacity>
         <Text style={styles.title}>Order History</Text>
       </View>
-
-      {}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -335,8 +330,6 @@ export default function OrderHistoryScreen() {
           <Text style={styles.statLabel}>Pickup</Text>
         </View>
       </ScrollView>
-
-      {}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -373,8 +366,6 @@ export default function OrderHistoryScreen() {
           );
         })}
       </ScrollView>
-
-      {}
       <FlatList
         data={filteredOrders}
         keyExtractor={(item: any) => `order-${item.order_item_id || item.id}`}
@@ -393,8 +384,6 @@ export default function OrderHistoryScreen() {
         }
         showsVerticalScrollIndicator={false}
       />
-
-      {}
       <View style={[styles.bottomNav, { paddingBottom: Math.max(insets.bottom, 12) }]}>
         <TouchableOpacity onPress={() => router.replace("/home")}>
           <View style={styles.navItemWrap}>

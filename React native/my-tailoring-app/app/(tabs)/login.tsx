@@ -76,7 +76,6 @@ export default function LoginScreen() {
         style={{ flex: 1, justifyContent: "center" }}
       >
         <View style={styles.container}>
-          {}
           <View style={styles.card}>
             <View style={styles.header}>
               <Image 
@@ -87,8 +86,6 @@ export default function LoginScreen() {
               <Text style={styles.title}>Welcome Back</Text>
               <Text style={styles.subtitle}>Sign in to book appointments & rentals</Text>
             </View>
-
-            {}
             <View style={styles.toggleContainer}>
               <TouchableOpacity
                 style={[styles.toggleButton, styles.toggleButtonActive]}
@@ -103,8 +100,6 @@ export default function LoginScreen() {
                 <Text style={styles.toggleButtonText}>Sign Up</Text>
               </TouchableOpacity>
             </View>
-
-            {}
             <View style={styles.inputGroup}>
               <TextInput
                 style={styles.input}
@@ -116,8 +111,6 @@ export default function LoginScreen() {
                 onChangeText={setEmail}
               />
             </View>
-
-            {}
             <View style={styles.inputGroup}>
               <TextInput
                 style={styles.input}
@@ -138,8 +131,6 @@ export default function LoginScreen() {
                 />
               </TouchableOpacity>
             </View>
-
-            {}
             <View style={styles.optionsContainer}>
               <TouchableOpacity style={styles.rememberMe}>
                 <View style={styles.checkbox} />
@@ -149,8 +140,6 @@ export default function LoginScreen() {
                 <Text style={styles.forgotLink}>Forgot Password?</Text>
               </TouchableOpacity>
             </View>
-
-            {}
             <TouchableOpacity
               style={styles.submitButton}
               onPress={handleLogin}
@@ -161,8 +150,6 @@ export default function LoginScreen() {
                 {loading ? "Processing..." : "Login Now"}
               </Text>
             </TouchableOpacity>
-
-            {}
             <View style={styles.footer}>
               <Text style={styles.footerText}>
                 Don't have an account?{" "}

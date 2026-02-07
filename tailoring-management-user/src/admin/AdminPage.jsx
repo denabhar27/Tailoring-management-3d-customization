@@ -4,7 +4,6 @@ import '../adminStyle/admin.css';
 import AdminHeader from './AdminHeader';
 import { getAdminDashboardOverview } from '../api/AdminDashboardApi';
 import { getAllTransactionLogs } from '../api/TransactionLogApi';
-import AdminAnalytics from '../components/analytics/AdminAnalytics';
 
 function AdminPage() {
   const [stats, setStats] = useState([]);
@@ -284,11 +283,6 @@ function AdminPage() {
             ))
           )}
         </div>
-
-        {}
-        <AdminAnalytics />
-
-        {}
         <div className="filter-dropdowns">
           <div className="filter-dropdown">
             <label>Service:</label>
@@ -321,8 +315,6 @@ function AdminPage() {
               <option value="month">30 Days</option>
             </select>
           </div>
-          
-          {}
           {statusFilter === 'payment' && (
             <div className="filter-dropdown">
               <label>Payment:</label>

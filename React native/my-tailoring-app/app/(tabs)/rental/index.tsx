@@ -262,7 +262,6 @@ export default function RentalLanding() {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        {}
         <View style={styles.headerSection}>
           <View style={styles.greetingRow}>
             <Image
@@ -277,8 +276,6 @@ export default function RentalLanding() {
             <Ionicons name="notifications-outline" size={24} color="#78350F" />
           </TouchableOpacity>
         </View>
-
-        {}
         <View style={styles.heroContainer}>
           <Image
             source={require("../../../assets/images/rent.jpg")}
@@ -296,8 +293,6 @@ export default function RentalLanding() {
             </View>
           </View>
         </View>
-
-        {}
         <View style={styles.categorySection}>
           <ScrollView
             horizontal
@@ -333,8 +328,6 @@ export default function RentalLanding() {
             })}
           </ScrollView>
         </View>
-
-        {}
         <View style={styles.sectionContainer}>
           <View style={styles.sectionHeader}>
             <View style={styles.sectionTitleContainer}>
@@ -349,7 +342,6 @@ export default function RentalLanding() {
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
               <Text style={styles.itemCount}>{filteredRentals.length} items</Text>
-              {}
               <TouchableOpacity
                 onPress={() => {
                   if (isMultiSelectMode) {
@@ -378,8 +370,6 @@ export default function RentalLanding() {
               </TouchableOpacity>
             </View>
           </View>
-
-        {}
         {loading ? (
           <View style={styles.loadingContainer}>
             <ActivityIndicator size="large" color="#94665B" />
@@ -413,7 +403,6 @@ export default function RentalLanding() {
                   activeOpacity={0.88}
                   onPress={() => toggleItemSelection(item)}
                 >
-                  {}
                   {isMultiSelectMode && (
                     <View style={styles.selectionCheckbox}>
                       <View style={[
@@ -457,8 +446,6 @@ export default function RentalLanding() {
         )}
         </View>
       </ScrollView>
-
-      {}
       {isMultiSelectMode && selectedItems.length > 0 && (
         <View style={styles.bundleActionBar}>
           <View style={styles.bundleInfo}>
@@ -478,8 +465,6 @@ export default function RentalLanding() {
           </TouchableOpacity>
         </View>
       )}
-
-      {}
       <Modal
         visible={showBundleModal}
         transparent
@@ -498,7 +483,6 @@ export default function RentalLanding() {
             </View>
 
             <ScrollView showsVerticalScrollIndicator={false}>
-              {}
               <View style={styles.selectedItemsPreview}>
                 <Text style={styles.selectedItemsTitle}>Selected Items:</Text>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.selectedItemsScroll}>
@@ -522,8 +506,6 @@ export default function RentalLanding() {
                   ))}
                 </ScrollView>
               </View>
-
-              {}
               <View style={styles.dateSection}>
                 <Text style={styles.dateSectionTitle}>Rental Dates *</Text>
                 
@@ -589,8 +571,6 @@ export default function RentalLanding() {
                   </View>
                 )}
               </View>
-
-              {}
               {bundleStartDate && bundleDuration && (
                 <View style={styles.costBreakdown}>
                   <Text style={styles.costBreakdownTitle}>Payment Summary</Text>
@@ -624,8 +604,6 @@ export default function RentalLanding() {
                   </View>
                 </View>
               )}
-
-              {}
               <View style={styles.policyCard}>
                 <Text style={styles.policyTitle}>Rental Policy</Text>
                 <View style={styles.policyRow}>
@@ -639,8 +617,6 @@ export default function RentalLanding() {
                   <Text style={styles.policyText}>Late return: ₱100 per day</Text>
                 </View>
               </View>
-
-              {}
               <View style={styles.bundleModalActions}>
                 <TouchableOpacity
                   style={styles.bundleCancelButton}
@@ -665,8 +641,6 @@ export default function RentalLanding() {
           </View>
         </View>
       </Modal>
-
-      {}
       <DateTimePickerModal
         visible={showDatePicker}
         mode="date"
@@ -675,8 +649,6 @@ export default function RentalLanding() {
         onConfirm={handleDateConfirm}
         onCancel={() => setShowDatePicker(false)}
       />
-
-      {}
       <View style={[styles.bottomNav, { paddingBottom: Math.max(insets.bottom, 12) }]}>
         <TouchableOpacity onPress={() => router.replace("/home")}>
           <View style={styles.navItemWrap}>

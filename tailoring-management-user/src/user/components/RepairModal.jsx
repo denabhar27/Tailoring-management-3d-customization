@@ -174,7 +174,6 @@ const RepairModal = ({ isOpen, onClose, onCartUpdate }) => {
         {success && <div className="repair-success">{success}</div>}
 
         <div className="repair-modal-content">
-          {}
           {step === 1 && (
             <div className="repair-step">
               <h3>What's the damage level?</h3>
@@ -192,8 +191,6 @@ const RepairModal = ({ isOpen, onClose, onCartUpdate }) => {
               </div>
             </div>
           )}
-
-          {/* Step 2: Select Service */}
           {step === 2 && (
             <div className="repair-step">
               <h3>Select Repair Service</h3>
@@ -218,8 +215,6 @@ const RepairModal = ({ isOpen, onClose, onCartUpdate }) => {
               </button>
             </div>
           )}
-
-          {/* Step 3: Enter Details */}
           {step === 3 && (
             <div className="repair-step">
               <h3>Repair Details</h3>
@@ -254,44 +249,7 @@ const RepairModal = ({ isOpen, onClose, onCartUpdate }) => {
                     <label>Upload Photo of Damage *</label>
                     <input
                       type="file"
-                      accept="image/*"
-                      onChange={(e) => {
-                        if (e.target.files[0]) {
-                          handleImageUpload(e.target.files[0]);
-                        }
-                      }}
-                    />
-                    {uploadedImage && (
-                      <div className="uploaded-image">
-                        <img src={`http://localhost:5000${uploadedImage.url}`} alt="Damage" />
-                        <p>Image uploaded successfully</p>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                <div className="price-estimate">
-                  <h4>Estimated Price: {formatPrice(estimatedPrice)}</h4>
-                  <p>Final price will be confirmed after admin review</p>
-                </div>
-              </div>
-
-              <div className="repair-form-actions">
-                <button className="repair-back-btn" onClick={() => setStep(2)}>
-                  ← Back
-                </button>
-                <button
-                  className="repair-next-btn"
-                  onClick={() => setStep(4)}
-                  disabled={!damageDescription || !garmentType || (selectedService?.requires_image && !uploadedImage)}
-                >
-                  Review →
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* Step 4: Review */}
+                      accept="image}
           {step === 4 && (
             <div className="repair-step">
               <h3>Review Your Repair Request</h3>

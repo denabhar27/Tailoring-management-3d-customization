@@ -83,7 +83,7 @@ const App = ({ setIsLoggedIn }) => {
   const handleLogin = async () => {
     setAuthError('');
     
-    // Validate password for login
+    
     if (isLogin) {
       if (!loginUsername || !loginPassword) {
         setAuthError('Please enter both username and password');
@@ -95,7 +95,7 @@ const App = ({ setIsLoggedIn }) => {
     
     try {
       if (isLogin) {
-        // Handle login - backend expects username and password
+        
         const result = await loginUser({
           username: loginUsername,
           password: loginPassword
@@ -106,7 +106,7 @@ const App = ({ setIsLoggedIn }) => {
             setIsLoggedIn(true);
           }
           setIsAuthModalOpen(false);
-          // Redirect based on role
+          
           const userRole = localStorage.getItem('role');
           if (userRole === 'admin') {
             navigate('/admin', { replace: true });
@@ -118,9 +118,9 @@ const App = ({ setIsLoggedIn }) => {
           setAuthError(errorMessage);
         }
       } else {
-        // Handle signup - backend expects first_name, last_name, username, email, password, phone_number
         
-        // Validate required fields
+        
+        
         if (!signupFirstName || !signupLastName || !signupUsername || !signupEmail || !signupPassword) {
           setAuthError('Please fill in all required fields');
           alert('Please fill in all required fields (First Name, Last Name, Username, Email, Password)');
@@ -135,7 +135,7 @@ const App = ({ setIsLoggedIn }) => {
           return;
         }
         
-        // Validate password for signup
+        
         const passwordValidation = validatePassword(signupPassword);
         if (!passwordValidation.isValid) {
           setAuthError(passwordValidation.message);
@@ -156,14 +156,14 @@ const App = ({ setIsLoggedIn }) => {
           
           console.log('Registration result:', result);
           
-          // Check for success - backend returns { message: "Registration successful", token, ... } or { success: false, message: "..." }
+          
           if (result.success || result.message === 'Registration successful' || result.token) {
-            // Auto-login after successful registration
+            
             if (typeof setIsLoggedIn === 'function') {
               setIsLoggedIn(true);
             }
             setIsAuthModalOpen(false);
-            // Reset form
+            
             setSignupFirstName('');
             setSignupLastName('');
             setSignupUsername('');
@@ -203,7 +203,6 @@ const App = ({ setIsLoggedIn }) => {
 
   return (
     <>
-      {/* Header */}
       <header className="header">
         <div className="logo">
           <img 
@@ -230,8 +229,6 @@ const App = ({ setIsLoggedIn }) => {
         </button>
         
       </header>
-
-      {}
       <section className="hero" id="top" style={{ backgroundImage: `url(${heroBg})` }}>
         <div className="hero-overlay"></div>
         <div className="hero-content">
@@ -256,8 +253,6 @@ const App = ({ setIsLoggedIn }) => {
           ))}
         </div>
       </section>
-
-      {/* Appointment */}
       <section className="appointment fade-in-up" id="Appointment">
         <h2 className="fade-in-up">Appointment</h2>
         <div className="appointment-content scale-in">
@@ -269,11 +264,7 @@ const App = ({ setIsLoggedIn }) => {
           </div>
         </div>
       </section>
-
-      {/* Rental Clothes */}
       <RentalClothes openAuthModal={openAuthModal} />
-
-      {/* Customization */}
       <section className="customization fade-in-up" 
           id="Customize" 
           style={{ 
@@ -289,8 +280,6 @@ const App = ({ setIsLoggedIn }) => {
           <button className="btn-customize glow-on-hover" onClick={openAuthModal}>Customize now!</button>
         </div>
       </section>
-
-      {/* Repair Section */}
       <section className="repair fade-in-up" id="Repair">
         <h2 className="fade-in-up">Repair Service</h2>
         <div className="repair-bg scale-in" style={{ backgroundImage: `url(${repairBg})` }}>
@@ -302,8 +291,6 @@ const App = ({ setIsLoggedIn }) => {
           </div>
         </div>
       </section>
-
-      {/* Dry Cleaning Section */}
       <section className="clean fade-in-up" id="DryCleaning">
         <h2 className="fade-in-up">Dry Cleaning Service</h2>
         <div className="clean-bg scale-in" style={{ backgroundImage: `url(${dryCleanBg})` }}>
@@ -333,8 +320,6 @@ const App = ({ setIsLoggedIn }) => {
           </div>
         </div>
       )}
-
-     {/* ===== FIXED & BEAUTIFUL LOGIN / SIGNUP MODAL ===== */}
 {isAuthModalOpen && (
   <div className="auth-modal-overlay" onClick={closeAuthModal}>
     <div className="auth-modal" onClick={(e) => e.stopPropagation()}>
@@ -351,8 +336,6 @@ const App = ({ setIsLoggedIn }) => {
               : 'Join the Jackman Tailor Deluxe family'}
           </p>
         </div>
-
-        {/* Toggle Buttons */}
         <div className="auth-toggle">
           <button
             className={isLogin ? 'active' : ''}
@@ -367,8 +350,6 @@ const App = ({ setIsLoggedIn }) => {
             Sign Up
           </button>
         </div>
-
-        {/* Form */}
         <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
           {!isLogin && (
             <>
@@ -467,8 +448,6 @@ const App = ({ setIsLoggedIn }) => {
               </div>
             </>
           )}
-
-          {/* Remember Me & Forgot Password */}
           {isLogin && (
             <div className="auth-options">
               <label className="remember-me">
@@ -478,21 +457,15 @@ const App = ({ setIsLoggedIn }) => {
               <a href="#" className="forgot-link">Forgot Password?</a>
             </div>
           )}
-
-          {/* Error Message */}
           {authError && (
             <div className="auth-error" style={{ color: '#dc3545', fontSize: '14px', marginBottom: '16px', textAlign: 'center' }}>
               {authError}
             </div>
           )}
-
-          {/* Submit Button */}
           <button type="submit" className="auth-submit" onClick={handleLogin} disabled={isLoading}>
             {isLoading ? 'Processing...' : (isLogin ? 'Login Now' : 'Create Account')}
           </button>
         </form>
-
-        {/* Footer Link */}
         <div className="auth-footer">
           <p>
             {isLogin ? "Don't have an account? " : "Already have an account? "}

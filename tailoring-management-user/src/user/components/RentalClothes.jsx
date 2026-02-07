@@ -39,7 +39,6 @@ const RentalImageCarousel = ({ images, itemName }) => {
 
   return (
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-      {}
       <div style={{ 
         position: 'relative', 
         backgroundColor: '#ffffff',
@@ -56,8 +55,6 @@ const RentalImageCarousel = ({ images, itemName }) => {
           alt={`${itemName} - ${validImages[currentIndex].label}`}
           style={{ maxWidth: '100%', maxHeight: '450px', objectFit: 'contain' }}
         />
-        
-        {}
         <div style={{
           position: 'absolute',
           top: '8px',
@@ -71,8 +68,6 @@ const RentalImageCarousel = ({ images, itemName }) => {
         }}>
           {validImages[currentIndex].label}
         </div>
-
-        {}
         <button onClick={goToPrev} style={{
           position: 'absolute', left: '8px', top: '50%', transform: 'translateY(-50%)',
           width: '36px', height: '36px', borderRadius: '50%', border: 'none',
@@ -86,8 +81,6 @@ const RentalImageCarousel = ({ images, itemName }) => {
           fontSize: '18px', fontWeight: 'bold', boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
         }}>›</button>
       </div>
-      
-      {}
       <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '10px' }}>
         {validImages.map((img, index) => (
           <button key={index} onClick={() => setCurrentIndex(index)} style={{
@@ -159,7 +152,6 @@ const MeasurementsDropdown = ({ measurements, item, isInModal = false, measureme
           overflowY: 'auto',
           boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
         }}>
-          {}
           {isInModal && onUnitChange && (
             <div style={{ 
               display: 'flex', 
@@ -909,7 +901,6 @@ const RentalClothes = ({ openAuthModal, showAll = false }) => {
           <h2 style={{ margin: 0 }}>{showAll ? 'All Rental Clothes' : 'Rental Clothes'}</h2>
           
           <div style={{ display: 'flex', gap: '15px', alignItems: 'center', flexWrap: 'wrap' }}>
-            {}
             <button
               onClick={() => {
                 if (isMultiSelectMode) {
@@ -965,7 +956,6 @@ const RentalClothes = ({ openAuthModal, showAll = false }) => {
                 }
               }}
             >
-              {}
               {isMultiSelectMode && (
                 <div style={{
                   position: 'absolute',
@@ -1016,8 +1006,6 @@ const RentalClothes = ({ openAuthModal, showAll = false }) => {
             ))
           )}
         </div>
-        
-        {}
         {!showAll && rentalItems.length > 3 && (
           <div style={{ 
             display: 'flex', 
@@ -1053,8 +1041,6 @@ const RentalClothes = ({ openAuthModal, showAll = false }) => {
           </div>
         )}
       </section>
-
-      {}
       {isMultiSelectMode && selectedItems.length > 0 && (
         <div style={{
           position: 'fixed',
@@ -1095,8 +1081,6 @@ const RentalClothes = ({ openAuthModal, showAll = false }) => {
           </button>
         </div>
       )}
-
-      {}
       {isDateModalOpen && selectedItems.length > 0 && (
         <div className="modal" onClick={closeDateModal} style={{
           position: 'fixed',
@@ -1131,8 +1115,6 @@ const RentalClothes = ({ openAuthModal, showAll = false }) => {
             <h2 style={{ marginBottom: '20px', color: '#1a1a2e' }}>
               Rental Bundle ({selectedItems.length} items)
             </h2>
-            
-            {}
             <div style={{
               display: 'flex',
               flexWrap: 'wrap',
@@ -1175,8 +1157,6 @@ const RentalClothes = ({ openAuthModal, showAll = false }) => {
                 </div>
               ))}
             </div>
-            
-            {}
             <div className="date-section" style={{ marginBottom: '20px' }}>
               <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
                 <div className="date-input-group" style={{ flex: 1, minWidth: '200px' }}>
@@ -1249,13 +1229,9 @@ const RentalClothes = ({ openAuthModal, showAll = false }) => {
                 )}
               </div>
             </div>
-            
-            {}
             {totalCost > 0 && (
               <div className="cost-breakdown">
                 <h4>Payment Details</h4>
-                
-                {}
                 <div style={{ marginBottom: '10px' }}>
                   {selectedItems.map((item, idx) => {
                     const itemCost = calculateTotalCost(rentalDuration, item);
@@ -1293,8 +1269,6 @@ const RentalClothes = ({ openAuthModal, showAll = false }) => {
                 </div>
               </div>
             )}
-            
-            {}
             {cartMessage && (
               <div style={{
                 padding: '12px',
@@ -1307,8 +1281,6 @@ const RentalClothes = ({ openAuthModal, showAll = false }) => {
                 {cartMessage}
               </div>
             )}
-            
-            {}
             <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
               <button
                 onClick={closeDateModal}
@@ -1345,8 +1317,6 @@ const RentalClothes = ({ openAuthModal, showAll = false }) => {
           </div>
         </div>
       )}
-
-      {}
       {isModalOpen && selectedItem && (
         <div className="modal" onClick={closeModal} style={{
           position: 'fixed',
@@ -1378,7 +1348,6 @@ const RentalClothes = ({ openAuthModal, showAll = false }) => {
               zIndex: 10
             }}>×</span>
             <div className="modal-body" style={{ maxHeight: 'calc(90vh - 40px)', overflow: 'hidden', display: 'flex', gap: '30px' }}>
-              {}
               <RentalImageCarousel 
                 images={[
                   { url: selectedItem.front_image ? getRentalImageUrl(selectedItem.front_image) : null, label: 'Front' },
@@ -1427,8 +1396,6 @@ const RentalClothes = ({ openAuthModal, showAll = false }) => {
                     </div>
                   </div>
                 </div>
-                
-                {}
                 <div style={{ marginTop: '15px', display: 'flex', justifyContent: 'center' }}>
                   {(() => {
                     const measurementsSummary = getMeasurementsSummary(selectedItem);
@@ -1543,8 +1510,6 @@ const RentalClothes = ({ openAuthModal, showAll = false }) => {
                       </div>
                     </div>
                   )}
-                  
-                  {}
                   {cartMessage && (
                     <div className={`cart-message ${cartMessage.includes('✅') ? 'success' : 'error'}`}>
                       {cartMessage}

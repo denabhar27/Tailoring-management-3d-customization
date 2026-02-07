@@ -49,7 +49,6 @@ const SimpleImageCarousel = ({ images, itemName, height = '250px' }) => {
 
   return (
     <div style={{ width: '100%' }}>
-      {}
       <div style={{ 
         position: 'relative', 
         width: '100%',
@@ -57,7 +56,6 @@ const SimpleImageCarousel = ({ images, itemName, height = '250px' }) => {
         borderRadius: '8px',
         overflow: 'hidden'
       }}>
-        {}
         <div style={{ 
           display: 'flex', 
           justifyContent: 'center', 
@@ -74,8 +72,6 @@ const SimpleImageCarousel = ({ images, itemName, height = '250px' }) => {
             }}
           />
         </div>
-        
-        {}
         <div style={{
           position: 'absolute',
           top: '8px',
@@ -89,8 +85,6 @@ const SimpleImageCarousel = ({ images, itemName, height = '250px' }) => {
         }}>
           {validImages[currentIndex].label || `${currentIndex + 1}/${validImages.length}`}
         </div>
-
-        {}
         <button
           onClick={goToPrev}
           style={{
@@ -140,8 +134,6 @@ const SimpleImageCarousel = ({ images, itemName, height = '250px' }) => {
           ›
         </button>
       </div>
-      
-      {}
       <div style={{
         display: 'flex',
         justifyContent: 'center',

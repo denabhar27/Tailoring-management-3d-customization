@@ -444,7 +444,6 @@ const WalkInOrders = () => {
         </div>
 
         <div className="form-container" style={{ maxWidth: '800px', margin: '0 auto' }}>
-          {}
           <div className="form-group">
             <label>Service Type *</label>
             <select 
@@ -458,8 +457,6 @@ const WalkInOrders = () => {
               <option value="rental">Rental</option>
             </select>
           </div>
-
-          {}
           <div className="form-section">
             <h3>Customer Information</h3>
             
@@ -512,8 +509,6 @@ const WalkInOrders = () => {
               />
             </div>
           </div>
-
-          {}
           {serviceType === 'dry_cleaning' && (
             <div className="form-section">
               <h3>Dry Cleaning Details</h3>
@@ -694,8 +689,6 @@ const WalkInOrders = () => {
                   <option value="Uniform">👔 Uniform (Price varies)</option>
                 </select>
               </div>
-
-              {}
               {customGarmentType === 'Uniform' && (
                 <div style={{ 
                   backgroundColor: '#fff3e0', 
@@ -749,8 +742,6 @@ const WalkInOrders = () => {
                   ))}
                 </select>
               </div>
-
-              {}
               <div className="form-group" style={{ marginTop: '15px' }}>
                 <label>Reference Image (Optional)</label>
                 <p style={{ fontSize: '12px', color: '#666', marginBottom: '8px' }}>
@@ -811,13 +802,10 @@ const WalkInOrders = () => {
                   </div>
                 )}
               </div>
-
-              {}
               <div className="measurements-section" style={{ marginTop: '20px', padding: '15px', backgroundColor: '#f9f9f9', borderRadius: '8px' }}>
                 <h4 style={{ marginBottom: '15px', color: '#5D4037' }}>Customer Measurements</h4>
                 
                 <div style={{ display: 'flex', gap: '20px' }}>
-                  {}
                   <div style={{ flex: 1, padding: '15px', backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #eee' }}>
                     <p style={{ fontWeight: '600', marginBottom: '15px', color: '#333', textAlign: 'center' }}>Top Measurements</p>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px 10px' }}>
@@ -889,8 +877,6 @@ const WalkInOrders = () => {
                       </div>
                     </div>
                   </div>
-
-                  {}
                   <div style={{ flex: 1, padding: '15px', backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #eee' }}>
                     <p style={{ fontWeight: '600', marginBottom: '15px', color: '#333', textAlign: 'center' }}>Bottom Measurements</p>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px 10px' }}>
@@ -963,8 +949,6 @@ const WalkInOrders = () => {
                     </div>
                   </div>
                 </div>
-
-                {}
                 <div style={{ marginTop: '15px' }}>
                   <label style={{ fontSize: '13px', fontWeight: '500' }}>Measurement Notes</label>
                   <textarea
@@ -1183,8 +1167,6 @@ const WalkInOrders = () => {
               </div>
             </div>
           )}
-
-          {}
           <div className="form-group">
             <label>Order Notes</label>
             <textarea
@@ -1195,8 +1177,6 @@ const WalkInOrders = () => {
               placeholder="Any additional notes..."
             />
           </div>
-
-          {}
           <div className="form-actions">
             <button
               type="submit"

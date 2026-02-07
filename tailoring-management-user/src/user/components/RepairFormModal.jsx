@@ -454,7 +454,6 @@ const RepairFormModal = ({ isOpen, onClose, onCartUpdate }) => {
         </div>
 
         <form onSubmit={handleSubmit} className="modal-content-shared">
-          {}
           <div className="form-group-shared">
             <label htmlFor="damageLevel" className="form-label-shared">
               👔 Damage Level <span className="required-indicator">*</span>
@@ -474,7 +473,6 @@ const RepairFormModal = ({ isOpen, onClose, onCartUpdate }) => {
                 </option>
               ))}
             </select>
-            {}
             <div className="help-text-shared" style={{ marginTop: '12px' }}>
               {damageLevels.map(level => (
                 <div key={level.value} style={{ marginBottom: '8px' }}>
@@ -486,8 +484,6 @@ const RepairFormModal = ({ isOpen, onClose, onCartUpdate }) => {
               <span className="error-message-shared">{errors.damageLevel}</span>
             )}
           </div>
-
-          {}
           <div className="form-group-shared">
             <label htmlFor="garmentType" className="form-label-shared">
               👔 Garment Type <span className="required-indicator">*</span>
@@ -511,8 +507,6 @@ const RepairFormModal = ({ isOpen, onClose, onCartUpdate }) => {
               <span className="error-message-shared">{errors.garmentType}</span>
             )}
           </div>
-
-          {}
           <div className="form-group-shared">
             <label htmlFor="notes" className="form-label-shared">
               📝 Detailed Description <span className="required-indicator">*</span>
@@ -532,8 +526,6 @@ const RepairFormModal = ({ isOpen, onClose, onCartUpdate }) => {
               <span className="error-message-shared">{errors.notes}</span>
             )}
           </div>
-
-          {}
           <div className="form-group-shared">
             <label htmlFor="image" className="form-label-shared">📷 Upload Damage Photo (Recommended)</label>
             <div className="image-upload-wrapper-shared">
@@ -549,8 +541,6 @@ const RepairFormModal = ({ isOpen, onClose, onCartUpdate }) => {
                 📷 Choose Photo
               </label>
             </div>
-            
-            {}
             {imagePreview && (
               <div className="image-preview-shared">
                 <img src={imagePreview} alt="Damage preview" />
@@ -575,8 +565,6 @@ const RepairFormModal = ({ isOpen, onClose, onCartUpdate }) => {
             )}
             <span className="help-text-shared">Photos help us provide accurate pricing and better service</span>
           </div>
-
-          {}
           <div className="form-group-shared">
             <label htmlFor="date" className="form-label-shared">
               📅 Drop off date <span className="required-indicator">*</span>
@@ -596,15 +584,11 @@ const RepairFormModal = ({ isOpen, onClose, onCartUpdate }) => {
               <span className="error-message-shared">{errors.date}</span>
             )}
           </div>
-
-          {}
           {formData.date && (
             <div className="form-group-shared">
               <label className="form-label-shared">
                 🕐 Select Time Slot <span className="required-indicator">*</span>
               </label>
-              
-              {}
               <div className="time-slot-legend">
                 <div className="legend-item">
                   <span className="legend-dot available"></span>
@@ -675,8 +659,6 @@ const RepairFormModal = ({ isOpen, onClose, onCartUpdate }) => {
                   <p>No time slots available for this date. Please select another date.</p>
                 </div>
               )}
-              
-              {}
               <input
                 type="hidden"
                 name="time"
@@ -694,8 +676,6 @@ const RepairFormModal = ({ isOpen, onClose, onCartUpdate }) => {
               )}
             </div>
           )}
-
-          {}
           {estimatedPrice > 0 && (
             <div className="price-estimate-shared">
               <h4>Estimated Price: ₱{estimatedPrice}</h4>

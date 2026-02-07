@@ -8,6 +8,7 @@ import {
   getRevenueTrend,
   getRevenueComparison
 } from '../../api/AnalyticsApi';
+import { exportRevenueTrend, exportRevenueComparison, exportBillingData } from '../../utils/excelExport';
 import './AnalyticsDashboard.css';
 
 const BillingAnalytics = () => {
@@ -28,6 +29,46 @@ const BillingAnalytics = () => {
     trend: false,
     comparison: false
   });
+
+  
+  const [exportLoading, setExportLoading] = useState({
+    trend: false,
+    comparison: false,
+    full: false
+  });
+  const [exportSuccess, setExportSuccess] = useState('');
+
+  
+  const handleExport = async (type, exportFn, data, period = null) => {
+    setExportLoading(prev => ({ ...prev, [type]: true }));
+    try {
+      if (period) {
+        await exportFn(data, period);
+      } else {
+        await exportFn(data);
+      }
+      setExportSuccess(`${type.charAt(0).toUpperCase() + type.slice(1)} data exported successfully!`);
+      setTimeout(() => setExportSuccess(''), 3000);
+    } catch (error) {
+      console.error('Export failed:', error);
+    } finally {
+      setExportLoading(prev => ({ ...prev, [type]: false }));
+    }
+  };
+
+  
+  const handleExportAll = async () => {
+    setExportLoading(prev => ({ ...prev, full: true }));
+    try {
+      await exportBillingData(trendData, comparisonData, trendPeriod, comparisonPeriod);
+      setExportSuccess('All billing data exported successfully!');
+      setTimeout(() => setExportSuccess(''), 3000);
+    } catch (error) {
+      console.error('Export failed:', error);
+    } finally {
+      setExportLoading(prev => ({ ...prev, full: false }));
+    }
+  };
 
   const fetchAllData = async () => {
     setLoading(true);
@@ -138,13 +179,33 @@ const BillingAnalytics = () => {
 
   return (
     <div className="analytics-dashboard">
-      {}
       <div className="analytics-header">
-        <h2>💰 Revenue Analytics</h2>
-        <p>Revenue trends and performance comparisons</p>
+        <div className="header-content">
+          <h2>💰 Revenue Analytics</h2>
+          <p>Revenue trends and performance comparisons</p>
+        </div>
+        <button 
+          className={`export-all-btn ${exportLoading.full ? 'loading' : ''}`}
+          onClick={handleExportAll}
+          disabled={exportLoading.full || loading}
+        >
+          {exportLoading.full ? (
+            <>
+              <span className="export-spinner"></span>
+              Exporting...
+            </>
+          ) : (
+            <>
+              📥 Export All to Excel
+            </>
+          )}
+        </button>
       </div>
-
-      {}
+      {exportSuccess && (
+        <div className="export-success-notification">
+          ✅ {exportSuccess}
+        </div>
+      )}
       <div className="analytics-filters billing-filters">
         <div className="filter-group">
           <label>Date Range</label>
@@ -211,20 +272,28 @@ const BillingAnalytics = () => {
           Apply Filters
         </button>
       </div>
-
-      {}
       <div className="charts-grid">
-        {}
         <div className="chart-container trend-chart">
           <div className="chart-header">
-            <div className="period-selector">
-              <label>View by:</label>
-              <select value={trendPeriod} onChange={(e) => setTrendPeriod(e.target.value)}>
-                <option value="daily">Daily</option>
-                <option value="weekly">Weekly</option>
-                <option value="monthly">Monthly</option>
-                <option value="yearly">Yearly</option>
-              </select>
+            <h3>📈 Revenue Trend</h3>
+            <div className="chart-controls">
+              <div className="period-selector">
+                <label>View by:</label>
+                <select value={trendPeriod} onChange={(e) => setTrendPeriod(e.target.value)}>
+                  <option value="daily">Daily</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="yearly">Yearly</option>
+                </select>
+              </div>
+              <button 
+                className={`export-btn ${exportLoading.trend ? 'loading' : ''}`}
+                onClick={() => handleExport('trend', exportRevenueTrend, trendData, trendPeriod)}
+                disabled={exportLoading.trend || trendData.length === 0}
+                title="Export to Excel"
+              >
+                {exportLoading.trend ? '⏳' : '📥'}
+              </button>
             </div>
           </div>
           <div className="chart-body">
@@ -235,18 +304,27 @@ const BillingAnalytics = () => {
             )}
           </div>
         </div>
-
-        {}
         <div className="chart-container comparison-chart">
           <div className="chart-header">
-            <div className="period-selector">
-              <label>Compare:</label>
-              <select value={comparisonPeriod} onChange={(e) => setComparisonPeriod(e.target.value)}>
-                <option value="daily">Today vs Yesterday</option>
-                <option value="weekly">This Week vs Last Week</option>
-                <option value="monthly">This Month vs Last Month</option>
-                <option value="yearly">This Year vs Last Year</option>
-              </select>
+            <h3>📊 Revenue Comparison</h3>
+            <div className="chart-controls">
+              <div className="period-selector">
+                <label>Compare:</label>
+                <select value={comparisonPeriod} onChange={(e) => setComparisonPeriod(e.target.value)}>
+                  <option value="daily">Today vs Yesterday</option>
+                  <option value="weekly">This Week vs Last Week</option>
+                  <option value="monthly">This Month vs Last Month</option>
+                  <option value="yearly">This Year vs Last Year</option>
+                </select>
+              </div>
+              <button 
+                className={`export-btn ${exportLoading.comparison ? 'loading' : ''}`}
+                onClick={() => handleExport('comparison', exportRevenueComparison, comparisonData.data, comparisonPeriod)}
+                disabled={exportLoading.comparison || !comparisonData.data}
+                title="Export to Excel"
+              >
+                {exportLoading.comparison ? '⏳' : '📥'}
+              </button>
             </div>
           </div>
           <div className="chart-body">

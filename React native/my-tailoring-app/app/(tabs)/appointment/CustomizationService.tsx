@@ -304,7 +304,6 @@ export default function CustomizationService() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {}
       <View style={styles.header}>
         <TouchableOpacity onPress={handleClose} style={styles.closeButton}>
           <Ionicons name="close" size={28} color="#5D4037" />
@@ -318,7 +317,6 @@ export default function CustomizationService() {
         contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
       >
-        {}
         <TouchableOpacity 
           style={styles.banner3D}
           onPress={handleOpen3DCustomizer}
@@ -335,15 +333,11 @@ export default function CustomizationService() {
           </View>
           <Ionicons name="chevron-forward" size={24} color="#B8860B" />
         </TouchableOpacity>
-
-        {}
         <View style={styles.divider}>
           <View style={styles.dividerLine} />
           <Text style={styles.dividerText}>OR fill out the form</Text>
           <View style={styles.dividerLine} />
         </View>
-
-        {}
         <Text style={styles.sectionTitle}>Select Garment Type</Text>
         {loadingGarments ? (
           <ActivityIndicator size="small" color="#B8860B" style={{ marginVertical: 20 }} />
@@ -368,8 +362,6 @@ export default function CustomizationService() {
               </View>
             </TouchableOpacity>
         )}
-
-            {}
             <Modal
               visible={showGarmentPicker}
               transparent={true}
@@ -419,8 +411,6 @@ export default function CustomizationService() {
                 </View>
               </TouchableOpacity>
             </Modal>
-
-            {}
             {selectedGarment === 'uniform' && (
               <View style={styles.uniformNotice}>
                 <Ionicons name="information-circle" size={24} color="#e65100" />
@@ -432,8 +422,6 @@ export default function CustomizationService() {
                 </View>
               </View>
             )}
-
-            {}
             <Text style={styles.sectionTitle}>Select Fabric</Text>
             <TouchableOpacity 
               style={styles.dropdownSelector}
@@ -452,8 +440,6 @@ export default function CustomizationService() {
                 <Ionicons name="chevron-down" size={20} color="#8D6E63" />
               </View>
             </TouchableOpacity>
-
-            {}
             <Modal
               visible={showFabricPicker}
               transparent={true}
@@ -503,8 +489,6 @@ export default function CustomizationService() {
                 </View>
               </TouchableOpacity>
             </Modal>
-
-            {}
             {selectedGarment && selectedFabric && (selectedGarment !== 'uniform') && (
               <View style={styles.priceEstimateCard}>
                 <Text style={styles.priceEstimateTitle}>Estimated Price</Text>
@@ -524,8 +508,6 @@ export default function CustomizationService() {
                 </View>
               </View>
             )}
-
-            {}
             <Text style={styles.sectionTitle}>Reference Image (Optional)</Text>
             <TouchableOpacity style={styles.imageUpload} onPress={pickImage}>
               {image ? (
@@ -537,8 +519,6 @@ export default function CustomizationService() {
                 </View>
               )}
             </TouchableOpacity>
-
-            {}
             <Text style={styles.sectionTitle}>Preferred Appointment Date</Text>
             <TouchableOpacity style={styles.datePickerButton} onPress={() => setShowDatePicker(true)}>
               <Ionicons name="calendar-outline" size={20} color="#8D6E63" />
@@ -556,11 +536,7 @@ export default function CustomizationService() {
               onConfirm={handleDateConfirm}
               onCancel={handleDateCancel}
             />
-
-            {}
             <Text style={styles.sectionTitle}>Select Time Slot</Text>
-            
-            {}
             <View style={styles.legendContainer}>
               <View style={styles.legendItem}>
                 <View style={[styles.legendDot, styles.legendDotAvailable]} />
@@ -575,8 +551,6 @@ export default function CustomizationService() {
                 <Text style={styles.legendText}>Full</Text>
               </View>
             </View>
-
-            {}
             {loadingSlots ? (
               <View style={styles.loadingContainer}>
                 <ActivityIndicator size="small" color="#B8860B" />
@@ -638,8 +612,6 @@ export default function CustomizationService() {
                 </Text>
               </View>
             )}
-
-            {}
             <Text style={styles.sectionTitle}>Additional Notes (Optional)</Text>
             <TextInput
               style={styles.textArea}
@@ -650,8 +622,6 @@ export default function CustomizationService() {
               numberOfLines={3}
               placeholderTextColor="#999"
             />
-
-            {}
             <TouchableOpacity
               style={[
                 styles.primaryButton, 

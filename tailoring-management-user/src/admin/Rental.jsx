@@ -716,7 +716,6 @@ function Rental() {
                           {rental.rental_start_date && rental.rental_end_date ? (
                             <>
                               <div>{rental.rental_start_date} to {rental.rental_end_date}</div>
-                              {}
                               {(rental.approval_status === 'rented' || rental.approval_status === 'picked_up') && (() => {
                                 const today = new Date();
                                 today.setHours(0, 0, 0, 0);
@@ -836,7 +835,6 @@ function Rental() {
                             
                             return (
                             <div className="action-buttons">
-                                {}
                                 {(() => {
                                   const currentStatus = rental.approval_status || 'pending';
                                   const nextStatus = getNextStatus(currentStatus, 'rental', rental);
@@ -886,7 +884,6 @@ function Rental() {
                               </button>
                                   );
                                 })()}
-                                {}
                                 {isPending && (
                                   <button 
                                     className="icon-btn decline" 
@@ -909,7 +906,6 @@ function Rental() {
                                 </svg>
                               </button>
                                 )}
-                                {}
                                 {rental.approval_status !== 'cancelled' && (
                                 <button 
                                     className="icon-btn" 
@@ -948,8 +944,6 @@ function Rental() {
           )}
         </div>
       </div>
-
-      {}
       {showEditModal && selectedRental && (
         <div className="modal-overlay active" onClick={(e) => {
           if (e.target.classList.contains('modal-overlay')) setShowEditModal(false);
@@ -1048,8 +1042,6 @@ function Rental() {
           </div>
         </div>
       )}
-
-      {}
       {showPaymentModal && selectedRental && (
         <div className="modal-overlay active" onClick={(e) => {
           if (e.target.classList.contains('modal-overlay')) setShowPaymentModal(false);
@@ -1154,8 +1146,6 @@ function Rental() {
           </div>
         </div>
       )}
-
-      {}
       {showDetailModal && selectedRental && (
         <div className="modal-overlay active" onClick={(e) => {
           if (e.target.classList.contains('modal-overlay')) setShowDetailModal(false);
@@ -1166,7 +1156,6 @@ function Rental() {
               <span className="close-modal" onClick={() => setShowDetailModal(false)}>×</span>
             </div>
             <div className="modal-body">
-              {}
               {(() => {
                 const isBundle = selectedRental.specific_data?.is_bundle === true || selectedRental.specific_data?.category === 'rental_bundle';
                 const bundleItems = selectedRental.specific_data?.bundle_items || [];
@@ -1174,7 +1163,6 @@ function Rental() {
                 if (isBundle && bundleItems.length > 0) {
                   return (
                     <>
-                      {}
                       <div className="detail-row" style={{ marginBottom: '20px' }}>
                         <strong style={{ display: 'block', marginBottom: '10px' }}>Rental Items:</strong>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
@@ -1209,8 +1197,6 @@ function Rental() {
                           })}
                         </div>
                       </div>
-                      
-                      {}
                       <div className="detail-row">
                         <strong>Rented Item:</strong>
                         <span>{bundleItems.map(item => item.item_name).join(', ') || 'N/A'}</span>
@@ -1262,8 +1248,6 @@ function Rental() {
                   );
                 }
               })()}
-              
-              {}
               <div className="detail-row">
                 <strong>Order ID:</strong>
                 <span>ORD-{selectedRental.order_id}</span>
@@ -1494,8 +1478,6 @@ function Rental() {
                     : 'N/A'}
                 </span>
               </div>
-              
-              {}
               {(selectedRental.approval_status === 'rented' || selectedRental.approval_status === 'picked_up') && 
                selectedRental.rental_end_date && (() => {
                 const today = new Date();

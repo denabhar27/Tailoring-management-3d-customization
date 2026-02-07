@@ -40,9 +40,11 @@ const DryCleaningFormModal = ({ isOpen, onClose, onCartUpdate }) => {
 
   const loadGarmentTypes = async () => {
     try {
+      console.log('[DryCleaningFormModal] Loading garment types...');
       const result = await getAllDCGarmentTypes();
+      console.log('[DryCleaningFormModal] API result:', result);
       if (result.success && result.data) {
-        
+        console.log('[DryCleaningFormModal] Found', result.data.length, 'garment types');
         const typesObj = {};
         result.data.forEach(garment => {
           if (garment.is_active === 1) {
@@ -51,9 +53,12 @@ const DryCleaningFormModal = ({ isOpen, onClose, onCartUpdate }) => {
         });
         setGarmentTypes(typesObj);
         setGarmentTypesList(result.data.filter(g => g.is_active === 1));
+        console.log('[DryCleaningFormModal] Garment types loaded successfully');
+      } else {
+        console.log('[DryCleaningFormModal] API returned no data or failed:', result);
       }
     } catch (err) {
-      console.error("Load garment types error:", err);
+      console.error("[DryCleaningFormModal] Load garment types error:", err);
       
       setGarmentTypes({
         'barong': 200,
@@ -474,7 +479,6 @@ const DryCleaningFormModal = ({ isOpen, onClose, onCartUpdate }) => {
 
         <div className="modal-content-shared">
           <form onSubmit={handleSubmit}>
-            {}
             <div className="form-group-shared">
               <label htmlFor="garmentType" className="form-label-shared">
                 👔 Garment Type <span className="required-indicator">*</span>
@@ -489,7 +493,7 @@ const DryCleaningFormModal = ({ isOpen, onClose, onCartUpdate }) => {
               >
                 <option value="">Select garment type...</option>
                 {garmentTypesList.map(garment => (
-                  <option key={garment.garment_id} value={garment.garment_name.toLowerCase()}>
+                  <option key={garment.dc_garment_id} value={garment.garment_name.toLowerCase()}>
                     {garment.garment_name} - ₱{parseFloat(garment.garment_price).toFixed(2)}
                   </option>
                 ))}
@@ -535,8 +539,6 @@ const DryCleaningFormModal = ({ isOpen, onClose, onCartUpdate }) => {
                 <span className="error-message-shared">{errors.brand}</span>
               )}
             </div>
-
-            {}
             <div className="form-group-shared">
               <label htmlFor="quantity" className="form-label-shared">
                 📦 Number of Items <span className="required-indicator">*</span>
@@ -554,8 +556,6 @@ const DryCleaningFormModal = ({ isOpen, onClose, onCartUpdate }) => {
               />
               <span className="help-text-shared">Enter the number of items to be cleaned</span>
             </div>
-
-            {}
             <div className="form-group-shared">
               <label htmlFor="notes" className="form-label-shared">📝 Special Instructions</label>
               <textarea
@@ -568,8 +568,6 @@ const DryCleaningFormModal = ({ isOpen, onClose, onCartUpdate }) => {
                 className="form-textarea-shared"
               />
             </div>
-
-            {}
             <div className="form-group-shared">
               <label htmlFor="date" className="form-label-shared">
                 📅 Drop off item date <span className="required-indicator">*</span>
@@ -589,15 +587,11 @@ const DryCleaningFormModal = ({ isOpen, onClose, onCartUpdate }) => {
                 <span className="error-message-shared">{errors.date}</span>
               )}
             </div>
-
-            {}
             {formData.date && (
               <div className="form-group-shared">
                 <label className="form-label-shared">
                   🕐 Select Time Slot <span className="required-indicator">*</span>
                 </label>
-                
-                {}
                 <div className="time-slot-legend">
                   <div className="legend-item">
                     <span className="legend-dot available"></span>
@@ -668,8 +662,6 @@ const DryCleaningFormModal = ({ isOpen, onClose, onCartUpdate }) => {
                     <p>No time slots available for this date. Please select another date.</p>
                   </div>
                 )}
-                
-                {}
                 <input
                   type="hidden"
                   name="time"
@@ -687,8 +679,6 @@ const DryCleaningFormModal = ({ isOpen, onClose, onCartUpdate }) => {
                 )}
               </div>
             )}
-
-            {}
             <div className="form-group-shared">
               <label htmlFor="image" className="form-label-shared">📷 Upload Clothing Photo (Optional)</label>
               <div className="image-upload-wrapper-shared">
@@ -704,8 +694,6 @@ const DryCleaningFormModal = ({ isOpen, onClose, onCartUpdate }) => {
                   📷 Choose Photo
                 </label>
               </div>
-
-              {}
               {imagePreview && (
                 <div className="image-preview-shared">
                   <img src={imagePreview} alt="Clothing preview" />
@@ -730,8 +718,6 @@ const DryCleaningFormModal = ({ isOpen, onClose, onCartUpdate }) => {
               )}
               <span className="help-text-shared">Photos help us provide better service and accurate pricing</span>
             </div>
-
-            {}
             {estimatedPrice > 0 && formData.garmentType && (
               <div className="price-estimate-shared">
                 <h4>{isEstimatedPrice ? 'Estimated Price' : 'Final Price'}</h4>
@@ -750,15 +736,11 @@ const DryCleaningFormModal = ({ isOpen, onClose, onCartUpdate }) => {
                 <p className="estimated-pickup">Drop off item date: {formData.date && formData.time ? `${formData.date} ${formData.time.substring(0, 5)}` : 'Not set'}</p>
               </div>
             )}
-
-            {}
             {message && (
               <div className={`message-shared ${message.includes('✅') ? 'success' : 'error'}`}>
                 {message}
               </div>
             )}
-
-            {}
             <div className="modal-footer-shared">
               <button
                 type="button"

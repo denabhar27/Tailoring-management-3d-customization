@@ -44,7 +44,6 @@ const ImageCarousel = ({ images, itemName, getRentalImageUrl }) => {
 
   return (
     <div style={{ width: '100%' }}>
-      {}
       <div style={{ 
         position: 'relative', 
         backgroundColor: '#f9f9f9',
@@ -58,8 +57,6 @@ const ImageCarousel = ({ images, itemName, getRentalImageUrl }) => {
             style={{ maxWidth: '100%', maxHeight: '250px', objectFit: 'contain' }}
           />
         </div>
-        
-        {}
         <div style={{
           position: 'absolute',
           top: '8px',
@@ -73,8 +70,6 @@ const ImageCarousel = ({ images, itemName, getRentalImageUrl }) => {
         }}>
           {validImages[currentIndex].label}
         </div>
-
-        {}
         <button onClick={goToPrev} style={{
           position: 'absolute', left: '8px', top: '50%', transform: 'translateY(-50%)',
           width: '32px', height: '32px', borderRadius: '50%', border: 'none',
@@ -88,8 +83,6 @@ const ImageCarousel = ({ images, itemName, getRentalImageUrl }) => {
           fontSize: '16px', fontWeight: 'bold', boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
         }}>›</button>
       </div>
-      
-      {}
       <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '10px' }}>
         {validImages.map((img, index) => (
           <button key={index} onClick={() => setCurrentIndex(index)} style={{
@@ -588,14 +581,11 @@ const PostRent = () => {
                   {error}
                 </div>
               )}
-
-              {}
               <div style={{ marginBottom: '20px' }}>
                 <h4 style={{ marginBottom: '15px', color: '#333', fontSize: '1rem', fontWeight: '600' }}>
                   📸 Upload Images (Front, Back, Side)
                 </h4>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '15px' }}>
-                  {}
                   <div 
                     className="upload-area" 
                     onClick={() => document.getElementById('frontImageInput')?.click()}
@@ -628,8 +618,6 @@ const PostRent = () => {
                     <input type="file" id="frontImageInput" accept="image/*" className="hidden-input" onChange={(e) => handleImageChange(e, 'front')} style={{ display: 'none' }} />
                     <span style={{ fontSize: '11px', color: '#007bff', marginTop: '5px', fontWeight: '600' }}>Front View</span>
                   </div>
-
-                  {}
                   <div 
                     className="upload-area" 
                     onClick={() => document.getElementById('backImageInput')?.click()}
@@ -662,8 +650,6 @@ const PostRent = () => {
                     <input type="file" id="backImageInput" accept="image/*" className="hidden-input" onChange={(e) => handleImageChange(e, 'back')} style={{ display: 'none' }} />
                     <span style={{ fontSize: '11px', color: '#28a745', marginTop: '5px', fontWeight: '600' }}>Back View</span>
                   </div>
-
-                  {}
                   <div 
                     className="upload-area" 
                     onClick={() => document.getElementById('sideImageInput')?.click()}
@@ -725,8 +711,6 @@ const PostRent = () => {
                   </select>
                 </div>
               </div>
-
-              {}
               {isTopCategory(formData.category) && (
                 <div className="measurements-section" style={{ marginBottom: '20px' }}>
                   <h4 style={{ marginBottom: '15px', color: '#333', fontSize: '1.1rem', fontWeight: '600' }}>Top Measurements</h4>
@@ -1142,8 +1126,6 @@ const PostRent = () => {
           </div>
         </div>
       )}
-
-      {}
       {isDetailModalOpen && selectedItem && (
         <div className="overlay" onClick={closeDetailModal}>
           <div className="detail-modal" onClick={(e) => e.stopPropagation()}>
@@ -1154,7 +1136,6 @@ const PostRent = () => {
             
             <div className="detail-modal-body">
               <div className="detail-image-section">
-                {}
                 <ImageCarousel 
                   images={[
                     { url: selectedItem.front_image, label: 'Front' },

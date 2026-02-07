@@ -57,7 +57,6 @@ export default function AppointmentSelection() {
         contentContainerStyle={{ paddingBottom: height * 0.2 }}
         showsVerticalScrollIndicator={false}
       >
-        {}
         <View style={styles.header}>
           <Image
             source={require("../../../assets/images/logo.png")}
@@ -65,8 +64,6 @@ export default function AppointmentSelection() {
           />
           <Text style={styles.headerTitle}>Jackman Tailor Deluxe</Text>
         </View>
-
-        {}
         <View style={styles.heroCard}>
           <Text style={styles.heroTitle}>Book an Appointment</Text>
           <Text style={styles.heroSubtitle}>
@@ -74,8 +71,6 @@ export default function AppointmentSelection() {
           </Text>
           <View style={styles.decorativeLine} />
         </View>
-
-        {}
         <View style={styles.servicesContainer}>
           {services.map((service) => (
             <TouchableOpacity
@@ -148,8 +143,6 @@ export default function AppointmentSelection() {
           </View>
         </TouchableOpacity>
       </View>
-
-      {}
       <CustomizationModal
         visible={showCustomizationModal}
         onClose={() => setShowCustomizationModal(false)}

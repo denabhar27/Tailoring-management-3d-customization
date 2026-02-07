@@ -361,9 +361,6 @@ const CustomerList = () => {
           {error && <div className="error-message" style={{ color: 'red', marginBottom: '20px' }}>{error}</div>}
 
         </div>
-
-        {}
-
         <div className="search-container">
 
           <input
@@ -399,9 +396,6 @@ const CustomerList = () => {
           </select>
 
         </div>
-
-        {}
-
         <div className="table-container">
 
           <table>
@@ -627,9 +621,6 @@ const CustomerList = () => {
         </div>
 
       </div>
-
-      {}
-
       {showEditModal && selectedCustomer && (
 
         <div className="modal-overlay active" onClick={(e) => e.target === e.currentTarget && setShowEditModal(false)}>
@@ -645,9 +636,6 @@ const CustomerList = () => {
             </div>
 
             <div className="modal-body">
-
-  {}
-
   <div className="form-row-three-cols">
 
     <div className="form-group">
@@ -743,19 +731,10 @@ const CustomerList = () => {
     </div>
 
   </div>
-
-              {}
-
               <div style={{ marginTop: '30px', paddingTop: '20px', borderTop: '2px solid #eee' }}>
 
                 <h3 className="measurement-title" style={{ marginTop: 0, marginBottom: '15px', fontSize: '18px', color: '#000', textAlign: 'center', fontWeight: '600' }}>Customer Measurements</h3>
-
-                {}
-
                 <div style={{ display: 'flex', gap: '20px', marginTop: '15px' }}>
-
-                  {}
-
                   <div style={{ flex: 1, padding: '15px', backgroundColor: '#f9f9f9', borderRadius: '8px' }}>
 
                     <p className="measurement-title" style={{ marginTop: 0, marginBottom: '15px', color: '#000', textAlign: 'center', fontWeight: '600', fontSize: '16px' }}>Top Measurements</p>
@@ -897,9 +876,6 @@ const CustomerList = () => {
                   </div>
 
                 </div>
-
-                  {}
-
                   <div style={{ flex: 1, padding: '15px', backgroundColor: '#f9f9f9', borderRadius: '8px' }}>
 
                     <p className="measurement-title" style={{ marginTop: 0, marginBottom: '15px', color: '#000', textAlign: 'center', fontWeight: '600', fontSize: '16px' }}>Bottom Measurements</p>
@@ -1043,9 +1019,6 @@ const CustomerList = () => {
                 </div>
 
                 </div>
-
-                {}
-
                 <div style={{ marginTop: '20px', padding: '15px', backgroundColor: '#fff3e0', borderRadius: '8px', border: '1px solid #ffcc80' }}>
 
                   <label style={{ display: 'block', marginBottom: '10px', color: '#000', fontWeight: '600', fontSize: '16px' }}>Notes</label>

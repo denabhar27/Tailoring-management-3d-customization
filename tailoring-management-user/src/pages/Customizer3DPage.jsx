@@ -568,8 +568,6 @@ const Customizer3DPage = () => {
         >
           Pants
         </button>
-        
-        {}
         {getCustomGarmentNavItems().map(model => (
           <button
             key={model.model_id}

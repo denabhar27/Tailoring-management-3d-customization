@@ -25,7 +25,6 @@ export default function ContactSupportScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {}
       <View style={styles.header}>
         <TouchableOpacity 
           style={styles.backButton}
@@ -36,8 +35,6 @@ export default function ContactSupportScreen() {
         <Text style={styles.headerTitle}>Contact Support</Text>
         <View style={styles.headerPlaceholder} />
       </View>
-
-      {}
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <Text style={styles.sectionTitle}>Need More Help?</Text>
         <Text style={styles.sectionSubtitle}>
@@ -101,8 +98,6 @@ export default function ContactSupportScreen() {
             <Text style={styles.directionsButtonText}>Get Directions</Text>
           </TouchableOpacity>
         </View>
-
-        {}
         <TouchableOpacity 
           style={styles.faqLink}
           onPress={() => router.push("/(tabs)/faq")}
@@ -119,8 +114,6 @@ export default function ContactSupportScreen() {
 
         <View style={{ height: 120 }} />
       </ScrollView>
-
-      {}
       <View style={[styles.bottomNav, { paddingBottom: insets.bottom > 0 ? insets.bottom : 12 }]}>
         <TouchableOpacity onPress={() => router.push("/(tabs)/home")}>
           <View style={styles.navItemWrap}>

@@ -26,16 +26,12 @@ const App = () => {
   return (
     <>
       <Routes>
-
-        {}
         <Route path="/" element={<GuestHomePage />} />
         <Route path="/user-home" element={<UserHomePage />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/rentals" element={<RentalPage />} />
         <Route path="/orders/:orderItemId" element={<OrderDetails />} />
         <Route path="/3d-customizer" element={<Customizer3DPage />} />
-
-        {}
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/rental" element={<Rental />} />
         <Route path="/drycleaning" element={<DryCleaning />} />
